@@ -102,6 +102,24 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 	   unifying monster's behavior would result in smaller flexibility. */
 	ai := c.AIType
 	switch ai {
+	case PatrollingAI:
+		if c.AITriggered == true {
+			if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) > 1 {
+				c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
+			} else {
+				c.AttackTarget((*cs)[0], &o, &b, cs, "")
+			}
+		} else {
+			if c.DistanceTo(c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1]) > 1 {
+				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
+			} else {
+				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
+				c.NextPoint++
+				if c.NextPoint >= len(c.PatrolPoints) {
+					c.NextPoint = 0
+				}
+			}
+		}
 	case MeleeDumbAI:
 		if c.AITriggered == true {
 			if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) > 1 {

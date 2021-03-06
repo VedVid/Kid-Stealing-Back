@@ -27,6 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package main
 
 import "fmt"
+import "math/rand"
 
 var (
 	TreasureMin        = 6
@@ -271,6 +272,60 @@ func MakeRoomsMap(b *Board) {
 		fmt.Println("rooms[row]", rooms[row])
 		room := rooms[row]
 		if decorationChance < RandInt(100) {
+			layoutRoom := HardcodedRooms[rand.Intn(len(HardcodedRooms))]
+			for xx := 0; xx < 5; xx++ {
+				for yy := 0; yy < 5; yy++ {
+					ch := layoutRoom[xx][yy]
+					cx := room[0]+xx
+					cy := room[1]+yy
+					switch ch {
+					case ".":
+						(*b)[cx][cy].Char = "."
+						(*b)[cx][cy].Name = "floor"
+						(*b)[cx][cy].Color = "light grey"
+						(*b)[cx][cy].ColorDark = "grey"
+						(*b)[cx][cy].Layer = BoardLayer
+						(*b)[cx][cy].Explored = true
+						(*b)[cx][cy].Slows = false
+						(*b)[cx][cy].Blocked = false
+						(*b)[cx][cy].BlocksSight = false
+					case "o":
+						(*b)[cx][cy].Char = "○"
+						(*b)[cx][cy].Name = "pillar"
+						(*b)[cx][cy].Color = "grey"
+						(*b)[cx][cy].ColorDark = "grey"
+						(*b)[cx][cy].Layer = BoardLayer
+						(*b)[cx][cy].Explored = true
+						(*b)[cx][cy].Slows = false
+						(*b)[cx][cy].Blocked = true
+						(*b)[cx][cy].BlocksSight = true
+					case "h":
+						(*b)[cx][cy].Char = "h"
+						(*b)[cx][cy].Name = "chair"
+						(*b)[cx][cy].Color = "dark orange"
+						(*b)[cx][cy].ColorDark = "grey"
+						(*b)[cx][cy].Layer = BoardLayer
+						(*b)[cx][cy].Explored = true
+						(*b)[cx][cy].Slows = false
+						(*b)[cx][cy].Blocked = false
+						(*b)[cx][cy].BlocksSight = false
+					case "T":
+						(*b)[cx][cy].Char = "T"
+						(*b)[cx][cy].Name = "table"
+						(*b)[cx][cy].Color = "dark orange"
+						(*b)[cx][cy].ColorDark = "grey"
+						(*b)[cx][cy].Layer = BoardLayer
+						(*b)[cx][cy].Explored = true
+						(*b)[cx][cy].Slows = false
+						(*b)[cx][cy].Blocked = false
+						(*b)[cx][cy].BlocksSight = false
+					}
+
+
+
+				}
+			}
+
 			for xx := room[0]; xx <= room[2]; xx++ {
 				for yy := room[1]; yy <= room[3]; yy++ {
 					fmt.Println(xx, yy)

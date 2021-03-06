@@ -206,6 +206,11 @@ func (c *Creature) Move(tx, ty int, b Board) bool {
 				c.Stuck = false
 			}
 			turnSpent = true
+		} else {
+			if c.AIType == PlayerAI && b[newX][newY].Hides == true {
+				c.X = newX
+				c.Y = newY
+			}
 		}
 	}
 	return turnSpent

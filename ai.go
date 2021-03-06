@@ -40,8 +40,8 @@ const (
 )
 
 const (
-	MinDistanceBetweenPatrolPoints = 5
-	MaxDistanceBetweenPatrolPoints = 15
+	MinDistanceBetweenPatrolPoints = 7
+	MaxDistanceBetweenPatrolPoints = 12
 )
 
 const (

@@ -73,7 +73,7 @@ func TilesToNodes() [][]*Node {
 	return nodes
 }
 
-func FindAdjacent(b Board, c Creatures, nodes [][]*Node, frontiers []*Node,
+func FindAdjacent(b Board, c *Creature, cs Creatures, nodes [][]*Node, frontiers []*Node,
 	start *Node, w int) ([]*Node, bool) {
 	/* Function FindAdjacent takes Board, Board-like [][]*Node array,
 	   coords of starting point, and current value to attribute Weight field
@@ -109,7 +109,14 @@ func FindAdjacent(b Board, c Creatures, nodes [][]*Node, frontiers []*Node,
 				if b[x][y].Blocked == true {
 					continue //tile is blocked
 				}
-				if GetAliveCreatureFromTile(x, y, c) != nil {
+				if c.AITriggered == false {
+					if b[x][y].Char != "." && b[x][y].Char != "+" {
+						if b[x][y].Treasure == false {
+							continue
+						}
+					}
+				}
+				if GetAliveCreatureFromTile(x, y, cs) != nil {
 					continue //tile is occupied by other monster
 				}
 				if x == frontiers[i].X || y == frontiers[i].Y {
@@ -153,7 +160,7 @@ func (c *Creature) MoveTowardsPath(b Board, cs Creatures, tx, ty int) error {
 		if len(frontiers) == 0 || startFound == true {
 			break
 		}
-		frontiers, startFound = FindAdjacent(b, cs, nodes, frontiers, start, w)
+		frontiers, startFound = FindAdjacent(b, c, cs, nodes, frontiers, start, w)
 	}
 	//RenderWeights was here
 	if ShowMapValidationProcess != ShowMapValidationProcessOff {

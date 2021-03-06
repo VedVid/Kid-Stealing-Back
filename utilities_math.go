@@ -40,7 +40,7 @@ const (
 )
 
 func CalcHPPercent(curHP, maxHP int) int {
-	return int((curHP/maxHP)*100)
+	return int((curHP / maxHP) * 100)
 }
 
 func RoundFloatToInt(x float64) int {

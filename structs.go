@@ -68,30 +68,30 @@ type FighterProperties struct {
 	   elements as well.
 	   AI types are iota (integers) defined
 	   in creatures.go. */
-	AIType           int
-	AITriggered      bool
-	HPMax            int
-	HPCurrent        int
-	Attack           int
-	Defense          int
-	Speed            int
-	Stuck            bool
-	SpawnTimer       int
-	TurnCounter      int
-	RangedMaxAmmo    int
-	RangedCurAmmo    int
-	ThrowablesMax    int
-	ThrowablesCur    int
-	ChallengeLevel   int
-	PatrolPoints     [][]int
-	NextPoint        int
-	LastPosition     []int
-	LightItem1       bool
-	LightItem2       bool
-	LightItem3       bool
-	MediumItem1      bool
-	MediumItem2      bool
-	HeavyItem1       bool
+	AIType         int
+	AITriggered    bool
+	HPMax          int
+	HPCurrent      int
+	Attack         int
+	Defense        int
+	Speed          int
+	Stuck          bool
+	SpawnTimer     int
+	TurnCounter    int
+	RangedMaxAmmo  int
+	RangedCurAmmo  int
+	ThrowablesMax  int
+	ThrowablesCur  int
+	ChallengeLevel int
+	PatrolPoints   [][]int
+	NextPoint      int
+	LastPosition   []int
+	LightItem1     bool
+	LightItem2     bool
+	LightItem3     bool
+	MediumItem1    bool
+	MediumItem2    bool
+	HeavyItem1     bool
 }
 
 type ObjectProperties struct {
@@ -139,8 +139,8 @@ type GameData struct {
 	// - amount of lost HP (malus)
 	// - TODO: bonus for killing
 	// - TODO: combo kills
-	Points         int
-	LastTarget     *Creature
+	Points     int
+	LastTarget *Creature
 	// How often monsters will spawn; in turns.
 	SpawnRatio     int
 	SpawnAmount    int

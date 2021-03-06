@@ -32,7 +32,7 @@ import (
 	blt "bearlibterminal"
 )
 
-const(
+const (
 	MapEntity = iota
 	ObjectEntity
 	MonsterEntity

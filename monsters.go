@@ -40,21 +40,20 @@ const (
 
 const (
 	// Speed values
-	SpeedVerySlow = iota-2
+	SpeedVerySlow = iota - 2
 	SpeedSlow
 	SpeedNormal
 	SpeedFast
 	SpeedVeryFast
 )
 
-var SpeedValues =map[int]int{
+var SpeedValues = map[int]int{
 	SpeedVerySlow: 2,
-	SpeedSlow: 4,
-	SpeedNormal: 1,
-	SpeedFast: 4,
+	SpeedSlow:     4,
+	SpeedNormal:   1,
+	SpeedFast:     4,
 	SpeedVeryFast: 2,
 }
-
 
 type Creature struct {
 	/* Creatures are living objects that
@@ -174,7 +173,7 @@ func (c *Creature) MoveOrAttack(tx, ty int, b Board, o *Objects, all *Creatures)
 		}
 	}
 	if target != nil {
-		if c != (*all)[0] {  // Disable bump-attack mechanics.
+		if c != (*all)[0] { // Disable bump-attack mechanics.
 			c.AttackTarget(target, o, &b, all, "")
 			turnSpent = true
 		} else {
@@ -212,7 +211,7 @@ func (c *Creature) Move(tx, ty int, b Board) bool {
 	return turnSpent
 }
 
-func (c *Creature) PickUp(o *Objects) bool {
+func (c *Creature) PickUp(b *Board) bool {
 	/* PickUp is method that has *Creature as receiver
 	   and slice of *Object as argument.
 	   Creature tries to pick object up.
@@ -222,18 +221,47 @@ func (c *Creature) PickUp(o *Objects) bool {
 	   Picking objects up takes turn only if it is
 	   successful attempt. */
 	turnSpent := false
-	obj := *o
-	for i := 0; i < len(obj); i++ {
-		if obj[i].X == c.X && obj[i].Y == c.Y && obj[i].Pickable == true {
-			if c.AIType == PlayerAI {
-				AddMessage("You found " + obj[i].Name + ".")
+	if c.AIType == PlayerAI {
+		if (*b)[c.X][c.Y].Treasure == true {
+			switch (*b)[c.X][c.Y].TreasureChar {
+			case TreasureCharLight:
+				if c.LightItem1 && c.LightItem2 && c.LightItem3 {
+					AddMessage("Your pockets are full already.")
+				} else {
+					if c.LightItem1 == false {
+						c.LightItem1 = true
+					} else if c.LightItem2 == false {
+						c.LightItem2 = true
+					} else if c.LightItem3 == false {
+						c.LightItem3 = true
+					}
+					(*b)[c.X][c.Y].Treasure = false
+					AddMessage("You put the coins in your pocket.")
+					turnSpent = true
+				}
+			case TreasureCharMedium:
+				if c.MediumItem1 && c.MediumItem2 {
+					AddMessage("You do not have free space on the belt anymore.")
+				} else {
+					if c.MediumItem1 == false {
+						c.MediumItem1 = true
+					} else if c.MediumItem2 == false {
+						c.MediumItem2 = true
+					}
+					(*b)[c.X][c.Y].Treasure = false
+					AddMessage("You put valuables down to the belt")
+					turnSpent = true
+				}
+			case TreasureCharHeavy:
+				if c.HeavyItem1 {
+					AddMessage("You can not carry anything else on your back.")
+				} else {
+					c.HeavyItem1 = true
+					(*b)[c.X][c.Y].Treasure = false
+					AddMessage("You put the treasure in a bag and put it on your back.")
+					turnSpent = true
+				}
 			}
-			c.Inventory = append(c.Inventory, obj[i])
-			copy(obj[i:], obj[i+1:])
-			obj[len(obj)-1] = nil
-			*o = obj[:len(obj)-1]
-			turnSpent = true
-			break
 		}
 	}
 	return turnSpent

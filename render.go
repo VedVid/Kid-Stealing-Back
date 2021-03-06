@@ -68,21 +68,7 @@ func PrintBoard(b Board, c Creatures) {
 				ch := t.Char
 				if t.Char == "[" || t.Char == "]" {
 					ch = t.Char + t.Char
-				}/*
-				if t.Treasure == false {
-					if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y) == true {
-						glyph := "[font=game][color=" + t.Color + "]" + ch
-						SmartPrint(t.X, t.Y, MapEntity, glyph)
-					} else {
-						if t.AlwaysVisible == true {
-							glyph := "[font=game][color=" + t.ColorDark + "]" + ch
-							SmartPrint(t.X, t.Y, MapEntity, glyph)
-						}
-					}
-				} else {
-					glyph := "[font=game][color=" + t.TreasureCol + "]" + t.TreasureChar
-					SmartPrint(t.X, t.Y, MapEntity, glyph)
-				}*/
+				}
 				if t.Treasure == true {
 					glyph := "[font=game][color=" + t.TreasureCol + "]" + t.TreasureChar
 					SmartPrint(t.X, t.Y, MapEntity, glyph)
@@ -149,7 +135,7 @@ func PrintCreatures(b Board, c Creatures) {
 	// Print corpses
 	for i, v := range c {
 		if i == 0 {
-			continue  // Player will be drawn separately
+			continue // Player will be drawn separately
 		}
 		if v.Layer != DeadLayer {
 			continue
@@ -172,7 +158,7 @@ func PrintCreatures(b Board, c Creatures) {
 	// Print living creatures
 	for i, v := range c {
 		if i == 0 {
-			continue  // Player will be drawn separately
+			continue // Player will be drawn separately
 		}
 		if v.Layer == DeadLayer {
 			continue
@@ -195,7 +181,7 @@ func PrintCreatures(b Board, c Creatures) {
 	// Print player
 	blt.Layer(PlayerLayer)
 	SmartPrint(c[0].X, c[0].Y,
-		MonsterEntity, "[font=game][color=" + c[0].Color + "]" + c[0].Char)
+		MonsterEntity, "[font=game][color="+c[0].Color+"]"+c[0].Char)
 	for i := 0; i < PlayerLayer; i++ {
 		blt.Layer(i)
 		SmartClear(c[0].X, c[0].Y, MonsterEntity)
@@ -217,7 +203,7 @@ func PrintUI(c *Creature) {
 	for i := c.HPCurrent; i < c.HPMax; i++ {
 		hp += "[/color][color=darker red]♡"
 	}
-	blt.Print(UIPosX, UIPosY+UIFontSpacingY, "[font=game]" + hp)
+	blt.Print(UIPosX, UIPosY+UIFontSpacingY, "[font=game]"+hp)
 	enc := ""
 	if c.LightItem1 == true {
 		enc += "[color=yellow]" + TreasureCharLight
@@ -247,7 +233,7 @@ func PrintUI(c *Creature) {
 	if c.HeavyItem1 == true {
 		enc += "[color=yellow]" + TreasureCharHeavy
 	} else {
-		enc += "[color=gray]"  + TreasureCharHeavy
+		enc += "[color=gray]" + TreasureCharHeavy
 	}
 	enc += "[color=lighter gray] → "
 	encm := 0
@@ -270,29 +256,29 @@ func PrintUI(c *Creature) {
 	case 3:
 		enc += "[color=dark red]█"
 	}
-	blt.Print(UIPosX, UIPosY+(2*UIFontSpacingY), "[font=game]" + enc)
+	blt.Print(UIPosX, UIPosY+(2*UIFontSpacingY), "[font=game]"+enc)
 
-/*
-	name := "Player"
-	blt.Print(UIPosX, UIPosY * UIFontSpacingY, "[font=ui]" + name)
-	hp := "HP: " + strconv.Itoa(c.HPCurrent) + "\\" + strconv.Itoa(c.HPMax)
-	blt.Print(UIPosX, (UIPosY+1) * UIFontSpacingY, "[font=ui][color=red]" + hp)
-	turn := "Turns: " + strconv.Itoa(Game.TurnCounter)
-	if Game.BreakTime > 0 {
-		turn = turn + " [color=darker yellow]BREAK[/color]"
-	}
-	blt.Print(UIPosX, (UIPosY+2) * UIFontSpacingY, "[font=ui]" + turn)
-	monsters := "Killed: " + strconv.Itoa(len(Game.MonstersKilled))
-	blt.Print(UIPosX, (UIPosY+3) * UIFontSpacingY, "[font=ui]" + monsters)
-	wave := "Wave:" + strconv.Itoa(Game.WaveNo)
-	blt.Print(UIPosX, (UIPosY+4) * UIFontSpacingY, "[font=ui]" + wave)
-	ranged := c.CreateRangedString()
-	blt.Print(UIPosX, (UIPosY+5) * UIFontSpacingY + (UIFontSpacingY / 2), "[font=ui]" + ranged)
-	throwables := c.CreateThrowablesString()
-	blt.Print(UIPosX, (UIPosY+7) * UIFontSpacingY, "[font=ui]" + throwables)
-	status := c.CreateStatusString()
-	blt.Print(UIPosX, (UIPosY+9) * UIFontSpacingY, "[font=ui]" + status)
-*/
+	/*
+		name := "Player"
+		blt.Print(UIPosX, UIPosY * UIFontSpacingY, "[font=ui]" + name)
+		hp := "HP: " + strconv.Itoa(c.HPCurrent) + "\\" + strconv.Itoa(c.HPMax)
+		blt.Print(UIPosX, (UIPosY+1) * UIFontSpacingY, "[font=ui][color=red]" + hp)
+		turn := "Turns: " + strconv.Itoa(Game.TurnCounter)
+		if Game.BreakTime > 0 {
+			turn = turn + " [color=darker yellow]BREAK[/color]"
+		}
+		blt.Print(UIPosX, (UIPosY+2) * UIFontSpacingY, "[font=ui]" + turn)
+		monsters := "Killed: " + strconv.Itoa(len(Game.MonstersKilled))
+		blt.Print(UIPosX, (UIPosY+3) * UIFontSpacingY, "[font=ui]" + monsters)
+		wave := "Wave:" + strconv.Itoa(Game.WaveNo)
+		blt.Print(UIPosX, (UIPosY+4) * UIFontSpacingY, "[font=ui]" + wave)
+		ranged := c.CreateRangedString()
+		blt.Print(UIPosX, (UIPosY+5) * UIFontSpacingY + (UIFontSpacingY / 2), "[font=ui]" + ranged)
+		throwables := c.CreateThrowablesString()
+		blt.Print(UIPosX, (UIPosY+7) * UIFontSpacingY, "[font=ui]" + throwables)
+		status := c.CreateStatusString()
+		blt.Print(UIPosX, (UIPosY+9) * UIFontSpacingY, "[font=ui]" + status)
+	*/
 }
 
 func PrintLog() {

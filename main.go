@@ -49,7 +49,7 @@ func main() {
 	var actors = new(Creatures)
 	StartGame(cells, actors, objs)
 	for {
-		if (Game.TurnCounter == 0 || Game.TurnCounter % Game.SpawnRatio == 0) &&
+		if (Game.TurnCounter == 0 || Game.TurnCounter%Game.SpawnRatio == 0) &&
 			Game.BreakTime <= 0 {
 			SpawnMonsters(*cells, actors)
 		}
@@ -59,10 +59,10 @@ func main() {
 			Game.WaveNo++
 			Game.WaveMax = Game.WaveNo * 10
 			Game.WaveCur = 0
-			if Game.WaveNo % 3 == 0 {
+			if Game.WaveNo%3 == 0 {
 				Game.SpawnAmount++
 			}
-			if Game.WaveNo % 2 == 0 {
+			if Game.WaveNo%2 == 0 {
 				Game.WaveMax += 4
 			}
 			(*actors)[0].Restore()
@@ -123,30 +123,30 @@ func NewGame(b *Board, c *Creatures, o *Objects) {
 	// The commented code below is perfectly valid example
 	// of creating game data during runtime.
 	/*
-	enemy, err := NewCreature(MapSizeX-2, MapSizeY-2, "patherRanged.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-	w1, err := NewObject(0, 0, "weapon1.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-	w2, err := NewObject(0, 0, "weapon2.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-	wm, err := NewObject(0, 0, "melee.json")
-	if err != nil {
-		fmt.Println(err)
-	}
-	var enemyEq = EquipmentComponent{Objects{w1, w2, wm}, Objects{}}
-	enemy.EquipmentComponent = enemyEq
-	*c = Creatures{player, enemy}
-	obj, err := NewObject(24, 15, "heal.json")
-	*o = Objects{obj}
-	if err != nil {
-		fmt.Println(err)
-	}
+		enemy, err := NewCreature(MapSizeX-2, MapSizeY-2, "patherRanged.json")
+		if err != nil {
+			fmt.Println(err)
+		}
+		w1, err := NewObject(0, 0, "weapon1.json")
+		if err != nil {
+			fmt.Println(err)
+		}
+		w2, err := NewObject(0, 0, "weapon2.json")
+		if err != nil {
+			fmt.Println(err)
+		}
+		wm, err := NewObject(0, 0, "melee.json")
+		if err != nil {
+			fmt.Println(err)
+		}
+		var enemyEq = EquipmentComponent{Objects{w1, w2, wm}, Objects{}}
+		enemy.EquipmentComponent = enemyEq
+		*c = Creatures{player, enemy}
+		obj, err := NewObject(24, 15, "heal.json")
+		*o = Objects{obj}
+		if err != nil {
+			fmt.Println(err)
+		}
 	*/
 	var err error
 	*b = InitializeEmptyMap()
@@ -191,7 +191,7 @@ func StartGame(b *Board, c *Creatures, o *Objects) {
 	if errHighScores == nil {
 		_ = LoadScores(&HighScores)
 	} else {
-		_= SaveScores(HighScores)
+		_ = SaveScores(HighScores)
 	}
 	if errBoard == nil && errCreatures == nil && errObjects == nil && errGame == nil {
 		LoadGame(b, c, o)

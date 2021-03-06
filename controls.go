@@ -111,7 +111,7 @@ func Command(com string, p *Creature, b *Board, c *Creatures, o *Objects) bool {
 	case StrReload:
 		turnSpent = p.Reload()
 	case StrPickup:
-		turnSpent = p.PickUp(o)
+		turnSpent = p.PickUp(b)
 	}
 	return turnSpent
 }

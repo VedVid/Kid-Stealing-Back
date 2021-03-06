@@ -99,16 +99,16 @@ func PrintLookingMessage(monstersSlice, objectsSlice, tilesSlice []string, hpSli
 		} else {
 			hpSymbol = "[color=dark red]Ⅰ[/color]"
 		}
-		blt.Print(UIPosX, (UIPosY+9+y) * UIFontSpacingY, "[font=ui]" + v +
-			" " + hpSymbol + "[/font]")
+		blt.Print(UIPosX, (UIPosY+9+y)*UIFontSpacingY, "[font=ui]"+v+
+			" "+hpSymbol+"[/font]")
 		y++
 	}
 	for _, v := range objectsSlice {
-		blt.Print(UIPosX, (UIPosY+9+y) * UIFontSpacingY, "[font=ui]" + v + "[/font]")
+		blt.Print(UIPosX, (UIPosY+9+y)*UIFontSpacingY, "[font=ui]"+v+"[/font]")
 		y++
 	}
 	for _, v := range tilesSlice {
-		blt.Print(UIPosX, (UIPosY+9+y) * UIFontSpacingY, "[font=ui]" + v + "[/font]")
+		blt.Print(UIPosX, (UIPosY+9+y)*UIFontSpacingY, "[font=ui]"+v+"[/font]")
 		y++
 	}
 	blt.Refresh()
@@ -250,14 +250,14 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string) bool 
 			// TODO: behaviour like below should be default one,
 			// with customizable distance between target and source.
 			CursorMovement(&targetX, &targetY, key)
-			if targetX >= c.X + 2 {
+			if targetX >= c.X+2 {
 				targetX = c.X + 1
-			} else if targetX <= c.X - 2 {
+			} else if targetX <= c.X-2 {
 				targetX = c.X - 1
 			}
-			if targetY >= c.Y + 2 {
+			if targetY >= c.Y+2 {
 				targetY = c.Y + 1
-			} else if targetY <= c.Y - 2 {
+			} else if targetY <= c.Y-2 {
 				targetY = c.Y - 1
 			}
 		}
@@ -399,7 +399,7 @@ func (c *Creature) MonstersInRange(b Board, cs Creatures, o Objects,
 			fmt.Println(err)
 		}
 		if ComputeVector(vec) <= length+1 { // "+1" is necessary due Vector values.
-			dist := StrRanged  // or StrThrowable - should it be passed as arg?
+			dist := StrRanged // or StrThrowable - should it be passed as arg?
 			if length <= 1 {
 				dist = StrMelee
 			}

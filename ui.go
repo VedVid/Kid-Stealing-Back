@@ -117,7 +117,7 @@ func PrintMessages(x, y int) {
 	   will not format text in special way. */
 	blt.Layer(UILayer)
 	for i, v := range MsgBuf {
-		blt.Print(x + UIFontSpacingX, y + (i * UIFontSpacingY), "[font=ui]" + v)
+		blt.Print(x+UIFontSpacingX, y+(i*UIFontSpacingY), "[font=ui]"+v)
 	}
 }
 
@@ -132,7 +132,7 @@ func AddMessage(message string) {
 	   at its own. */
 	var err error
 	messageLen := utf8.RuneCountInString(message)
-	if messageLen > LogSizeX {  // Find proper X size of Log
+	if messageLen > LogSizeX { // Find proper X size of Log
 		txt := MessageLengthError(message, messageLen, LogSizeX)
 		err = errors.New("Message is too long to fit message log. " + txt)
 		fmt.Println(err)

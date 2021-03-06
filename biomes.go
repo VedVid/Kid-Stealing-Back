@@ -53,12 +53,12 @@ type BiomeElement struct {
 
 var Topics = []Topic{Desert, Forest, Mountains}
 
-var(
+var (
 	Desert = Topic{"Desert", []Biome{DesertErg, DesertErg, DesertOasis}}
 
 	DesertErg = Biome{"DesertErg", []BiomeElement{DesertErgSand}}
 
-	DesertErgSand = BiomeElement {
+	DesertErgSand = BiomeElement{
 		"DesertErgSand",
 		100,
 		[]string{"."},
@@ -74,7 +74,7 @@ var(
 	}
 
 	DesertOasis = Biome{"DesertOasis", []BiomeElement{DesertOasisShallowWater, DesertOasisSand,
-						 DesertOasisTree, DesertOasisGrass, DesertOasisBush}}
+		DesertOasisTree, DesertOasisGrass, DesertOasisBush}}
 
 	DesertOasisSand = BiomeElement{
 		"DesertOasisSand",
@@ -152,7 +152,7 @@ var(
 	}
 )
 
-var(
+var (
 	Forest = Topic{"Forest", []Biome{ForestWoods, ForestYoungForest, ForestClearing}}
 
 	ForestWoods = Biome{"ForestWoods", []BiomeElement{ForestWoodsTree, ForestWoodsGrass,
@@ -376,12 +376,12 @@ var(
 	}
 )
 
-var(
+var (
 	Mountains = Topic{"Mountains", []Biome{MountainsHighMountains, MountainsMeadows, MountainsForest}}
 
 	MountainsHighMountains = Biome{"MountainsHighMountains", []BiomeElement{MountainsHighMountainsMountains}}
 
-	MountainsHighMountainsMountains = BiomeElement {
+	MountainsHighMountainsMountains = BiomeElement{
 		"MountainsHighMountainsMountains",
 		100,
 		[]string{"^"},
@@ -397,7 +397,7 @@ var(
 	}
 
 	MountainsMeadows = Biome{"MountainsMeadows", []BiomeElement{MountainsMeadowsGrass, MountainsMeadowsBush,
-						MountainsMeadowsTree}}
+		MountainsMeadowsTree}}
 
 	MountainsMeadowsGrass = BiomeElement{
 		"MountainsMeadowsGrass",
@@ -445,7 +445,7 @@ var(
 	}
 
 	MountainsForest = Biome{"MountainsForest", []BiomeElement{MountainsForestGrass, MountainsForestBush,
-						MountainsForestTree}}
+		MountainsForestTree}}
 
 	MountainsForestGrass = BiomeElement{
 		"MountainsForestGrass",
@@ -491,5 +491,4 @@ var(
 		true,
 		true,
 	}
-
 )

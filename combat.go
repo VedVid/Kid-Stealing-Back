@@ -54,24 +54,24 @@ func (c *Creature) AttackTarget(t *Creature, o *Objects, b *Board, cs *Creatures
 		switch attack {
 		case StrMelee:
 			att = RandRange(c.Equipment[MeleeSlot].DmgMinimal,
-							c.Equipment[MeleeSlot].DmgMaximal)
+				c.Equipment[MeleeSlot].DmgMaximal)
 		case StrRanged:
 			att = RandRange(c.Equipment[RangedSlot].DmgMinimal,
-							c.Equipment[RangedSlot].DmgMaximal)
+				c.Equipment[RangedSlot].DmgMaximal)
 		case StrThrowable:
 			att = RandRange(c.Equipment[ThrowableSlot].DmgMinimal,
-							c.Equipment[ThrowableSlot].DmgMaximal)
+				c.Equipment[ThrowableSlot].DmgMaximal)
 		default:
 			att = RandInt(c.Attack)
 			fmt.Println("Something went wrong. Player's attack was not found in: " +
 				"[StrMelee, StrRanged, StrThrowable].")
 		}
 	}
-	att2 := 0                //critical bonus
-	def := t.Defense         //opponent's defense
-	dmg := 0                 //dmg delivered
-	crit := false            //was it critical hit?
-	if RandInt(100) >= 90 {  //critical hit!
+	att2 := 0               //critical bonus
+	def := t.Defense        //opponent's defense
+	dmg := 0                //dmg delivered
+	crit := false           //was it critical hit?
+	if RandInt(100) >= 90 { //critical hit!
 		crit = true
 		att = c.Attack
 		att2 = RandInt(c.Attack)
@@ -80,15 +80,15 @@ func (c *Creature) AttackTarget(t *Creature, o *Objects, b *Board, cs *Creatures
 			case StrMelee:
 				att = c.Equipment[MeleeSlot].DmgMaximal
 				att2 = RandRange(c.Equipment[MeleeSlot].DmgMinimal,
-							c.Equipment[MeleeSlot].DmgMaximal)
+					c.Equipment[MeleeSlot].DmgMaximal)
 			case StrRanged:
 				att = c.Equipment[RangedSlot].DmgMaximal
 				att2 = RandRange(c.Equipment[RangedSlot].DmgMinimal,
-							c.Equipment[RangedSlot].DmgMaximal)
+					c.Equipment[RangedSlot].DmgMaximal)
 			case StrThrowable:
 				att = c.Equipment[ThrowableSlot].DmgMaximal
 				att2 = RandRange(c.Equipment[ThrowableSlot].DmgMinimal,
-							c.Equipment[ThrowableSlot].DmgMaximal)
+					c.Equipment[ThrowableSlot].DmgMaximal)
 			default:
 				att = c.Attack
 				att2 = RandInt(c.Attack)

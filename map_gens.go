@@ -26,21 +26,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package main
 
-
 var (
-	TreasureMin = 6
-	TreasureMax = 12
-	TreasureLightMin = 3
-	TreasureLightMax = 6
-	TreasureMediumMin = 2
-	TreasureMediumMax = 4
-	TreasureHeavyMin = 1
-	TreasureHeavyMax = 2
-	TreasureCharLight = "☼"
+	TreasureMin        = 6
+	TreasureMax        = 12
+	TreasureLightMin   = 3
+	TreasureLightMax   = 6
+	TreasureMediumMin  = 2
+	TreasureMediumMax  = 4
+	TreasureHeavyMin   = 1
+	TreasureHeavyMax   = 2
+	TreasureCharLight  = "☼"
 	TreasureCharMedium = "☥"
-	TreasureCharHeavy = "⚱"
+	TreasureCharHeavy  = "⚱"
 )
-
 
 func MakeRoomsMap(b *Board) {
 	roomSizeX := MapSizeX / 5
@@ -60,7 +58,7 @@ func MakeRoomsMap(b *Board) {
 				(*b)[x][y].Slows = false
 				(*b)[x][y].Blocked = false
 				(*b)[x][y].BlocksSight = false
-			} else if x % (roomSizeX + 1) == 0 || y % (roomSizeY + 1) == 0 {
+			} else if x%(roomSizeX+1) == 0 || y%(roomSizeY+1) == 0 {
 				(*b)[x][y].Char = "#"
 				(*b)[x][y].Name = "wall"
 				(*b)[x][y].Color = "light grey"
@@ -79,7 +77,7 @@ func MakeRoomsMap(b *Board) {
 	for i := 0; i < yRooms; i++ {
 		for j := 0; j < xRooms; j++ {
 			if i == 1 {
-				y := i * (roomSizeY + 1) - RandRange(1, roomSizeY)
+				y := i*(roomSizeY+1) - RandRange(1, roomSizeY)
 				x := j * (roomSizeX + 1)
 				(*b)[x][y].Char = "+"
 				(*b)[x][y].Name = "closed doors"
@@ -93,7 +91,7 @@ func MakeRoomsMap(b *Board) {
 			}
 			if j == 1 {
 				y := i * (roomSizeY + 1)
-				x := j * (roomSizeX + 1) - RandRange(1, roomSizeX)
+				x := j*(roomSizeX+1) - RandRange(1, roomSizeX)
 				(*b)[x][y].Char = "+"
 				(*b)[x][y].Name = "closed doors"
 				(*b)[x][y].Color = "darker orange"
@@ -105,7 +103,7 @@ func MakeRoomsMap(b *Board) {
 				(*b)[x][y].BlocksSight = true
 			}
 			y := i * (roomSizeY + 1)
-			x := j * (roomSizeX + 1) + RandRange(1, roomSizeX)
+			x := j*(roomSizeX+1) + RandRange(1, roomSizeX)
 			(*b)[x][y].Char = "+"
 			(*b)[x][y].Name = "closed doors"
 			(*b)[x][y].Color = "darker orange"
@@ -115,7 +113,7 @@ func MakeRoomsMap(b *Board) {
 			(*b)[x][y].Slows = false
 			(*b)[x][y].Blocked = false
 			(*b)[x][y].BlocksSight = true
-			y = i * (roomSizeY + 1) + RandRange(1, roomSizeY)
+			y = i*(roomSizeY+1) + RandRange(1, roomSizeY)
 			x = j * (roomSizeX + 1)
 			(*b)[x][y].Char = "+"
 			(*b)[x][y].Name = "closed doors"
@@ -204,7 +202,7 @@ func MakeRoomsMap(b *Board) {
 	for i := 1; i < yRooms; i++ {
 		for j := 1; j < xRooms; j++ {
 			y := i * (roomSizeX + 1)
-			x := j * (roomSizeY + 1) + 1
+			x := j*(roomSizeY+1) + 1
 			if RandInt(100) < deleteChance {
 				for xx := 0; xx < roomSizeX; xx++ {
 					(*b)[x][y].Char = "."
@@ -223,7 +221,7 @@ func MakeRoomsMap(b *Board) {
 	}
 	for i := 1; i < yRooms; i++ {
 		for j := 1; j < xRooms; j++ {
-			y := i * (roomSizeY + 1) + 1
+			y := i*(roomSizeY+1) + 1
 			x := j * (roomSizeX + 1)
 			if RandInt(100) < deleteChance {
 				for yy := 0; yy < roomSizeY; yy++ {
@@ -251,10 +249,10 @@ func MakeRoomsMap(b *Board) {
 	for {
 		if treasureLC >= treasureL && treasureMC >= treasureM &&
 			treasureHC >= treasureH {
-				break
-			}
-		x := RandInt(MapSizeX-1)
-		y := RandInt(MapSizeY-1)
+			break
+		}
+		x := RandInt(MapSizeX - 1)
+		y := RandInt(MapSizeY - 1)
 		if (*b)[x][y].Blocked || (*b)[x][y].BlocksSight || (*b)[x][y].Treasure {
 			continue
 		} else {

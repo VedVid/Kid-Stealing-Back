@@ -201,7 +201,7 @@ func ValidateVector(vec *Vector, b Board, c Creatures,
 	length := len(vec.TilesX)
 	// Additional "1" because the vector starts _at_ the player,
 	// not _next to_.
-	if length > 1 + 1 && dist == StrMelee {
+	if length > 1+1 && dist == StrMelee {
 		return valid, tile, monster, object
 	}
 Loop:
@@ -291,14 +291,14 @@ func PrintRangedCharacter(x, y int, color string, valid bool) {
 	blt.Layer(LookLayer)
 	if valid == true {
 		ch := "[font=game][color=" + color + "]" + "○" + "[/color][/font]"
-		blt.Print(x * GameFontSpacingX, y * GameFontSpacingY, ch)
+		blt.Print(x*GameFontSpacingX, y*GameFontSpacingY, ch)
 	} else {
 		ch := "[font=game][color=" + color + "]" + "X" + "[/color][/font]"
-		blt.Print(x * GameFontSpacingX, y * GameFontSpacingY, ch)
+		blt.Print(x*GameFontSpacingX, y*GameFontSpacingY, ch)
 	}
 	for i := 0; i < LookLayer; i++ {
-				blt.Layer(i)
-				blt.ClearArea(x * GameFontSpacingX, y * GameFontSpacingY,
-					GameFontSpacingX, GameFontSpacingY)
-			}
+		blt.Layer(i)
+		blt.ClearArea(x*GameFontSpacingX, y*GameFontSpacingY,
+			GameFontSpacingX, GameFontSpacingY)
+	}
 }

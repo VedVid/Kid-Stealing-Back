@@ -46,7 +46,7 @@ const (
 
 const (
 	// Probability of triggering AI
-	AITrigger = 0//92
+	AITrigger = 0 //92
 )
 
 func CreaturesTakeTurn(b Board, c *Creatures, o Objects) {
@@ -62,7 +62,7 @@ func CreaturesTakeTurn(b Board, c *Creatures, o Objects) {
 		if ai == NoAI || ai == PlayerAI {
 			continue
 		}
-		if Game.TurnCounter % SpeedValues[v.Speed] == 0 {
+		if Game.TurnCounter%SpeedValues[v.Speed] == 0 {
 			if v.Speed < SpeedNormal {
 				continue
 			} else if v.Speed > SpeedNormal {

@@ -39,8 +39,8 @@ type Tile struct {
 	// Tiles are map cells - floors, walls, doors.
 	BasicProperties
 	VisibilityProperties
-	Explored             bool
-	Slows                bool
+	Explored bool
+	Slows    bool
 	CollisionProperties
 	TreasureProperties
 }
@@ -68,7 +68,7 @@ type MapJson struct {
    to hold data of its every cell. */
 type Board [][]*Tile
 
-const(
+const (
 	ShowMapValidationProcessOff = iota
 	ShowMapValidationProcessOnSlow
 	ShowMapValidationProcessOnFast

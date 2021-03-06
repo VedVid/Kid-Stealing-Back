@@ -51,8 +51,8 @@ const (
 	LogPosX      = 0
 	LogPosY      = MapSizeY * 6
 
-	GameTitle    = "unnamed game"
-	GameVersion  = "0.1"
+	GameTitle   = "unnamed game"
+	GameVersion = "0.1"
 )
 
 var (
@@ -60,15 +60,15 @@ var (
 	ReferenceFontSize = 2
 	UIFontName        = "NovaMono-Regular.ttf"
 	UIFontSize        = 12
-	UIFontSpacingX    = UIFontSize/ReferenceFontSize/2
-	UIFontSpacingY    = UIFontSize/ReferenceFontSize
+	UIFontSpacingX    = UIFontSize / ReferenceFontSize / 2
+	UIFontSpacingY    = UIFontSize / ReferenceFontSize
 	UIFontSpacing     = strconv.Itoa(UIFontSpacingX) + "x" +
 		strconv.Itoa(UIFontSpacingY)
-	GameFontName      = "Deferral-Square.ttf"
-	GameFontSize      = 12
-	GameFontSpacingX  = UIFontSize/ReferenceFontSize
-	GameFontSpacingY  = UIFontSize/ReferenceFontSize
-	GameFontSpacing   = strconv.Itoa(GameFontSpacingX) + "x" +
+	GameFontName     = "Deferral-Square.ttf"
+	GameFontSize     = 12
+	GameFontSpacingX = UIFontSize / ReferenceFontSize
+	GameFontSpacingY = UIFontSize / ReferenceFontSize
+	GameFontSpacing  = strconv.Itoa(GameFontSpacingX) + "x" +
 		strconv.Itoa(GameFontSpacingY)
 )
 

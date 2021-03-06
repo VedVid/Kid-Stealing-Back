@@ -76,185 +76,6 @@ func MakeRoomsMap(b *Board) {
 			}
 		}
 	}
-	// Create doors
-	xRooms := ((MapSizeX - 1) / (roomSizeX + 1))
-	yRooms := ((MapSizeY - 1) / (roomSizeY + 1))
-	for i := 0; i < yRooms; i++ {
-		for j := 0; j < xRooms; j++ {
-			if i == 1 {
-				y := i*(roomSizeY+1) - RandRange(1, roomSizeY)
-				x := j * (roomSizeX + 1)
-				(*b)[x][y].Char = "+"
-				(*b)[x][y].Name = "closed doors"
-				(*b)[x][y].Color = "darker orange"
-				(*b)[x][y].ColorDark = "grey"
-				(*b)[x][y].Layer = BoardLayer
-				(*b)[x][y].Explored = true
-				(*b)[x][y].Slows = false
-				(*b)[x][y].Hides = false
-				(*b)[x][y].Blocked = false
-				(*b)[x][y].BlocksSight = true
-			}
-			if j == 1 {
-				y := i * (roomSizeY + 1)
-				x := j*(roomSizeX+1) - RandRange(1, roomSizeX)
-				(*b)[x][y].Char = "+"
-				(*b)[x][y].Name = "closed doors"
-				(*b)[x][y].Color = "darker orange"
-				(*b)[x][y].ColorDark = "grey"
-				(*b)[x][y].Layer = BoardLayer
-				(*b)[x][y].Explored = true
-				(*b)[x][y].Slows = false
-				(*b)[x][y].Hides = false
-				(*b)[x][y].Blocked = false
-				(*b)[x][y].BlocksSight = true
-			}
-			y := i * (roomSizeY + 1)
-			x := j*(roomSizeX+1) + RandRange(1, roomSizeX)
-			(*b)[x][y].Char = "+"
-			(*b)[x][y].Name = "closed doors"
-			(*b)[x][y].Color = "darker orange"
-			(*b)[x][y].ColorDark = "grey"
-			(*b)[x][y].Layer = BoardLayer
-			(*b)[x][y].Explored = true
-			(*b)[x][y].Slows = false
-			(*b)[x][y].Hides = false
-			(*b)[x][y].Blocked = false
-			(*b)[x][y].BlocksSight = true
-			y = i*(roomSizeY+1) + RandRange(1, roomSizeY)
-			x = j * (roomSizeX + 1)
-			(*b)[x][y].Char = "+"
-			(*b)[x][y].Name = "closed doors"
-			(*b)[x][y].Color = "darker orange"
-			(*b)[x][y].ColorDark = "grey"
-			(*b)[x][y].Layer = BoardLayer
-			(*b)[x][y].Explored = true
-			(*b)[x][y].Slows = false
-			(*b)[x][y].Hides = false
-			(*b)[x][y].Blocked = false
-			(*b)[x][y].BlocksSight = true
-		}
-	}
-	for x := 0; x < MapSizeX; x++ {
-		for y := 0; y < MapSizeY; y++ {
-			if (*b)[x][y].Char == "+" {
-				if x > 0 {
-					if (*b)[x-1][y].Char == "+" {
-						(*b)[x][y].Char = "#"
-						(*b)[x][y].Name = "wall"
-						(*b)[x][y].Color = "light grey"
-						(*b)[x][y].ColorDark = "grey"
-						(*b)[x][y].Layer = BoardLayer
-						(*b)[x][y].Explored = true
-						(*b)[x][y].Slows = false
-						(*b)[x][y].Hides = false
-						(*b)[x][y].Blocked = true
-						(*b)[x][y].BlocksSight = true
-					}
-				}
-				if x < MapSizeX-1 {
-					if (*b)[x+1][y].Char == "+" {
-						(*b)[x][y].Char = "#"
-						(*b)[x][y].Name = "wall"
-						(*b)[x][y].Color = "light grey"
-						(*b)[x][y].ColorDark = "grey"
-						(*b)[x][y].Layer = BoardLayer
-						(*b)[x][y].Explored = true
-						(*b)[x][y].Slows = false
-						(*b)[x][y].Hides = false
-						(*b)[x][y].Blocked = true
-						(*b)[x][y].BlocksSight = true
-					}
-				}
-				if y > 0 {
-					if (*b)[x][y-1].Char == "+" {
-						(*b)[x][y].Char = "#"
-						(*b)[x][y].Name = "wall"
-						(*b)[x][y].Color = "light grey"
-						(*b)[x][y].ColorDark = "grey"
-						(*b)[x][y].Layer = BoardLayer
-						(*b)[x][y].Explored = true
-						(*b)[x][y].Slows = false
-						(*b)[x][y].Hides = false
-						(*b)[x][y].Blocked = true
-						(*b)[x][y].BlocksSight = true
-					}
-				}
-				if y < MapSizeY-1 {
-					if (*b)[x][y+1].Char == "+" {
-						(*b)[x][y].Char = "#"
-						(*b)[x][y].Name = "wall"
-						(*b)[x][y].Color = "light grey"
-						(*b)[x][y].ColorDark = "grey"
-						(*b)[x][y].Layer = BoardLayer
-						(*b)[x][y].Explored = true
-						(*b)[x][y].Slows = false
-						(*b)[x][y].Hides = false
-						(*b)[x][y].Blocked = true
-						(*b)[x][y].BlocksSight = true
-					}
-				}
-				if x == 0 || x >= MapSizeX-1 || y == 0 || y >= MapSizeY-1 {
-					(*b)[x][y].Char = "#"
-					(*b)[x][y].Name = "wall"
-					(*b)[x][y].Color = "light grey"
-					(*b)[x][y].ColorDark = "grey"
-					(*b)[x][y].Layer = BoardLayer
-					(*b)[x][y].Explored = true
-					(*b)[x][y].Slows = false
-					(*b)[x][y].Hides = false
-					(*b)[x][y].Blocked = true
-					(*b)[x][y].BlocksSight = true
-				}
-			}
-		}
-	}
-	// Crush walls
-	xRooms = ((MapSizeX - 1) / (roomSizeX + 1))
-	yRooms = ((MapSizeY - 1) / (roomSizeY + 1))
-	deleteChance := 33
-	for i := 1; i < yRooms; i++ {
-		for j := 1; j < xRooms; j++ {
-			y := i * (roomSizeX + 1)
-			x := j*(roomSizeY+1) + 1
-			if RandInt(100) < deleteChance {
-				for xx := 0; xx < roomSizeX; xx++ {
-					(*b)[x][y].Char = "."
-					(*b)[x][y].Name = "floor"
-					(*b)[x][y].Color = "light grey"
-					(*b)[x][y].ColorDark = "grey"
-					(*b)[x][y].Layer = BoardLayer
-					(*b)[x][y].Explored = true
-					(*b)[x][y].Slows = false
-					(*b)[x][y].Hides = false
-					(*b)[x][y].Blocked = false
-					(*b)[x][y].BlocksSight = false
-					x++
-				}
-			}
-		}
-	}
-	for i := 1; i < yRooms; i++ {
-		for j := 1; j < xRooms; j++ {
-			y := i*(roomSizeY+1) + 1
-			x := j * (roomSizeX + 1)
-			if RandInt(100) < deleteChance {
-				for yy := 0; yy < roomSizeY; yy++ {
-					(*b)[x][y].Char = "."
-					(*b)[x][y].Name = "floor"
-					(*b)[x][y].Color = "light grey"
-					(*b)[x][y].ColorDark = "grey"
-					(*b)[x][y].Layer = BoardLayer
-					(*b)[x][y].Explored = true
-					(*b)[x][y].Slows = false
-					(*b)[x][y].Hides = false
-					(*b)[x][y].Blocked = false
-					(*b)[x][y].BlocksSight = false
-					y++
-				}
-			}
-		}
-	}
 	// Add some decorations
 	var rooms = [][]int{ // StartX, StartY, EndX, EndY
 		// first row
@@ -342,6 +163,185 @@ func MakeRoomsMap(b *Board) {
 			for xx := room[0]; xx <= room[2]; xx++ {
 				for yy := room[1]; yy <= room[3]; yy++ {
 					fmt.Println(xx, yy)
+				}
+			}
+		}
+	}
+	// Create doors
+	xRooms := ((MapSizeX - 1) / (roomSizeX + 1))
+	yRooms := ((MapSizeY - 1) / (roomSizeY + 1))
+	for i := 0; i < yRooms; i++ {
+		for j := 0; j < xRooms; j++ {
+			if i == 1 {
+				y := i*(roomSizeY+1) - RandRange(1, roomSizeY)
+				x := j * (roomSizeX + 1)
+				(*b)[x][y].Char = "+"
+				(*b)[x][y].Name = "closed doors"
+				(*b)[x][y].Color = "darker orange"
+				(*b)[x][y].ColorDark = "grey"
+				(*b)[x][y].Layer = BoardLayer
+				(*b)[x][y].Explored = true
+				(*b)[x][y].Slows = false
+				(*b)[x][y].Hides = false
+				(*b)[x][y].Blocked = false
+				(*b)[x][y].BlocksSight = true
+			}
+			if j == 1 {
+				y := i * (roomSizeY + 1)
+				x := j*(roomSizeX+1) - RandRange(1, roomSizeX)
+				(*b)[x][y].Char = "+"
+				(*b)[x][y].Name = "closed doors"
+				(*b)[x][y].Color = "darker orange"
+				(*b)[x][y].ColorDark = "grey"
+				(*b)[x][y].Layer = BoardLayer
+				(*b)[x][y].Explored = true
+				(*b)[x][y].Slows = false
+				(*b)[x][y].Hides = false
+				(*b)[x][y].Blocked = false
+				(*b)[x][y].BlocksSight = true
+			}
+			y := i * (roomSizeY + 1)
+			x := j*(roomSizeX+1) + RandRange(1, roomSizeX)
+			(*b)[x][y].Char = "+"
+			(*b)[x][y].Name = "closed doors"
+			(*b)[x][y].Color = "darker orange"
+			(*b)[x][y].ColorDark = "grey"
+			(*b)[x][y].Layer = BoardLayer
+			(*b)[x][y].Explored = true
+			(*b)[x][y].Slows = false
+			(*b)[x][y].Hides = false
+			(*b)[x][y].Blocked = false
+			(*b)[x][y].BlocksSight = true
+			y = i*(roomSizeY+1) + RandRange(1, roomSizeY)
+			x = j * (roomSizeX + 1)
+			(*b)[x][y].Char = "+"
+			(*b)[x][y].Name = "closed doors"
+			(*b)[x][y].Color = "darker orange"
+			(*b)[x][y].ColorDark = "grey"
+			(*b)[x][y].Layer = BoardLayer
+			(*b)[x][y].Explored = true
+			(*b)[x][y].Slows = false
+			(*b)[x][y].Hides = false
+			(*b)[x][y].Blocked = false
+			(*b)[x][y].BlocksSight = true
+		}
+	}
+	for x := 0; x < MapSizeX; x++ {
+		for y := 0; y < MapSizeY; y++ {
+			if (*b)[x][y].Char == "+" {
+				if x > 0 {
+					if (*b)[x-1][y].Char != "." && (*b)[x-1][y].Char != "#" {
+						(*b)[x][y].Char = "#"
+						(*b)[x][y].Name = "wall"
+						(*b)[x][y].Color = "light grey"
+						(*b)[x][y].ColorDark = "grey"
+						(*b)[x][y].Layer = BoardLayer
+						(*b)[x][y].Explored = true
+						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
+						(*b)[x][y].Blocked = true
+						(*b)[x][y].BlocksSight = true
+					}
+				}
+				if x < MapSizeX-1 {
+					if (*b)[x+1][y].Char != "." && (*b)[x+1][y].Char != "#" {
+						(*b)[x][y].Char = "#"
+						(*b)[x][y].Name = "wall"
+						(*b)[x][y].Color = "light grey"
+						(*b)[x][y].ColorDark = "grey"
+						(*b)[x][y].Layer = BoardLayer
+						(*b)[x][y].Explored = true
+						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
+						(*b)[x][y].Blocked = true
+						(*b)[x][y].BlocksSight = true
+					}
+				}
+				if y > 0 {
+					if (*b)[x][y-1].Char != "." && (*b)[x][y-1].Char != "#" {
+						(*b)[x][y].Char = "#"
+						(*b)[x][y].Name = "wall"
+						(*b)[x][y].Color = "light grey"
+						(*b)[x][y].ColorDark = "grey"
+						(*b)[x][y].Layer = BoardLayer
+						(*b)[x][y].Explored = true
+						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
+						(*b)[x][y].Blocked = true
+						(*b)[x][y].BlocksSight = true
+					}
+				}
+				if y < MapSizeY-1 {
+					if (*b)[x][y+1].Char != "." && (*b)[x][y+1].Char != "#" {
+						(*b)[x][y].Char = "#"
+						(*b)[x][y].Name = "wall"
+						(*b)[x][y].Color = "light grey"
+						(*b)[x][y].ColorDark = "grey"
+						(*b)[x][y].Layer = BoardLayer
+						(*b)[x][y].Explored = true
+						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
+						(*b)[x][y].Blocked = true
+						(*b)[x][y].BlocksSight = true
+					}
+				}
+				if x == 0 || x >= MapSizeX-1 || y == 0 || y >= MapSizeY-1 {
+					(*b)[x][y].Char = "#"
+					(*b)[x][y].Name = "wall"
+					(*b)[x][y].Color = "light grey"
+					(*b)[x][y].ColorDark = "grey"
+					(*b)[x][y].Layer = BoardLayer
+					(*b)[x][y].Explored = true
+					(*b)[x][y].Slows = false
+					(*b)[x][y].Hides = false
+					(*b)[x][y].Blocked = true
+					(*b)[x][y].BlocksSight = true
+				}
+			}
+		}
+	}
+	// Crush walls
+	xRooms = ((MapSizeX - 1) / (roomSizeX + 1))
+	yRooms = ((MapSizeY - 1) / (roomSizeY + 1))
+	deleteChance := 33
+	for i := 1; i < yRooms; i++ {
+		for j := 1; j < xRooms; j++ {
+			y := i * (roomSizeX + 1)
+			x := j*(roomSizeY+1) + 1
+			if RandInt(100) < deleteChance {
+				for xx := 0; xx < roomSizeX; xx++ {
+					(*b)[x][y].Char = "."
+					(*b)[x][y].Name = "floor"
+					(*b)[x][y].Color = "light grey"
+					(*b)[x][y].ColorDark = "grey"
+					(*b)[x][y].Layer = BoardLayer
+					(*b)[x][y].Explored = true
+					(*b)[x][y].Slows = false
+					(*b)[x][y].Hides = false
+					(*b)[x][y].Blocked = false
+					(*b)[x][y].BlocksSight = false
+					x++
+				}
+			}
+		}
+	}
+	for i := 1; i < yRooms; i++ {
+		for j := 1; j < xRooms; j++ {
+			y := i*(roomSizeY+1) + 1
+			x := j * (roomSizeX + 1)
+			if RandInt(100) < deleteChance {
+				for yy := 0; yy < roomSizeY; yy++ {
+					(*b)[x][y].Char = "."
+					(*b)[x][y].Name = "floor"
+					(*b)[x][y].Color = "light grey"
+					(*b)[x][y].ColorDark = "grey"
+					(*b)[x][y].Layer = BoardLayer
+					(*b)[x][y].Explored = true
+					(*b)[x][y].Slows = false
+					(*b)[x][y].Hides = false
+					(*b)[x][y].Blocked = false
+					(*b)[x][y].BlocksSight = false
+					y++
 				}
 			}
 		}

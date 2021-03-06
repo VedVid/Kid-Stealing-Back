@@ -80,6 +80,12 @@ type FighterProperties struct {
 	PatrolPoints     [][]int
 	NextPoint        int
 	LastPosition     []int
+	LightItem1       bool
+	LightItem2       bool
+	LightItem3       bool
+	MediumItem1      bool
+	MediumItem2      bool
+	HeavyItem1       bool
 }
 
 type ObjectProperties struct {

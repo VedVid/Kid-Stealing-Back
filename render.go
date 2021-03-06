@@ -196,9 +196,62 @@ func PrintUI(c *Creature) {
 		hp += "[color=red]♥"
 	}
 	for i := c.HPCurrent; i < c.HPMax; i++ {
-		hp += "[/color][color=darker red]♥"
+		hp += "[/color][color=darker red]♡"
 	}
 	blt.Print(UIPosX, UIPosY+UIFontSpacingY, "[font=game]" + hp)
+	enc := ""
+	if c.LightItem1 == true {
+		enc += "[color=yellow]☼"
+	} else {
+		enc += "[color=gray]☼"
+	}
+	if c.LightItem2 == true {
+		enc += "[color=yellow]☼"
+	} else {
+		enc += "[color=gray]☼"
+	}
+	if c.LightItem3 == true {
+		enc += "[color=yellow]☼"
+	} else {
+		enc += "[color=gray]☼"
+	}
+	if c.MediumItem1 == true {
+		enc += "[color=yellow]☥"
+	} else {
+		enc += "[color=gray]☥"
+	}
+	if c.MediumItem2 == true {
+		enc += "[color=yellow]☥"
+	} else {
+		enc += "[color=gray]☥"
+	}
+	if c.HeavyItem1 == true {
+		enc += "[color=yellow]⚱"
+	} else {
+		enc += "[color=gray]⚱"
+	}
+	enc += "[color=lighter gray] → "
+	encm := 0
+	if c.LightItem1 && c.LightItem2 && c.LightItem3 {
+		encm += 1
+	}
+	if c.MediumItem1 && c.MediumItem2 {
+		encm += 1
+	}
+	if c.HeavyItem1 {
+		encm += 1
+	}
+	switch encm {
+	case 0:
+		enc += "[color=dark green]▏"
+	case 1:
+		enc += "[color=dark yellow]▍"
+	case 2:
+		enc += "[color=dark orange]▋"
+	case 3:
+		enc += "[color=dark red]█"
+	}
+	blt.Print(UIPosX, UIPosY+(2*UIFontSpacingY), "[font=game]" + enc)
 
 /*
 	name := "Player"

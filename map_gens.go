@@ -227,11 +227,13 @@ func MakeRoomsMap(b *Board) {
 		}
 	}
 	// Remove some doors
-	deleteChance = 25
+	wallChance := 40
+	floorChance := 55
 	for x := 0; x < MapSizeX; x++ {
 		for y := 0; y < MapSizeY; y++ {
 			if (*b)[x][y].Char == "+" {
-				if deleteChance < RandInt(100) {
+				chance := RandInt(100)
+				if chance < wallChance {
 					(*b)[x][y].Char = "#"
 					(*b)[x][y].Name = "wall"
 					(*b)[x][y].Color = "light grey"
@@ -252,6 +254,16 @@ func MakeRoomsMap(b *Board) {
 						(*b)[x][y].Blocked = false
 						(*b)[x][y].BlocksSight = true
 					}
+				} else if chance < floorChance {
+					(*b)[x][y].Char = "."
+					(*b)[x][y].Name = "floor"
+					(*b)[x][y].Color = "light grey"
+					(*b)[x][y].ColorDark = "grey"
+					(*b)[x][y].Layer = BoardLayer
+					(*b)[x][y].Explored = true
+					(*b)[x][y].Slows = false
+					(*b)[x][y].Blocked = false
+					(*b)[x][y].BlocksSight = false
 				}
 			}
 		}

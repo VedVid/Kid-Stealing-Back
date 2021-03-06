@@ -26,6 +26,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package main
 
+import "fmt"
+
 var (
 	TreasureMin        = 6
 	TreasureMax        = 12
@@ -235,6 +237,43 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Blocked = false
 					(*b)[x][y].BlocksSight = false
 					y++
+				}
+			}
+		}
+	}
+	// Add some decorations
+	var rooms = [][]int{  // StartX, StartY, EndX, EndY
+		// first row
+		[]int{1, 1, 5, 5},
+		[]int{7, 1, 11, 5},
+		[]int{13, 1, 17, 5},
+		[]int{19, 1, 23, 5},
+		// second row
+		[]int{1, 7, 5, 11},
+		[]int{7, 7, 11, 11},
+		[]int{13, 7, 17, 11},
+		[]int{19, 7, 23, 11},
+		// third row
+		[]int{1, 13, 5, 17},
+		[]int{7, 13, 11, 17},
+		[]int{13, 13, 17, 17},
+		[]int{19, 13, 23, 17},
+		// fourht row
+		[]int{1, 19, 5, 23},
+		[]int{7, 19, 11, 23},
+		[]int{13, 19, 17, 23},
+		[]int{19, 19, 23, 23},
+	}
+	decorationChance := 50
+	fmt.Println(rooms)
+	fmt.Println()
+	for row := 0; row < len(rooms); row++ {
+		fmt.Println("rooms[row]", rooms[row])
+		room := rooms[row]
+		if decorationChance < RandInt(100) {
+			for xx := room[0]; xx <= room[2]; xx++ {
+				for yy := room[1]; yy <= room[3]; yy++ {
+					fmt.Println(xx, yy)
 				}
 			}
 		}

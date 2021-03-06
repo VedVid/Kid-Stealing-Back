@@ -98,7 +98,6 @@ var (
 		[]string{".", ".", "h", ".", "."},
 		[]string{"o", ".", ".", ".", "o"},
 	}
-
 )
 
 var HardcodedRooms = [][][]string{

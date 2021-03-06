@@ -59,6 +59,7 @@ func MakeRoomsMap(b *Board) {
 				(*b)[x][y].Layer = BoardLayer
 				(*b)[x][y].Explored = true
 				(*b)[x][y].Slows = false
+				(*b)[x][y].Hides = false
 				(*b)[x][y].Blocked = false
 				(*b)[x][y].BlocksSight = false
 			} else if x%(roomSizeX+1) == 0 || y%(roomSizeY+1) == 0 {
@@ -69,6 +70,7 @@ func MakeRoomsMap(b *Board) {
 				(*b)[x][y].Layer = BoardLayer
 				(*b)[x][y].Explored = true
 				(*b)[x][y].Slows = false
+				(*b)[x][y].Hides = false
 				(*b)[x][y].Blocked = true
 				(*b)[x][y].BlocksSight = true
 			}
@@ -89,6 +91,7 @@ func MakeRoomsMap(b *Board) {
 				(*b)[x][y].Layer = BoardLayer
 				(*b)[x][y].Explored = true
 				(*b)[x][y].Slows = false
+				(*b)[x][y].Hides = false
 				(*b)[x][y].Blocked = false
 				(*b)[x][y].BlocksSight = true
 			}
@@ -102,6 +105,7 @@ func MakeRoomsMap(b *Board) {
 				(*b)[x][y].Layer = BoardLayer
 				(*b)[x][y].Explored = true
 				(*b)[x][y].Slows = false
+				(*b)[x][y].Hides = false
 				(*b)[x][y].Blocked = false
 				(*b)[x][y].BlocksSight = true
 			}
@@ -114,6 +118,7 @@ func MakeRoomsMap(b *Board) {
 			(*b)[x][y].Layer = BoardLayer
 			(*b)[x][y].Explored = true
 			(*b)[x][y].Slows = false
+			(*b)[x][y].Hides = false
 			(*b)[x][y].Blocked = false
 			(*b)[x][y].BlocksSight = true
 			y = i*(roomSizeY+1) + RandRange(1, roomSizeY)
@@ -125,6 +130,7 @@ func MakeRoomsMap(b *Board) {
 			(*b)[x][y].Layer = BoardLayer
 			(*b)[x][y].Explored = true
 			(*b)[x][y].Slows = false
+			(*b)[x][y].Hides = false
 			(*b)[x][y].Blocked = false
 			(*b)[x][y].BlocksSight = true
 		}
@@ -141,6 +147,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[x][y].Layer = BoardLayer
 						(*b)[x][y].Explored = true
 						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
 						(*b)[x][y].Blocked = true
 						(*b)[x][y].BlocksSight = true
 					}
@@ -154,6 +161,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[x][y].Layer = BoardLayer
 						(*b)[x][y].Explored = true
 						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
 						(*b)[x][y].Blocked = true
 						(*b)[x][y].BlocksSight = true
 					}
@@ -167,6 +175,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[x][y].Layer = BoardLayer
 						(*b)[x][y].Explored = true
 						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
 						(*b)[x][y].Blocked = true
 						(*b)[x][y].BlocksSight = true
 					}
@@ -180,6 +189,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[x][y].Layer = BoardLayer
 						(*b)[x][y].Explored = true
 						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
 						(*b)[x][y].Blocked = true
 						(*b)[x][y].BlocksSight = true
 					}
@@ -192,6 +202,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Layer = BoardLayer
 					(*b)[x][y].Explored = true
 					(*b)[x][y].Slows = false
+					(*b)[x][y].Hides = false
 					(*b)[x][y].Blocked = true
 					(*b)[x][y].BlocksSight = true
 				}
@@ -215,6 +226,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Layer = BoardLayer
 					(*b)[x][y].Explored = true
 					(*b)[x][y].Slows = false
+					(*b)[x][y].Hides = false
 					(*b)[x][y].Blocked = false
 					(*b)[x][y].BlocksSight = false
 					x++
@@ -235,6 +247,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Layer = BoardLayer
 					(*b)[x][y].Explored = true
 					(*b)[x][y].Slows = false
+					(*b)[x][y].Hides = false
 					(*b)[x][y].Blocked = false
 					(*b)[x][y].BlocksSight = false
 					y++
@@ -243,7 +256,7 @@ func MakeRoomsMap(b *Board) {
 		}
 	}
 	// Add some decorations
-	var rooms = [][]int{  // StartX, StartY, EndX, EndY
+	var rooms = [][]int{ // StartX, StartY, EndX, EndY
 		// first row
 		[]int{1, 1, 5, 5},
 		[]int{7, 1, 11, 5},
@@ -276,8 +289,8 @@ func MakeRoomsMap(b *Board) {
 			for xx := 0; xx < 5; xx++ {
 				for yy := 0; yy < 5; yy++ {
 					ch := layoutRoom[xx][yy]
-					cx := room[0]+xx
-					cy := room[1]+yy
+					cx := room[0] + xx
+					cy := room[1] + yy
 					switch ch {
 					case ".":
 						(*b)[cx][cy].Char = "."
@@ -287,6 +300,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[cx][cy].Layer = BoardLayer
 						(*b)[cx][cy].Explored = true
 						(*b)[cx][cy].Slows = false
+						(*b)[cx][cy].Hides = false
 						(*b)[cx][cy].Blocked = false
 						(*b)[cx][cy].BlocksSight = false
 					case "o":
@@ -297,6 +311,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[cx][cy].Layer = BoardLayer
 						(*b)[cx][cy].Explored = true
 						(*b)[cx][cy].Slows = false
+						(*b)[cx][cy].Hides = false
 						(*b)[cx][cy].Blocked = true
 						(*b)[cx][cy].BlocksSight = true
 					case "h":
@@ -307,6 +322,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[cx][cy].Layer = BoardLayer
 						(*b)[cx][cy].Explored = true
 						(*b)[cx][cy].Slows = false
+						(*b)[cx][cy].Hides = true
 						(*b)[cx][cy].Blocked = false
 						(*b)[cx][cy].BlocksSight = false
 					case "T":
@@ -317,15 +333,12 @@ func MakeRoomsMap(b *Board) {
 						(*b)[cx][cy].Layer = BoardLayer
 						(*b)[cx][cy].Explored = true
 						(*b)[cx][cy].Slows = false
+						(*b)[cx][cy].Hides = true
 						(*b)[cx][cy].Blocked = false
 						(*b)[cx][cy].BlocksSight = false
 					}
-
-
-
 				}
 			}
-
 			for xx := room[0]; xx <= room[2]; xx++ {
 				for yy := room[1]; yy <= room[3]; yy++ {
 					fmt.Println(xx, yy)
@@ -347,7 +360,8 @@ func MakeRoomsMap(b *Board) {
 		}
 		x := RandInt(MapSizeX - 1)
 		y := RandInt(MapSizeY - 1)
-		if (*b)[x][y].Blocked || (*b)[x][y].BlocksSight || (*b)[x][y].Treasure {
+		if (*b)[x][y].Blocked || (*b)[x][y].BlocksSight ||
+			(*b)[x][y].Treasure || (*b)[x][y].Hides {
 			continue
 		} else {
 			chances := RandInt(100)

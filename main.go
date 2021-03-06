@@ -176,6 +176,10 @@ func NewGame(b *Board, c *Creatures, o *Objects) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	(*b)[playerX][playerY].Char = ">"
+	(*b)[playerX][playerY].Name = "Hatch"
+	(*b)[playerX][playerY].Color = "lightest gray"
+	(*b)[playerX][playerY].ColorDark = "grey"
 	*c = Creatures{player}
 	Game.MonstersList = ReadMonsterFiles()
 }

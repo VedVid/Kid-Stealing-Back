@@ -152,58 +152,16 @@ func NewGame(b *Board, c *Creatures, o *Objects) {
 	var err error
 	*b = InitializeEmptyMap()
 	tries := 1000
-	mapType := RandInt(100)
-	if mapType <= 25 {
-		for {
-			MakeForestMap(b)
-			valid := TestMapTilesConnections(b)
-			if valid == true {
-				break
-			}
-			ZeroMap(b)
-			tries--
-			if tries < 0 {
-				break
-			}
+	for {
+		MakeRoomsMap(b)
+		valid := TestMapTilesConnections(b)
+		if valid == true {
+			break
 		}
-	} else if mapType <= 50 {
-		for {
-			MakeDesertMap(b)
-			valid := TestMapTilesConnections(b)
-			if valid == true {
-				break
-			}
-			ZeroMap(b)
-			tries--
-			if tries < 0 {
-				break
-			}
-		}
-	} else  if mapType <= 75 {
-		for {
-			MakeMountainsMap(b)
-			valid := TestMapTilesConnections(b)
-			if valid == true {
-				break
-			}
-			ZeroMap(b)
-			tries--
-			if tries < 0 {
-				break
-			}
-		}
-	} else {
-		for {
-			MakeRoomsMap(b)
-			valid := TestMapTilesConnections(b)
-			if valid == true {
-				break
-			}
-			ZeroMap(b)
-			tries--
-			if tries < 0 {
-				break
-			}
+		ZeroMap(b)
+		tries--
+		if tries < 0 {
+			break
 		}
 	}
 	playerX, playerY := RandInt(len(*b)-1), RandInt(len((*b)[0])-1)

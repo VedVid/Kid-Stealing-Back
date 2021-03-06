@@ -26,8 +26,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package main
 
-import "fmt"
+
 import "math/rand"
+
 
 var (
 	TreasureMin        = 6
@@ -114,10 +115,7 @@ func MakeRoomsMap(b *Board) {
 		[]int{19, 19, 23, 23},
 	}
 	decorationChance := 30
-	fmt.Println(rooms)
-	fmt.Println()
 	for row := 0; row < len(rooms); row++ {
-		fmt.Println("rooms[row]", rooms[row])
 		room := rooms[row]
 		if decorationChance < RandInt(100) {
 			layoutRoom := HardcodedRooms[rand.Intn(len(HardcodedRooms))]
@@ -172,11 +170,6 @@ func MakeRoomsMap(b *Board) {
 						(*b)[cx][cy].Blocked = false
 						(*b)[cx][cy].BlocksSight = false
 					}
-				}
-			}
-			for xx := room[0]; xx <= room[2]; xx++ {
-				for yy := room[1]; yy <= room[3]; yy++ {
-					fmt.Println(xx, yy)
 				}
 			}
 		}

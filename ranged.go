@@ -75,7 +75,6 @@ func (c *Creature) Look(b Board, o Objects, cs Creatures) {
 			if tt != nil {
 				s := "[color=" + tt.Color + "]" + tt.Char + "[/color] " + tt.Name + " "
 				til = append(til, s)
-				fmt.Println(tt.Treasure, tt.TreasureChar, tt.TreasureCol, tt.Char, tt.Color)
 			}
 		}
 		PrintLookingMessage(mon, obj, til, hps)

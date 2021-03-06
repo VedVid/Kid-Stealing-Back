@@ -47,6 +47,7 @@ func main() {
 	var cells = new(Board)
 	var objs = new(Objects)
 	var actors = new(Creatures)
+	blt.Composition(blt.TK_ON)
 	StartGame(cells, actors, objs)
 	for {
 		//		if (Game.TurnCounter == 0 || Game.TurnCounter%Game.SpawnRatio == 0) &&

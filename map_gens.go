@@ -322,7 +322,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[cx][cy].Layer = BoardLayer
 						(*b)[cx][cy].Explored = true
 						(*b)[cx][cy].Slows = false
-						(*b)[cx][cy].Hides = true
+						(*b)[cx][cy].Hides = false
 						(*b)[cx][cy].Blocked = false
 						(*b)[cx][cy].BlocksSight = false
 					case "T":

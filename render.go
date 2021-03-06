@@ -27,6 +27,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package main
 
 import (
+	"os"
+
 	blt "bearlibterminal"
 )
 
@@ -45,7 +47,89 @@ const (
 	CreaturesLayer
 	PlayerLayer
 	LookLayer
+	OverlayLayer
 )
+
+const (
+	_ = iota
+	HiddenInTunnel
+)
+
+func PrintOverlay(b Board, situation int) {
+	blt.Layer(BoardLayer)
+	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
+	blt.Layer(DeadLayer)
+	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
+	blt.Layer(ObjectsLayer)
+	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
+	blt.Layer(CreaturesLayer)
+	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
+	blt.Layer(PlayerLayer)
+	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
+	blt.Refresh()
+	blt.Layer(OverlayLayer)
+	if situation == HiddenInTunnel {
+		treasures := 0
+		unexplored := 0
+		for x := 0; x < MapSizeX; x++ {
+			for y := 0; y < MapSizeY; y++ {
+				if b[x][y].Treasure == true {
+					treasures++
+				}
+				if b[x][y].Explored == false {
+					unexplored++
+				}
+			}
+		}
+		msg1 := "[font=ui]You are safe, hidden in the old tunnel."
+		msg2 := ""
+		msg3 := ""
+		msg4 := ""
+		c := -1
+		if unexplored == 0 && treasures == 0 {
+			msg2 = "[font=ui]You managed to stole back all the items\nrobbed by the invaders."
+			msg3 = "[font=ui]Good job, kid.\nNow all you need to do is to wait\nuntil the vikings will leave this place."
+			msg4 = "[font=ui](1) Wait..."
+			c = 0
+		}
+		if unexplored == 0 && treasures > 0 {
+			msg2 = "[font=ui]The vikings still have the stolen goods..."
+			msg3 = "[font=ui]Are you going to go back to the keep,\nor rather play it safe and wait\nuntil the invaders will leave this place?"
+			msg4 = "[font=ui](1) Go back   (2) Wait"
+			c = 1
+		}
+		if unexplored > 0 {
+			msg2 = "[font=ui]There are still places in this keep that you did not visit."
+			msg3 = "[font=ui]Are you going to go back to the keep,\nor rather play it safe and wait\nuntil the invaders will leave this place?"
+			msg4 = "[font=ui](1) Go back   (2) Wait"
+			c = 2
+		}
+		SmartPrint(6, 3, UIEntity, msg1)
+		SmartPrint(6, 6, UIEntity, msg2)
+		SmartPrint(6, 10, UIEntity, msg3)
+		SmartPrint(6, 15, UIEntity, msg4)
+		blt.Refresh()
+		for {
+			key := ReadInput()
+			if key == blt.TK_1 {
+				if c == 0 {
+					blt.Close()
+					os.Exit(0)
+				}
+				if c == 1 || c == 2 {
+					break
+				}
+			} else if key == blt.TK_2 {
+				if c == 0 {
+					break
+				} else if c == 1 || c == 2 {
+					blt.Close()
+					os.Exit(0)
+				}
+			}
+		}
+	}
+}
 
 func PrintBoard(b Board, c Creatures) {
 	/* Function PrintBoard is used in RenderAll function.

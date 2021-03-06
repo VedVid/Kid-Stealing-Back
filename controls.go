@@ -48,6 +48,8 @@ const (
 	StrLook   = "LOOK"
 	StrReload = "RELOAD"
 	StrPickup = "PICKUP"
+
+	StrUseEnvironment = "USE_ENVIRONMENT"
 )
 
 var Actions = []string{
@@ -63,6 +65,7 @@ var Actions = []string{
 	StrLook,
 	StrReload,
 	StrPickup,
+	StrUseEnvironment,
 }
 
 var CommandKeys = map[int]string{
@@ -78,6 +81,7 @@ var CommandKeys = map[int]string{
 	blt.TK_L:     StrLook,
 	blt.TK_R:     StrReload,
 	blt.TK_G:     StrPickup,
+	blt.TK_ENTER: StrUseEnvironment,
 }
 
 /* Place to store customized controls scheme,
@@ -117,6 +121,8 @@ func Command(com string, p *Creature, b *Board, c *Creatures, o *Objects) bool {
 		turnSpent = p.Reload()
 	case StrPickup:
 		turnSpent = p.PickUp(b)
+	case StrUseEnvironment:
+		turnSpent = p.UseEnvironment(b)
 	}
 	return turnSpent
 }

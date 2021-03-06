@@ -211,6 +211,18 @@ func (c *Creature) Move(tx, ty int, b Board) bool {
 	return turnSpent
 }
 
+func (c *Creature) UseEnvironment(b *Board) bool {
+	turnSpent := false
+	if c.AIType != PlayerAI {
+		return turnSpent
+	}
+	if (*b)[c.X][c.Y].Name == "Hatch" {
+		PrintOverlay(*b, HiddenInTunnel)
+		turnSpent = true
+	}
+	return turnSpent
+}
+
 func (c *Creature) PickUp(b *Board) bool {
 	/* PickUp is method that has *Creature as receiver
 	   and slice of *Object as argument.

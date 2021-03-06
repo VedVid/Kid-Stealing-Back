@@ -36,6 +36,7 @@ const (
 	MapEntity = iota
 	ObjectEntity
 	MonsterEntity
+	UIEntity
 )
 
 func SetGlyph(path, number, filter string, size int) string {
@@ -95,6 +96,9 @@ func FixCoords(x, y, entity int) (int, int) {
 	case MapEntity, ObjectEntity, MonsterEntity:
 		newX = (x + MapPositionX) * GameFontSpacingX
 		newY = (y + MapPositionY) * GameFontSpacingY
+	case UIEntity:
+		newX = x * UIFontSpacingX
+		newY = y * UIFontSpacingY
 	default:
 		newX = x
 		newY = y

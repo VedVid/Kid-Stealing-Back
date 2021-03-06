@@ -39,6 +39,7 @@ const (
 	StrMoveWest  = "MOVE_WEST"
 	StrMoveEast  = "MOVE_EAST"
 	StrMoveSouth = "MOVE_SOUTH"
+	StrWait      = "WAIT"
 
 	StrRanged    = "RANGED"
 	StrMelee     = "MELEE"
@@ -55,6 +56,7 @@ var Actions = []string{
 	StrMoveWest,
 	StrMoveEast,
 	StrMoveSouth,
+	StrWait,
 	StrRanged,
 	StrMelee,
 	StrThrowable,
@@ -69,6 +71,7 @@ var CommandKeys = map[int]string{
 	blt.TK_RIGHT: StrMoveEast,
 	blt.TK_DOWN:  StrMoveSouth,
 	blt.TK_LEFT:  StrMoveWest,
+	blt.TK_SPACE: StrWait,
 	blt.TK_F:     StrRanged,
 	blt.TK_D:     StrMelee,
 	blt.TK_T:     StrThrowable,
@@ -99,6 +102,8 @@ func Command(com string, p *Creature, b *Board, c *Creatures, o *Objects) bool {
 		turnSpent = p.MoveOrAttack(0, 1, *b, o, c)
 	case StrMoveWest:
 		turnSpent = p.MoveOrAttack(-1, 0, *b, o, c)
+	case StrWait:
+		turnSpent = true
 
 	case StrRanged:
 		turnSpent = p.Target(*b, o, c, StrRanged)

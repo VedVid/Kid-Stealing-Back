@@ -10,7 +10,7 @@
     "AIType":1,
     "AITriggered":false,
     "HPMax":10,
-    "HPCurrent":9,
+    "HPCurrent":10,
     "Attack":0,
     "Defense":0,
     "SpawnTimer":-1,

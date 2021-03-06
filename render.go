@@ -69,14 +69,19 @@ func PrintBoard(b Board, c Creatures) {
 				if t.Char == "[" || t.Char == "]" {
 					ch = t.Char + t.Char
 				}
-				if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y) == true {
-					glyph := "[font=game][color=" + t.Color + "]" + ch
-					SmartPrint(t.X, t.Y, MapEntity, glyph)
-				} else {
-					if t.AlwaysVisible == true {
-						glyph := "[font=game][color=" + t.ColorDark + "]" + ch
+				if t.Treasure == false {
+					if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y) == true {
+						glyph := "[font=game][color=" + t.Color + "]" + ch
 						SmartPrint(t.X, t.Y, MapEntity, glyph)
+					} else {
+						if t.AlwaysVisible == true {
+							glyph := "[font=game][color=" + t.ColorDark + "]" + ch
+							SmartPrint(t.X, t.Y, MapEntity, glyph)
+						}
 					}
+				} else {
+					glyph := "[font=game][color=" + t.TreasureCol + "]" + t.TreasureChar
+					SmartPrint(t.X, t.Y, MapEntity, glyph)
 				}
 			}
 		}
@@ -201,34 +206,34 @@ func PrintUI(c *Creature) {
 	blt.Print(UIPosX, UIPosY+UIFontSpacingY, "[font=game]" + hp)
 	enc := ""
 	if c.LightItem1 == true {
-		enc += "[color=yellow]☼"
+		enc += "[color=yellow]" + TreasureCharLight
 	} else {
-		enc += "[color=gray]☼"
+		enc += "[color=gray]" + TreasureCharLight
 	}
 	if c.LightItem2 == true {
-		enc += "[color=yellow]☼"
+		enc += "[color=yellow]" + TreasureCharLight
 	} else {
-		enc += "[color=gray]☼"
+		enc += "[color=gray]" + TreasureCharLight
 	}
 	if c.LightItem3 == true {
-		enc += "[color=yellow]☼"
+		enc += "[color=yellow]" + TreasureCharLight
 	} else {
-		enc += "[color=gray]☼"
+		enc += "[color=gray]" + TreasureCharLight
 	}
 	if c.MediumItem1 == true {
-		enc += "[color=yellow]☥"
+		enc += "[color=yellow]" + TreasureCharMedium
 	} else {
-		enc += "[color=gray]☥"
+		enc += "[color=gray]" + TreasureCharMedium
 	}
 	if c.MediumItem2 == true {
-		enc += "[color=yellow]☥"
+		enc += "[color=yellow]" + TreasureCharMedium
 	} else {
-		enc += "[color=gray]☥"
+		enc += "[color=gray]" + TreasureCharMedium
 	}
 	if c.HeavyItem1 == true {
-		enc += "[color=yellow]⚱"
+		enc += "[color=yellow]" + TreasureCharHeavy
 	} else {
-		enc += "[color=gray]⚱"
+		enc += "[color=gray]"  + TreasureCharHeavy
 	}
 	enc += "[color=lighter gray] → "
 	encm := 0

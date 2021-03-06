@@ -27,6 +27,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package main
 
 
+var (
+	TreasureMin = 6
+	TreasureMax = 12
+	TreasureLightMin = 3
+	TreasureLightMax = 6
+	TreasureMediumMin = 2
+	TreasureMediumMax = 4
+	TreasureHeavyMin = 1
+	TreasureHeavyMax = 2
+	TreasureCharLight = "☼"
+	TreasureCharMedium = "☥"
+	TreasureCharHeavy = "⚱"
+)
+
+
 func MakeRoomsMap(b *Board) {
 	roomSizeX := MapSizeX / 5
 	roomSizeY := MapSizeY / 5
@@ -223,6 +238,38 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].BlocksSight = false
 					y++
 				}
+			}
+		}
+	}
+	// Put some treasures
+	treasureL := RandRange(TreasureLightMin, TreasureLightMax)
+	treasureM := RandRange(TreasureMediumMin, TreasureMediumMax)
+	treasureH := RandRange(TreasureHeavyMin, TreasureHeavyMax)
+	treasureLC := 0
+	treasureMC := 0
+	treasureHC := 0
+	for {
+		if treasureLC >= treasureL && treasureMC >= treasureM &&
+			treasureHC >= treasureH {
+				break
+			}
+		x := RandInt(MapSizeX-1)
+		y := RandInt(MapSizeY-1)
+		if (*b)[x][y].Blocked || (*b)[x][y].BlocksSight || (*b)[x][y].Treasure {
+			continue
+		} else {
+			(*b)[x][y].Treasure = true
+			(*b)[x][y].TreasureCol = "yellow"
+			chances := RandInt(100)
+			if 33 < chances && treasureLC < treasureL {
+				(*b)[x][y].TreasureChar = TreasureCharLight
+				treasureLC++
+			} else if 66 < chances && treasureMC < treasureM {
+				(*b)[x][y].TreasureChar = TreasureCharMedium
+				treasureMC++
+			} else if treasureHC < treasureH {
+				(*b)[x][y].TreasureChar = TreasureCharHeavy
+				treasureHC++
 			}
 		}
 	}

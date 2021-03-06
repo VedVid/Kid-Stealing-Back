@@ -37,6 +37,12 @@ type BasicProperties struct {
 	ColorDark string
 }
 
+type TreasureProperties struct {
+	Treasure     bool
+	TreasureChar string
+	TreasureCol  string
+}
+
 type VisibilityProperties struct {
 	/* VisibilityProperties is simple struct
 	   for checking if object is always visible,

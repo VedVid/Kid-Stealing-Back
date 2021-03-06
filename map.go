@@ -163,13 +163,10 @@ func TestMapTilesConnections(b *Board) bool {
 StartWalking:
 	for tx := 0; tx < MapSizeX; tx++ {
 		for ty := 0; ty < MapSizeY; ty++ {
-			fmt.Println("walker.X:", walker.X, "walker.Y:", walker.Y, "  ::  tx:", tx, "ty:", ty)
 			if tx == walker.X && ty == walker.Y {
-				fmt.Println("    tx == walker.X && ty == walker.Y")
 				continue
 			}
 			if (*b)[tx][ty].Blocked == true {
-				fmt.Println("    (*b)[tx][ty].Blocked == true")
 				continue
 			}
 			for {
@@ -186,7 +183,6 @@ StartWalking:
 		}
 	}
 Validation:
-	fmt.Println("Validation:", valid)
 	return valid
 }
 

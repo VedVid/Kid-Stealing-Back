@@ -27,121 +27,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package main
 
 
-import(
-	"math/rand"
-	"time"
-)
+import "fmt"
 
-
-var(
-	// Desert perlin parameters
-	DesertTopic = Desert
-	DesertAlpha = 2.0
-	DesertBeta = 3.0
-	DesertN = 3
-)
-
-var(
-	// Forest perlin parameters
-	// Not used
-	ForestTopic = Forest
-	ForestAlpha = 2.0
-	ForestBeta = 3.0
-	ForestN = 3
-)
-
-func MakeDesertMap(b *Board) {
-	var oasisWater = []BiomeElement{DesertOasisShallowWater}
-	var oasisLand = []BiomeElement{DesertOasisSand,
-		DesertOasisTree, DesertOasisGrass, DesertOasisBush}
-	var sand = []BiomeElement{DesertErgSand}
-	//topic := DesertTopic
-	p, d := NewPerlinNoise(DesertAlpha, DesertBeta, DesertN, rand.Int63n(time.Now().UTC().UnixNano()), 10.0)
-	for x := 0; x < MapSizeX; x++ {
-		for y := 0; y < MapSizeY; y++ {
-			var curBiomeElement BiomeElement
-			noise := p.Noise2D(float64(x)/d, float64(y)/d)
-			switch {
-			case noise < -0.4:
-				curBiomeElement = oasisWater[rand.Intn(len(oasisWater))]
-			case noise < -0.1:
-				curBiomeElement = oasisLand[rand.Intn(len(oasisLand))]
-			default:
-				curBiomeElement = sand[rand.Intn(len(sand))]
-			}
-			(*b)[x][y].Char = curBiomeElement.Char[rand.Intn(len(curBiomeElement.Char))]
-			(*b)[x][y].Name = curBiomeElement.Name[rand.Intn(len(curBiomeElement.Name))]
-			(*b)[x][y].Color = curBiomeElement.Color[rand.Intn(len(curBiomeElement.Color))]
-			(*b)[x][y].ColorDark = "grey"
-			(*b)[x][y].Layer = curBiomeElement.Layer
-			(*b)[x][y].Explored = curBiomeElement.Explored
-			(*b)[x][y].Slows = curBiomeElement.Slows
-			(*b)[x][y].Blocked = curBiomeElement.Blocked
-			(*b)[x][y].BlocksSight = curBiomeElement.BlocksSight
-		}
-	}
-}
-
-func MakeForestMap(b *Board) {
-	topic := ForestTopic
-	voronoiMap := NewVoronoi(5, topic)
-	for _, v := range voronoiMap {
-		var curBiomeElement BiomeElement
-		biome := topic.Elements[v.Val]
-		chances := RandInt(100)
-		for i := 0; i < len(biome.Elements); i++ {
-			if chances <= biome.Elements[i].Chances {
-				curBiomeElement = biome.Elements[i]
-				break
-			}
-		}
-		(*b)[v.X][v.Y].Char = curBiomeElement.Char[rand.Intn(len(curBiomeElement.Char))]
-		(*b)[v.X][v.Y].Name = curBiomeElement.Name[rand.Intn(len(curBiomeElement.Name))]
-		(*b)[v.X][v.Y].Color = curBiomeElement.Color[rand.Intn(len(curBiomeElement.Color))]
-		(*b)[v.X][v.Y].ColorDark = "grey"
-		(*b)[v.X][v.Y].Layer = curBiomeElement.Layer
-		(*b)[v.X][v.Y].Explored = curBiomeElement.Explored
-		(*b)[v.X][v.Y].Slows = curBiomeElement.Slows
-		(*b)[v.X][v.Y].Blocked = curBiomeElement.Blocked
-		(*b)[v.X][v.Y].BlocksSight = curBiomeElement.BlocksSight
-	}
-}
-
-func MakeMountainsMap(b *Board) {
-	//topic := DesertTopic
-	p, d := NewPerlinNoise(DesertAlpha, DesertBeta, DesertN, rand.Int63n(time.Now().UTC().UnixNano()), 10.0)
-	for x := 0; x < MapSizeX; x++ {
-		for y := 0; y < MapSizeY; y++ {
-			var biome Biome
-			noise := p.Noise2D(float64(x)/d, float64(y)/d)
-			switch {
-			case noise < -0.2:
-				biome = MountainsForest
-			case noise < 0.2:
-				biome = MountainsMeadows
-			default:
-				biome = MountainsHighMountains
-			}
-			var curBiomeElement BiomeElement
-			chances := RandInt(100)
-			for i := 0; i < len(biome.Elements); i++ {
-				if chances <= biome.Elements[i].Chances {
-					curBiomeElement = biome.Elements[i]
-					break
-				}
-			}
-			(*b)[x][y].Char = curBiomeElement.Char[rand.Intn(len(curBiomeElement.Char))]
-			(*b)[x][y].Name = curBiomeElement.Name[rand.Intn(len(curBiomeElement.Name))]
-			(*b)[x][y].Color = curBiomeElement.Color[rand.Intn(len(curBiomeElement.Color))]
-			(*b)[x][y].ColorDark = "grey"
-			(*b)[x][y].Layer = curBiomeElement.Layer
-			(*b)[x][y].Explored = curBiomeElement.Explored
-			(*b)[x][y].Slows = curBiomeElement.Slows
-			(*b)[x][y].Blocked = curBiomeElement.Blocked
-			(*b)[x][y].BlocksSight = curBiomeElement.BlocksSight
-		}
-	}
-}
 
 func MakeRoomsMap(b *Board) {
 	roomSizeX := MapSizeX / 5
@@ -342,6 +229,16 @@ func MakeRoomsMap(b *Board) {
 			}
 		}
 	}
+	// Remove some doors
+	var doors = []*Tile{}
+	for x := 0; x < MapSizeX; x++ {
+		for y := 0; y < MapSizeY; y++ {
+			if (*b)[x][y].Char == "+" {
+				doors = append(doors, (*b)[x][y])
+			}
+		}
+	}
+	fmt.Println(doors)
 }
 
 func MakeRandomMap(b *Board) {

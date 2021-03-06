@@ -36,6 +36,7 @@ const (
 	MeleePatherAI
 	RangedDumbAI
 	RangedPatherAI
+	PatrollingAI
 )
 
 const (
@@ -45,7 +46,7 @@ const (
 
 const (
 	// Probability of triggering AI
-	AITrigger = 92
+	AITrigger = 2//92
 )
 
 func CreaturesTakeTurn(b Board, c *Creatures, o Objects) {

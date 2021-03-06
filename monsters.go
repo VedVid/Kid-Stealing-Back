@@ -144,7 +144,12 @@ func NewCreature(x, y int, b Board, monsterFile string) (*Creature, error) {
 			monster.PatrolPoints = append(monster.PatrolPoints, []int{x, y})
 		}
 	}
-	fmt.Println(monster.PatrolPoints, "\n")
+	if monster.NextPoint <= 0 {
+		monster.NextPoint = 1
+	}
+	if monster.LastPosition == nil {
+		monster.LastPosition = []int{monster.X, monster.Y}
+	}
 	return monster, err2
 }
 
@@ -474,7 +479,6 @@ func SpawnMonsters(b Board, c *Creatures) {
 			}
 			var monsterEq = EquipmentComponent{Objects{w1, w2, wm}, Objects{}}
 			monster.EquipmentComponent = monsterEq
-			monster.AITriggered = true
 			*c = append(*c, monster)
 			Game.LivingMonsters++
 			Game.WaveCur++

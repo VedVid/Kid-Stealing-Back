@@ -101,5 +101,7 @@
             "Use":-1
         }
     ],
-    "PatrolPoints": null
+    "PatrolPoints": null,
+    "NextPoint": 0,
+    "LastPosition": null
 }

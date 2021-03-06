@@ -78,6 +78,8 @@ type FighterProperties struct {
 	ThrowablesCur    int
 	ChallengeLevel   int
 	PatrolPoints     [][]int
+	NextPoint        int
+	LastPosition     []int
 }
 
 type ObjectProperties struct {

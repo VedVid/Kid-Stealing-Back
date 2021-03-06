@@ -7,7 +7,7 @@
     "AlwaysVisible":false,
     "Blocked":true,
     "BlocksSight":false,
-    "AIType":2,
+    "AIType":6,
     "AITriggered":false,
     "HPMax":8,
     "HPCurrent":8,
@@ -30,5 +30,7 @@
     "Inventory":[
         null
     ],
-    "PatrolPoints": null
+    "PatrolPoints": null,
+    "NextPoint": 1,
+    "LastPosition": null
 }

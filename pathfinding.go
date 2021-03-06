@@ -28,7 +28,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"math"
 	"strconv"
 
@@ -168,9 +167,6 @@ func (c *Creature) MoveTowardsPath(b Board, cs Creatures, tx, ty int) error {
 		_ = ReadInput()
 	}
 	dx, dy, err := BacktrackPath(nodes, start)
-	if err != nil {
-		fmt.Println(err)
-	}
 	c.Move(dx, dy, b)
 	return err
 }

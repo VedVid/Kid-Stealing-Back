@@ -68,7 +68,7 @@ func PrintBoard(b Board, c Creatures) {
 				ch := t.Char
 				if t.Char == "[" || t.Char == "]" {
 					ch = t.Char + t.Char
-				}
+				}/*
 				if t.Treasure == false {
 					if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y) == true {
 						glyph := "[font=game][color=" + t.Color + "]" + ch
@@ -82,6 +82,20 @@ func PrintBoard(b Board, c Creatures) {
 				} else {
 					glyph := "[font=game][color=" + t.TreasureCol + "]" + t.TreasureChar
 					SmartPrint(t.X, t.Y, MapEntity, glyph)
+				}*/
+				if t.Treasure == true {
+					glyph := "[font=game][color=" + t.TreasureCol + "]" + t.TreasureChar
+					SmartPrint(t.X, t.Y, MapEntity, glyph)
+				} else {
+					if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y) == true {
+						glyph := "[font=game][color=" + t.Color + "]" + ch
+						SmartPrint(t.X, t.Y, MapEntity, glyph)
+					} else {
+						if t.AlwaysVisible == true {
+							glyph := "[font=game][color=" + t.ColorDark + "]" + ch
+							SmartPrint(t.X, t.Y, MapEntity, glyph)
+						}
+					}
 				}
 			}
 		}

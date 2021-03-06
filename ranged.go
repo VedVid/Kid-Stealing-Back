@@ -75,6 +75,7 @@ func (c *Creature) Look(b Board, o Objects, cs Creatures) {
 			if tt != nil {
 				s := "[color=" + tt.Color + "]" + tt.Char + "[/color] " + tt.Name + " "
 				til = append(til, s)
+				fmt.Println(tt.Treasure, tt.TreasureChar, tt.TreasureCol, tt.Char, tt.Color)
 			}
 		}
 		PrintLookingMessage(mon, obj, til, hps)
@@ -98,7 +99,7 @@ func PrintLookingMessage(monstersSlice, objectsSlice, tilesSlice []string, hpSli
 		} else {
 			hpSymbol = "[color=dark red]Ⅰ[/color]"
 		}
-		blt.Print(UIPosX, (UIPosY+9+y) * UIFontSpacingY, "[font=ui]" + v + 
+		blt.Print(UIPosX, (UIPosY+9+y) * UIFontSpacingY, "[font=ui]" + v +
 			" " + hpSymbol + "[/font]")
 		y++
 	}
@@ -182,7 +183,7 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string) bool 
 		PrintVector(vec, VectorWhyTarget, VectorColorGood, VectorColorBad, b, *o, *cs)
 		if monsterHit != nil {
 			hp := CalcHPPercent(monsterHit.HPCurrent, monsterHit.HPMax)
-			s := "[color=" + monsterHit.Color + "]" + monsterHit.Char + 
+			s := "[color=" + monsterHit.Color + "]" + monsterHit.Char +
 				"[/color] " + monsterHit.Name + " "
 			PrintLookingMessage([]string{s}, nil, nil, []int{hp})
 		} else if targetX == (*cs)[0].X && targetY == (*cs)[0].Y {

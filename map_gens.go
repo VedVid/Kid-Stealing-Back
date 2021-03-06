@@ -258,16 +258,20 @@ func MakeRoomsMap(b *Board) {
 		if (*b)[x][y].Blocked || (*b)[x][y].BlocksSight || (*b)[x][y].Treasure {
 			continue
 		} else {
-			(*b)[x][y].Treasure = true
-			(*b)[x][y].TreasureCol = "yellow"
 			chances := RandInt(100)
 			if 33 < chances && treasureLC < treasureL {
+				(*b)[x][y].Treasure = true
+				(*b)[x][y].TreasureCol = "yellow"
 				(*b)[x][y].TreasureChar = TreasureCharLight
 				treasureLC++
 			} else if 66 < chances && treasureMC < treasureM {
+				(*b)[x][y].Treasure = true
+				(*b)[x][y].TreasureCol = "yellow"
 				(*b)[x][y].TreasureChar = TreasureCharMedium
 				treasureMC++
 			} else if treasureHC < treasureH {
+				(*b)[x][y].Treasure = true
+				(*b)[x][y].TreasureCol = "yellow"
 				(*b)[x][y].TreasureChar = TreasureCharHeavy
 				treasureHC++
 			}

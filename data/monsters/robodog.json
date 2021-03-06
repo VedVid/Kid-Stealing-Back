@@ -1,0 +1,34 @@
+{
+    "Char":"d",
+    "Name":"robodog",
+    "Color":"#FFD300",
+    "ColorDark":"#FFD300",
+    "Layer":5,
+    "AlwaysVisible":false,
+    "Blocked":true,
+    "BlocksSight":false,
+    "AIType":2,
+    "AITriggered":false,
+    "HPMax":8,
+    "HPCurrent":8,
+    "Attack":4,
+    "Defense":5,
+    "Speed":-1,
+    "Stuck":false,
+    "SpawnTimer":150,
+    "TurnCounter": 0,
+    "RangedMaxAmmo": 0,
+    "RangedCurAmmo": 0,
+    "ThrowablesMax": 0,
+    "ThrowablesCur": 0,
+    "ChallengeLevel": 5,
+    "Equipment":[
+        null,
+        null,
+        null
+    ],
+    "Inventory":[
+        null
+    ],
+    "PatrolPoints": null
+}

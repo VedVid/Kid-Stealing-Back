@@ -166,7 +166,8 @@ func NewGame(b *Board, c *Creatures, o *Objects) {
 	}
 	playerX, playerY := RandInt(len(*b)-1), RandInt(len((*b)[0])-1)
 	for {
-		if (*b)[playerX][playerY].Blocked == false {
+		if (*b)[playerX][playerY].Blocked == false &&
+			(*b)[playerX][playerY].Treasure == false {
 			break
 		}
 		playerX, playerY = RandInt(len(*b)-1), RandInt(len((*b)[0])-1)

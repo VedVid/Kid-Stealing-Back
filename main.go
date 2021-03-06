@@ -153,8 +153,9 @@ func NewGame(b *Board, c *Creatures, o *Objects) {
 	tries := 1000
 	for {
 		MakeRoomsMap(b)
-		valid := TestMapTilesConnections(b)
-		if valid == true {
+		validPass := TestMapTilesConnections(b)
+		validTreasures := TestMapTreasureDistribution(b)
+		if validPass && validTreasures {
 			break
 		}
 		ZeroMap(b)

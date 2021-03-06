@@ -191,6 +191,48 @@ Validation:
 	return valid
 }
 
+func TestMapTreasureDistribution(b *Board) bool {
+	valid := true
+	middleX := MapSizeX / 2
+	middleY := MapSizeY / 2
+	treasuresQ1 := 0
+	treasuresQ2 := 0
+	treasuresQ3 := 0
+	treasuresQ4 := 0
+	for x := 0; x < middleX; x++ {
+		for y := 0; y < middleY; y++ {
+			if (*b)[x][y].Treasure {
+				treasuresQ1++
+			}
+		}
+	}
+	for x := middleX; x < MapSizeX; x++ {
+		for y := 0; y < middleY; y++ {
+			if (*b)[x][y].Treasure {
+				treasuresQ2++
+			}
+		}
+	}
+	for x := middleX; x < MapSizeX; x++ {
+		for y := middleY; y < MapSizeY; y++ {
+			if (*b)[x][y].Treasure {
+				treasuresQ3++
+			}
+		}
+	}
+	for x := 0; x < middleX; x++ {
+		for y := middleY; y < MapSizeY; y++ {
+			if (*b)[x][y].Treasure {
+				treasuresQ4++
+			}
+		}
+	}
+	if treasuresQ1 == 0 || treasuresQ2 == 0 || treasuresQ3 == 0 || treasuresQ4 == 0 {
+		valid = false
+	}
+	return valid
+}
+
 func NewPerlinNoise(alpha, beta float64, n int, seed int64, d float64) (*perlin.Perlin, float64) {
 	return perlin.NewPerlin(alpha, beta, n, seed), d
 }

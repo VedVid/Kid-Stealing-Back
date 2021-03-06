@@ -7,3 +7,11 @@
 - environmental interactions, like throwing a bottles to stagger an enemy
 
 - start with unexplored dungeon
+
+- dropping items
+
+- speed should decrease with encumbrance
+
+- maybe with full enc player should not be allowed to use some spots to hide?
+
+- enemies can't go through "hiding" tiles, unless player did hide while in FOV

@@ -55,7 +55,7 @@ const (
 	HiddenInTunnel
 )
 
-func PrintOverlay(b Board, situation int) {
+func PrintOverlay(b Board, cs Creatures, situation int) {
 	blt.Layer(BoardLayer)
 	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
 	blt.Layer(DeadLayer)

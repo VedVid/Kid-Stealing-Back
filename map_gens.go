@@ -27,9 +27,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package main
 
 
-import "fmt"
-
-
 func MakeRoomsMap(b *Board) {
 	roomSizeX := MapSizeX / 5
 	roomSizeY := MapSizeY / 5
@@ -230,15 +227,35 @@ func MakeRoomsMap(b *Board) {
 		}
 	}
 	// Remove some doors
-	var doors = []*Tile{}
+	deleteChance = 25
 	for x := 0; x < MapSizeX; x++ {
 		for y := 0; y < MapSizeY; y++ {
 			if (*b)[x][y].Char == "+" {
-				doors = append(doors, (*b)[x][y])
+				if deleteChance < RandInt(100) {
+					(*b)[x][y].Char = "#"
+					(*b)[x][y].Name = "wall"
+					(*b)[x][y].Color = "light grey"
+					(*b)[x][y].ColorDark = "grey"
+					(*b)[x][y].Layer = BoardLayer
+					(*b)[x][y].Explored = true
+					(*b)[x][y].Slows = false
+					(*b)[x][y].Blocked = true
+					(*b)[x][y].BlocksSight = true
+					if TestMapTilesConnections(b) == false {
+						(*b)[x][y].Char = "+"
+						(*b)[x][y].Name = "closed doors"
+						(*b)[x][y].Color = "darker orange"
+						(*b)[x][y].ColorDark = "grey"
+						(*b)[x][y].Layer = BoardLayer
+						(*b)[x][y].Explored = true
+						(*b)[x][y].Slows = false
+						(*b)[x][y].Blocked = false
+						(*b)[x][y].BlocksSight = true
+					}
+				}
 			}
 		}
 	}
-	fmt.Println(doors)
 }
 
 func MakeRandomMap(b *Board) {

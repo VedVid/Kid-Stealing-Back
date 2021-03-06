@@ -99,7 +99,7 @@ func MakeRoomsMap(b *Board) {
 		[]int{13, 19, 17, 23},
 		[]int{19, 19, 23, 23},
 	}
-	decorationChance := 50
+	decorationChance := 30
 	fmt.Println(rooms)
 	fmt.Println()
 	for row := 0; row < len(rooms); row++ {
@@ -360,10 +360,7 @@ func MakeRoomsMap(b *Board) {
 		}
 		x := RandInt(MapSizeX - 1)
 		y := RandInt(MapSizeY - 1)
-		if (*b)[x][y].Blocked || (*b)[x][y].BlocksSight ||
-			(*b)[x][y].Treasure || (*b)[x][y].Hides {
-			continue
-		} else {
+		if (*b)[x][y].Char == "." {
 			chances := RandInt(100)
 			if 33 < chances && treasureLC < treasureL {
 				(*b)[x][y].Treasure = true

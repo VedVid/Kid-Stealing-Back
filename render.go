@@ -27,8 +27,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package main
 
 import (
-	"strconv"
-
 	blt "bearlibterminal"
 )
 
@@ -193,6 +191,16 @@ func PrintUI(c *Creature) {
 	   provides only one basic, yet essential information: player's HP. */
 	//REMEMBER: [offset=x,y]
 	blt.Layer(UILayer)
+	hp := ""
+	for i := 0; i < c.HPCurrent; i++ {
+		hp += "[color=red]♥"
+	}
+	for i := c.HPCurrent; i < c.HPMax; i++ {
+		hp += "[/color][color=darker red]♥"
+	}
+	blt.Print(UIPosX, UIPosY+UIFontSpacingY, "[font=game]" + hp)
+
+/*
 	name := "Player"
 	blt.Print(UIPosX, UIPosY * UIFontSpacingY, "[font=ui]" + name)
 	hp := "HP: " + strconv.Itoa(c.HPCurrent) + "\\" + strconv.Itoa(c.HPMax)
@@ -212,6 +220,7 @@ func PrintUI(c *Creature) {
 	blt.Print(UIPosX, (UIPosY+7) * UIFontSpacingY, "[font=ui]" + throwables)
 	status := c.CreateStatusString()
 	blt.Print(UIPosX, (UIPosY+9) * UIFontSpacingY, "[font=ui]" + status)
+*/
 }
 
 func PrintLog() {

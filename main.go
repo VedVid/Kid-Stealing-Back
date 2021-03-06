@@ -48,7 +48,6 @@ func main() {
 	var objs = new(Objects)
 	var actors = new(Creatures)
 	StartGame(cells, actors, objs)
-	AddMessage("Good luck... You'll need it.")
 	for {
 		if (Game.TurnCounter == 0 || Game.TurnCounter % Game.SpawnRatio == 0) &&
 			Game.BreakTime <= 0 {

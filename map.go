@@ -175,7 +175,6 @@ StartWalking:
 					break
 				}
 				if err != nil {
-					fmt.Println(err)
 					valid = false
 					goto Validation
 				}

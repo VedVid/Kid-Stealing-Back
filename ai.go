@@ -46,7 +46,7 @@ const (
 
 const (
 	// Probability of triggering AI
-	AITrigger = 2//92
+	AITrigger = 0//92
 )
 
 func CreaturesTakeTurn(b Board, c *Creatures, o Objects) {

@@ -49,6 +49,7 @@ func MakeRoomsMap(b *Board) {
 	// Create room grid.
 	borderIndexX := ((MapSizeX - 1) / (roomSizeX + 1)) * (roomSizeX + 1)
 	borderIndexY := ((MapSizeY - 1) / (roomSizeY + 1)) * (roomSizeY + 1)
+	crumblinWallChance := 12
 	for x := 0; x < MapSizeX; x++ {
 		for y := 0; y < MapSizeY; y++ {
 			if x > borderIndexX || y > borderIndexY {
@@ -63,16 +64,29 @@ func MakeRoomsMap(b *Board) {
 				(*b)[x][y].Blocked = false
 				(*b)[x][y].BlocksSight = false
 			} else if x%(roomSizeX+1) == 0 || y%(roomSizeY+1) == 0 {
-				(*b)[x][y].Char = "#"
-				(*b)[x][y].Name = "wall"
-				(*b)[x][y].Color = "light grey"
-				(*b)[x][y].ColorDark = "grey"
-				(*b)[x][y].Layer = BoardLayer
-				(*b)[x][y].Explored = true
-				(*b)[x][y].Slows = false
-				(*b)[x][y].Hides = false
-				(*b)[x][y].Blocked = true
-				(*b)[x][y].BlocksSight = true
+				if crumblinWallChance > RandInt(100) && x > 0 && x < MapSizeX-1 && y > 0 && y < MapSizeY-1 {
+					(*b)[x][y].Char = "%"
+					(*b)[x][y].Name = "crumbling wall"
+					(*b)[x][y].Color = "#404b59"
+					(*b)[x][y].ColorDark = "grey"
+					(*b)[x][y].Layer = BoardLayer
+					(*b)[x][y].Explored = true
+					(*b)[x][y].Slows = false
+					(*b)[x][y].Hides = true
+					(*b)[x][y].Blocked = true
+					(*b)[x][y].BlocksSight = true
+				} else {
+					(*b)[x][y].Char = "#"
+					(*b)[x][y].Name = "wall"
+					(*b)[x][y].Color = "light grey"
+					(*b)[x][y].ColorDark = "grey"
+					(*b)[x][y].Layer = BoardLayer
+					(*b)[x][y].Explored = true
+					(*b)[x][y].Slows = false
+					(*b)[x][y].Hides = false
+					(*b)[x][y].Blocked = true
+					(*b)[x][y].BlocksSight = true
+				}
 			}
 		}
 	}
@@ -296,6 +310,63 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Hides = false
 					(*b)[x][y].Blocked = true
 					(*b)[x][y].BlocksSight = true
+				}
+			} else if (*b)[x][y].Char == "%" {
+				if x > 0 {
+					if (*b)[x-1][y].Char == "%" {
+						(*b)[x][y].Char = "#"
+						(*b)[x][y].Name = "wall"
+						(*b)[x][y].Color = "light grey"
+						(*b)[x][y].ColorDark = "grey"
+						(*b)[x][y].Layer = BoardLayer
+						(*b)[x][y].Explored = true
+						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
+						(*b)[x][y].Blocked = true
+						(*b)[x][y].BlocksSight = true
+					}
+				}
+				if x < MapSizeX-1 {
+					if (*b)[x+1][y].Char == "%" {
+						(*b)[x][y].Char = "#"
+						(*b)[x][y].Name = "wall"
+						(*b)[x][y].Color = "light grey"
+						(*b)[x][y].ColorDark = "grey"
+						(*b)[x][y].Layer = BoardLayer
+						(*b)[x][y].Explored = true
+						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
+						(*b)[x][y].Blocked = true
+						(*b)[x][y].BlocksSight = true
+					}
+				}
+				if y > 0 {
+					if (*b)[x][y-1].Char == "%" {
+						(*b)[x][y].Char = "#"
+						(*b)[x][y].Name = "wall"
+						(*b)[x][y].Color = "light grey"
+						(*b)[x][y].ColorDark = "grey"
+						(*b)[x][y].Layer = BoardLayer
+						(*b)[x][y].Explored = true
+						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
+						(*b)[x][y].Blocked = true
+						(*b)[x][y].BlocksSight = true
+					}
+				}
+				if y < MapSizeY-1 {
+					if (*b)[x][y+1].Char == "%" {
+						(*b)[x][y].Char = "#"
+						(*b)[x][y].Name = "wall"
+						(*b)[x][y].Color = "light grey"
+						(*b)[x][y].ColorDark = "grey"
+						(*b)[x][y].Layer = BoardLayer
+						(*b)[x][y].Explored = true
+						(*b)[x][y].Slows = false
+						(*b)[x][y].Hides = false
+						(*b)[x][y].Blocked = true
+						(*b)[x][y].BlocksSight = true
+					}
 				}
 			}
 		}

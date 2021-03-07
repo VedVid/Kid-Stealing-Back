@@ -41,13 +41,9 @@ const (
 	StrMoveSouth = "MOVE_SOUTH"
 	StrWait      = "WAIT"
 
-	StrRanged    = "RANGED"
-	StrMelee     = "MELEE"
-	StrThrowable = "THROWABLE"
-
 	StrLook   = "LOOK"
-	StrReload = "RELOAD"
 	StrPickup = "PICKUP"
+	StrDrop   = "DROP"
 
 	StrUseEnvironment = "USE_ENVIRONMENT"
 )
@@ -59,12 +55,9 @@ var Actions = []string{
 	StrMoveEast,
 	StrMoveSouth,
 	StrWait,
-	StrRanged,
-	StrMelee,
-	StrThrowable,
 	StrLook,
-	StrReload,
 	StrPickup,
+	StrDrop,
 	StrUseEnvironment,
 }
 
@@ -75,12 +68,9 @@ var CommandKeys = map[int]string{
 	blt.TK_DOWN:  StrMoveSouth,
 	blt.TK_LEFT:  StrMoveWest,
 	blt.TK_SPACE: StrWait,
-	blt.TK_F:     StrRanged,
-	blt.TK_D:     StrMelee,
-	blt.TK_T:     StrThrowable,
 	blt.TK_L:     StrLook,
-	blt.TK_R:     StrReload,
 	blt.TK_G:     StrPickup,
+	blt.TK_D:     StrDrop,
 	blt.TK_ENTER: StrUseEnvironment,
 }
 
@@ -109,16 +99,8 @@ func Command(com string, p *Creature, b *Board, c *Creatures, o *Objects) bool {
 	case StrWait:
 		turnSpent = true
 
-	case StrRanged:
-		turnSpent = p.Target(*b, o, c, StrRanged)
-	case StrMelee:
-		turnSpent = p.Target(*b, o, c, StrMelee)
-	case StrThrowable:
-		turnSpent = p.Target(*b, o, c, StrThrowable)
 	case StrLook:
 		p.Look(*b, *o, *c)
-	case StrReload:
-		turnSpent = p.Reload()
 	case StrPickup:
 		turnSpent = p.PickUp(b)
 	case StrUseEnvironment:

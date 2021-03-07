@@ -105,12 +105,25 @@ func main() {
 			}
 		} else {
 			turnSpent := Controls(key, (*actors)[0], cells, actors, objs)
-			if turnSpent == true {
+			if turnSpent {
 				Game.TurnCounter++
-				if Game.BreakTime > 0 {
-					Game.BreakTime--
+				if (*actors)[0].Speed == SpeedNormal {
+					CreaturesTakeTurn(*cells, actors, *objs, (*actors)[0].Speed)
+				} else if (*actors)[0].Speed == SpeedSlow {
+					CreaturesTakeTurn(*cells, actors, *objs, (*actors)[0].Speed)
+					if Game.TurnCounter % 5 == 0 {
+						CreaturesTakeTurn(*cells, actors, *objs, (*actors)[0].Speed)
+					}
+				} else if (*actors)[0].Speed == SpeedVerySlow {
+					CreaturesTakeTurn(*cells, actors, *objs, (*actors)[0].Speed)
+					if Game.TurnCounter % 3 == 0 {
+						CreaturesTakeTurn(*cells, actors, *objs, (*actors)[0].Speed)
+					}
+				} else if (*actors)[0].Speed == SpeedFast {
+					if Game.TurnCounter % 5 != 0 {
+						CreaturesTakeTurn(*cells, actors, *objs, (*actors)[0].Speed)
+					}
 				}
-				CreaturesTakeTurn(*cells, actors, *objs)
 			}
 		}
 	}

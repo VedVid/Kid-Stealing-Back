@@ -320,6 +320,26 @@ func (c *Creature) Drop(b *Board) bool {
 			}
 		}
 	}
+	encm := 0
+	if c.LightItem1 && c.LightItem2 && c.LightItem3 {
+		encm += 1
+	}
+	if c.MediumItem1 && c.MediumItem2 {
+		encm += 1
+	}
+	if c.HeavyItem1 {
+		encm += 1
+	}
+	switch encm {
+	case 0:
+		c.Speed = SpeedFast
+	case 1:
+		c.Speed = SpeedNormal
+	case 2:
+		c.Speed = SpeedSlow
+	case 3:
+		c.Speed = SpeedVerySlow
+	}
 	return turnSpent
 }
 
@@ -375,6 +395,26 @@ func (c *Creature) PickUp(b *Board) bool {
 				}
 			}
 		}
+	}
+	encm := 0
+	if c.LightItem1 && c.LightItem2 && c.LightItem3 {
+		encm += 1
+	}
+	if c.MediumItem1 && c.MediumItem2 {
+		encm += 1
+	}
+	if c.HeavyItem1 {
+		encm += 1
+	}
+	switch encm {
+	case 0:
+		c.Speed = SpeedFast
+	case 1:
+		c.Speed = SpeedNormal
+	case 2:
+		c.Speed = SpeedSlow
+	case 3:
+		c.Speed = SpeedVerySlow
 	}
 	return turnSpent
 }

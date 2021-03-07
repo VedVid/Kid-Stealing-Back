@@ -108,6 +108,7 @@ func NewPlayer(x, y int) (*Creature, error) {
 	if player.PatrolPoints == nil {
 		player.PatrolPoints = [][]int{}
 	}
+	player.Speed = SpeedFast
 	return player, err2
 }
 

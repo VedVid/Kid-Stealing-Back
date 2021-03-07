@@ -49,7 +49,7 @@ const (
 	AITrigger = 92
 )
 
-func CreaturesTakeTurn(b Board, c *Creatures, o Objects) {
+func CreaturesTakeTurn(b Board, c *Creatures, o Objects, playerSpeed int) {
 	/* Function CreaturesTakeTurn is supposed to handle all enemy creatures
 	   actions: movement, attacking, etc.
 	   It takes Board and Creatures as arguments.
@@ -62,6 +62,7 @@ func CreaturesTakeTurn(b Board, c *Creatures, o Objects) {
 		if ai == NoAI || ai == PlayerAI {
 			continue
 		}
+/*
 		if Game.TurnCounter%SpeedValues[v.Speed] == 0 {
 			if v.Speed < SpeedNormal {
 				continue
@@ -70,6 +71,7 @@ func CreaturesTakeTurn(b Board, c *Creatures, o Objects) {
 				TriggerAI(b, (*c)[0], v)
 			}
 		}
+*/
 		HandleAI(b, c, o, v)
 		TriggerAI(b, (*c)[0], v)
 		v.TurnCounter++

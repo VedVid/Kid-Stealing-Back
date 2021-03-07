@@ -627,7 +627,7 @@ func SpawnMonsters(b Board, c *Creatures) {
 					// enemies next to the map center
 					x = RandRange(0, (MapSizeX-4) / 2)
 					y = RandRange(0, (MapSizeY-4) / 2)
-					if b[x][y].Char == "." {
+					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y) == false {
 						break
 					}
 				}
@@ -638,7 +638,7 @@ func SpawnMonsters(b Board, c *Creatures) {
 				for {
 					x = RandRange((MapSizeX+4) / 2, MapSizeX-1)
 					y = RandRange(0, (MapSizeY-4) / 2)
-					if b[x][y].Char == "." {
+					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y) == false {
 						break
 					}
 				}
@@ -649,7 +649,7 @@ func SpawnMonsters(b Board, c *Creatures) {
 				for {
 					x = RandRange((MapSizeX+4) / 2, MapSizeX-1)
 					y = RandRange((MapSizeY+4) / 2, MapSizeY-1)
-					if b[x][y].Char == "." {
+					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y) == false {
 						break
 					}
 				}
@@ -660,7 +660,7 @@ func SpawnMonsters(b Board, c *Creatures) {
 				for {
 					x = RandRange(0, (MapSizeX-4) / 2)
 					y = RandRange((MapSizeY+4) / 2, MapSizeY-1)
-					if b[x][y].Char == "." {
+					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y) == false {
 						break
 					}
 				}

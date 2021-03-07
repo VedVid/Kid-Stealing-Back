@@ -82,7 +82,7 @@ func TriggerAI(b Board, p, c *Creature) {
 	   Enemy with AITriggered set to false will ignore the player existence.
 	   AITrigger is probability to notice (and, therefore, switch AITriggered)
 	   player if is in monster's FOV. */
-	if IsInFOV(b, p.X, p.Y, c.X, c.Y) == true && RandInt(100) <= AITrigger {
+	if IsInFOV(b, c.X, c.Y, p.X, p.Y) == true && RandInt(100) <= AITrigger {
 		if b[p.X][p.Y].Hides == false {
 			c.AITriggered = true
 			c.LastSawX = p.X
@@ -109,7 +109,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 	case PatrollingAI:
 		if c.AITriggered == true {
 			if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) > 1 {
-				if IsInFOV(b, (*cs)[0].X, (*cs)[0].Y, c.X, c.Y) {
+				if IsInFOV(b, c.X, c.Y, (*cs)[0].X, (*cs)[0].Y) {
 					c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
 				} else {
 					c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)

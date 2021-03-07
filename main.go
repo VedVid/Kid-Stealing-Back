@@ -43,7 +43,10 @@ var HighScores = Scores{[]Score{}}
 
 var GlobalSeed int64
 
+var Debug bool
+
 func main() {
+	Debug = false
 	var cells = new(Board)
 	var objs = new(Objects)
 	var actors = new(Creatures)

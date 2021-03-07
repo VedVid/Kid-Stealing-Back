@@ -50,6 +50,8 @@ const (
 	StrRanged    = "RANGED"
 	StrThrowable = "THROWABLE"
 	StrMelee     = "MELEE"
+
+	StrEnemiesAlwaysVisible = "ENEMIES_ALWAYS_VISIBLE"
 )
 
 var Actions = []string{
@@ -63,6 +65,7 @@ var Actions = []string{
 	StrPickup,
 	StrDrop,
 	StrUseEnvironment,
+	StrEnemiesAlwaysVisible,
 }
 
 var CommandKeys = map[int]string{
@@ -76,6 +79,7 @@ var CommandKeys = map[int]string{
 	blt.TK_G:     StrPickup,
 	blt.TK_D:     StrDrop,
 	blt.TK_ENTER: StrUseEnvironment,
+	blt.TK_1:     StrEnemiesAlwaysVisible,
 }
 
 /* Place to store customized controls scheme,
@@ -111,6 +115,11 @@ func Command(com string, p *Creature, b *Board, c *Creatures, o *Objects) bool {
 		turnSpent = p.Drop(b)
 	case StrUseEnvironment:
 		turnSpent = p.UseEnvironment(b)
+
+	case StrEnemiesAlwaysVisible:
+		for i := 0; i < len(*c); i++ {
+			(*c)[i].AlwaysVisible = true
+		}
 	}
 	return turnSpent
 }

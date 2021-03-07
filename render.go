@@ -266,7 +266,11 @@ func PrintCreatures(b Board, c Creatures) {
 	blt.Layer(PlayerLayer)
 	playerColor := c[0].Color
 	if b[c[0].X][c[0].Y].Hides == true {
-		playerColor = "darkest gray"
+		if c[0].Hidden {
+			playerColor = "darkest gray"
+		} else {
+			playerColor = "dark gray"
+		}
 	}
 	SmartPrint(c[0].X, c[0].Y,
 		MonsterEntity, "[font=game][color="+playerColor+"]"+c[0].Char)

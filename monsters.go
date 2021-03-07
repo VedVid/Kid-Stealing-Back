@@ -180,17 +180,18 @@ func (c *Creature) MoveOrAttack(tx, ty int, b Board, o *Objects, all *Creatures)
 			turnSpent = false
 		}
 	} else {
-		turnSpent = c.Move(tx, ty, b)
+		turnSpent = c.Move(tx, ty, b, *all)
 	}
 	return turnSpent
 }
 
-func (c *Creature) Move(tx, ty int, b Board) bool {
+func (c *Creature) Move(tx, ty int, b Board, cs Creatures) bool {
 	/* Move is method of Creature; it takes target x, y as arguments;
 	   check if next move won't put Creature off the screen, then updates
 	   Creature coords. */
 	turnSpent := false
 	newX, newY := c.X+tx, c.Y+ty
+	c.Hidden = false
 	if newX >= 0 &&
 		newX <= MapSizeX-1 &&
 		newY >= 0 &&
@@ -205,11 +206,33 @@ func (c *Creature) Move(tx, ty int, b Board) bool {
 			} else {
 				c.Stuck = false
 			}
+			if c.AIType == PlayerAI && b[newX][newY].Hides == true {
+				hidden := true
+				for i, v := range cs {
+					if i == 0 {
+						continue
+					}
+					if IsInFOV(b, c.X, c.Y, v.X, v.Y) && v.AITriggered {
+						hidden = false
+					}
+				}
+				c.Hidden = hidden
+			}
 			turnSpent = true
 		} else {
 			if c.AIType == PlayerAI && b[newX][newY].Hides == true {
 				c.X = newX
 				c.Y = newY
+				hidden := true
+				for i, v := range cs {
+					if i == 0 {
+						continue
+					}
+					if IsInFOV(b, c.X, c.Y, v.X, v.Y) && v.AITriggered {
+						hidden = false
+					}
+				}
+				c.Hidden = hidden
 			}
 		}
 	}

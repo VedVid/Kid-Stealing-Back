@@ -174,7 +174,7 @@ func (c *Creature) MoveTowardsPath(b Board, cs Creatures, tx, ty int) error {
 		_ = ReadInput()
 	}
 	dx, dy, err := BacktrackPath(nodes, start)
-	c.Move(dx, dy, b)
+	c.Move(dx, dy, b, cs)
 	return err
 }
 

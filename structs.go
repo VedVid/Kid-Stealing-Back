@@ -88,6 +88,7 @@ type FighterProperties struct {
 	LastPosition   []int
 	LastSawX       int
 	LastSawY       int
+	Hidden         bool
 	LightItem1     bool
 	LightItem2     bool
 	LightItem3     bool

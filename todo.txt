@@ -1,7 +1,5 @@
 - enemies should chase player if triggered, but also give up if player would remain out of their FOV for some time (so they should remember the last position where they see the player and move towards *this* position)
 
-- furniture, holes in the walls to allow player hide
-
 - enemies' cone FOV
 
 - environmental interactions, like throwing a bottles to stagger an enemy
@@ -14,4 +12,6 @@
 
 - maybe with full enc player should not be allowed to use some spots to hide?
 
-- enemies can't go through "hiding" tiles, unless player did hide while in FOV
+- maybe hidden player should have shorter FOV? it would need adding some kind of "footsteps" system
+
+- CHECK SOURCE <---> TARGET IN FOV FUNCTIONS

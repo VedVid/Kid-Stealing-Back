@@ -208,7 +208,13 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			 // where the player was seen
 			 // then gives up
 			c.OutOfFOV++
-			c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
+			if c.X == c.LastSawX && c.Y == c.LastSawY {
+				if RandInt(100) < 50 {
+					c.AITriggered = false
+				}
+			} else {
+				c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
+			}
 		// PLAYER NOT HIDDEN
 		case c.AITriggered == true &&
 			 p.Hidden == false &&
@@ -247,7 +253,13 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
 			 c.OutOfFOV >= c.MaxOutOfFOV:
 			c.OutOfFOV++
-			c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
+			if c.X == c.LastSawX && c.Y == c.LastSawY {
+				if RandInt(100) < 50 {
+					c.AITriggered = false
+				}
+			} else {
+				c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
+			}
 		default:
 			fmt.Println("AI corner case that has not been considered; continuing patrolling.")
 			if c.DistanceTo(c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1]) > 1 {

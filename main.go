@@ -49,11 +49,8 @@ func main() {
 	var actors = new(Creatures)
 	blt.Composition(blt.TK_ON)
 	StartGame(cells, actors, objs)
+	SpawnMonsters(*cells, actors)
 	for {
-		//if (Game.TurnCounter == 0 || Game.TurnCounter%Game.SpawnRatio == 0) &&
-		//	Game.BreakTime <= 0 {
-		//	SpawnMonsters(*cells, actors)
-		//}
 		if Game.WaveCur >= Game.WaveMax && Game.LivingMonsters <= 0 {
 			AddMessage("You fought well. Now, there is some time to rest.")
 			Game.BreakTime += 10

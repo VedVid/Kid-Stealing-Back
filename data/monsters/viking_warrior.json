@@ -1,8 +1,8 @@
 {
-    "Char":"d",
-    "Name":"stray dog",
-    "Color":"#DD3811",
-    "ColorDark":"#DD3811",
+    "Char":"☺",
+    "Name":"viking warrior",
+    "Color":"#33a2ac",
+    "ColorDark":"#33a2ac",
     "Layer":5,
     "AlwaysVisible":false,
     "Blocked":true,

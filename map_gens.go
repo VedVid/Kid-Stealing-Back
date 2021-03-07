@@ -30,6 +30,11 @@ package main
 import "math/rand"
 
 
+const (
+	MonstersMin = 6
+	MonstersMax = 10
+)
+
 var (
 	TreasureMin        = 6
 	TreasureMax        = 12

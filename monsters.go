@@ -607,6 +607,88 @@ func ReadMonsterFiles() []string {
 
 func SpawnMonsters(b Board, c *Creatures) {
 	var x, y int
+	monstersNum := RandRange(MonstersMin, MonstersMax)
+	//var monsters *Creatures
+	var placementX = []int{}
+	var placementY = []int{}
+	place1 := 0
+	place2 := 0
+	place3 := 0
+	place4 := 0
+	for {
+		placementX = nil
+		placementY = nil
+		validPlacement := true
+		for i := 0; i < monstersNum; i++ {
+			place := RandInt(100)
+			if place <= 25 {
+				for {
+					// "+-4" helps to avoid spawning multiple
+					// enemies next to the map center
+					x = RandRange(0, (MapSizeX-4) / 2)
+					y = RandRange(0, (MapSizeY-4) / 2)
+					if b[x][y].Char == "." {
+						break
+					}
+				}
+				placementX = append(placementX, x)
+				placementY = append(placementY, y)
+				place1++
+			} else if place <= 50 {
+				for {
+					x = RandRange((MapSizeX+4) / 2, MapSizeX-1)
+					y = RandRange(0, (MapSizeY-4) / 2)
+					if b[x][y].Char == "." {
+						break
+					}
+				}
+				placementX = append(placementX, x)
+				placementY = append(placementY, y)
+				place2++
+			} else if place <= 75 {
+				for {
+					x = RandRange((MapSizeX+4) / 2, MapSizeX-1)
+					y = RandRange((MapSizeY+4) / 2, MapSizeY-1)
+					if b[x][y].Char == "." {
+						break
+					}
+				}
+				placementX = append(placementX, x)
+				placementY = append(placementY, y)
+				place3++
+			} else {
+				for {
+					x = RandRange(0, (MapSizeX-4) / 2)
+					y = RandRange((MapSizeY+4) / 2, MapSizeY-1)
+					if b[x][y].Char == "." {
+						break
+					}
+				}
+				placementX = append(placementX, x)
+				placementY = append(placementY, y)
+				place4++
+			}
+		}
+		if place1 == 0 || place2 == 0 || place3 == 0 || place4 == 0 {
+			validPlacement = false
+		}
+		if validPlacement == false {
+			continue
+		} else {
+			break
+		}
+	}
+	for i := 0; i < monstersNum; i++ {
+		m, _ := NewCreature(placementX[i], placementY[i], b, "viking_warrior.json")
+		w1, _ := NewObject(0, 0, "weapon1.json")
+		w2, _ := NewObject(0, 0, "weapon2.json")
+		wm, _ := NewObject(0, 0, "melee.json")
+		var monsterEq = EquipmentComponent{Objects{w1, w2, wm}, Objects{}}
+		m.EquipmentComponent = monsterEq
+		*c = append(*c, m)
+	}
+
+/*
 	for i := 0; i <= Game.SpawnAmount; i++ {
 		if Game.WaveCur < Game.WaveMax {
 			for {
@@ -664,4 +746,5 @@ func SpawnMonsters(b Board, c *Creatures) {
 			Game.WaveCur++
 		}
 	}
+	*/
 }

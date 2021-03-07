@@ -85,6 +85,8 @@ func TriggerAI(b Board, p, c *Creature) {
 	if IsInFOV(b, p.X, p.Y, c.X, c.Y) == true && RandInt(100) <= AITrigger {
 		if b[p.X][p.Y].Hides == false {
 			c.AITriggered = true
+			c.LastSawX = p.X
+			c.LastSawY = p.Y
 		}
 	}
 }

@@ -7,3 +7,5 @@
 - maybe hidden player should have shorter FOV? it would need adding some kind of "footsteps" system
 
 - NEED TO FIX A BUG: enemies stop chasing you as soon as you break the FOV - it also means that they won't follow you through the doors!
+
+- NEED TO CHECK WHAT IS DEFAULT STATE OF LAST SAW AND HOW IT MUTATES

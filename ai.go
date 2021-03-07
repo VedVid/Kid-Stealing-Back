@@ -172,6 +172,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			 // enemy is alerted, close (but not too close)
 			 // to the hidden player;
 			 // maybe in the same room?
+			c.OutOfFOV = 0
 			if c.DistanceTo(p.X, p.Y) < 4 {
 				c.LastSawX = c.X
 				c.LastSawY = c.Y

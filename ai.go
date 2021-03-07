@@ -107,7 +107,11 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 	case PatrollingAI:
 		if c.AITriggered == true {
 			if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) > 1 {
-				c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
+				if IsInFOV(b, (*cs)[0].X, (*cs)[0].Y, c.X, c.Y) {
+					c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
+				} else {
+					c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
+				}
 			} else {
 				c.AttackTarget((*cs)[0], &o, &b, cs, "")
 			}

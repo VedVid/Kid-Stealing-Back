@@ -86,6 +86,8 @@ type FighterProperties struct {
 	PatrolPoints   [][]int
 	NextPoint      int
 	LastPosition   []int
+	LastSawX       int
+	LastSawY       int
 	LightItem1     bool
 	LightItem2     bool
 	LightItem3     bool

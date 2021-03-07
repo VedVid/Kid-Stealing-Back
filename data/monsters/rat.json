@@ -32,5 +32,7 @@
     ],
     "PatrolPoints": null,
     "NextPoint": 1,
-    "LastPosition": null
+    "LastPosition": null,
+    "LastSawX": -1,
+    "LastSawY": -1
 }

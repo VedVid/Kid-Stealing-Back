@@ -1,5 +1,3 @@
-- enemies should chase player if triggered, but also give up if player would remain out of their FOV for some time (so they should remember the last position where they see the player and move towards *this* position)
-
 - enemies' cone FOV
 
 - environmental interactions, like throwing a bottles to stagger an enemy

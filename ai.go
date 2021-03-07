@@ -236,7 +236,11 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			 c.OutOfFOV < c.MaxOutOfFOV:
 			 // enemy is alerted, player is not hidden, but
 			 // not close (not in fov) to the enemy
-			 // timer here?
+			 // who is actively searching
+			c.OutOfFOV++
+			c.MoveTowards(b, *cs, p.X, p.Y, ai)
+			c.LastSawX = p.X
+			c.LastSawY = p.Y
 		case c.AITriggered == true &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&

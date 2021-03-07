@@ -47,6 +47,7 @@ const (
 const (
 	// Probability of triggering AI
 	AITrigger = 92
+	OutOfFOVToForgetChance = 60
 )
 
 func CreaturesTakeTurn(b Board, c *Creatures, o Objects, playerSpeed int) {
@@ -114,7 +115,13 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 				if IsInFOV(b, c.X, c.Y, (*cs)[0].X, (*cs)[0].Y) {
 					c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
 				} else {
-					c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
+					if c.DistanceTo(c.LastSawX, c.LastSawY) > 1 {
+						c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
+					} else {
+						if RandInt(100) < OutOfFOVToForgetChance {
+							c.AITriggered = false
+						}
+					}
 				}
 			} else {
 				c.AttackTarget((*cs)[0], &o, &b, cs, "")

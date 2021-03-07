@@ -6,12 +6,6 @@
 
 - start with unexplored dungeon
 
-- dropping items
-
-- speed should decrease with encumbrance
-
 - maybe with full enc player should not be allowed to use some spots to hide?
 
 - maybe hidden player should have shorter FOV? it would need adding some kind of "footsteps" system
-
-- CHECK SOURCE <---> TARGET IN FOV FUNCTIONS

@@ -46,6 +46,10 @@ const (
 	StrDrop   = "DROP"
 
 	StrUseEnvironment = "USE_ENVIRONMENT"
+
+	StrRanged    = "RANGED"
+	StrThrowable = "THROWABLE"
+	StrMelee     = "MELEE"
 )
 
 var Actions = []string{
@@ -103,6 +107,8 @@ func Command(com string, p *Creature, b *Board, c *Creatures, o *Objects) bool {
 		p.Look(*b, *o, *c)
 	case StrPickup:
 		turnSpent = p.PickUp(b)
+	case StrDrop:
+		turnSpent = p.Drop(b)
 	case StrUseEnvironment:
 		turnSpent = p.UseEnvironment(b)
 	}

@@ -31,6 +31,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"unicode/utf8"
+
+	blt "bearlibterminal"
 )
 
 const (
@@ -247,6 +249,76 @@ func (c *Creature) UseEnvironment(b *Board) bool {
 	if (*b)[c.X][c.Y].Name == "Hatch" {
 		PrintOverlay(*b, HiddenInTunnel)
 		turnSpent = true
+	}
+	return turnSpent
+}
+
+func (c *Creature) Drop(b *Board) bool {
+	turnSpent := false
+	x, y := c.X, c.Y
+	if (*b)[x][y].Char != "." {
+		AddMessage("This tile is already occupied.")
+	} else {
+		msg := ""
+		l, m, h := false, false, false
+		if c.LightItem1 || c.LightItem2 || c.LightItem3 {
+			l = true
+			msg += "(L)ight  "
+		}
+		if c.MediumItem1 || c.MediumItem2 {
+			m = true
+			msg += "(M)edium  "
+		}
+		if c.HeavyItem1 {
+			h = true
+			msg += "(H)Heavy  "
+		}
+		if l == false && m == false && h == false {
+			AddMessage("You have nothing to drop")
+		} else {
+			AddMessage("What item do you want to drop here?")
+			AddMessage(msg)
+			for {
+				key := ReadInput()
+				if key == blt.TK_L && l {
+					if c.LightItem3 {
+						c.LightItem3 = false
+					} else if c.LightItem2 {
+						c.LightItem2 = false
+					} else if c.LightItem1 {
+						c.LightItem1 = false
+					}
+					AddMessage("You tossed the pouch from your pocket.")
+					(*b)[x][y].Treasure = true
+					(*b)[x][y].TreasureCol = "yellow"
+					(*b)[x][y].TreasureChar = TreasureCharLight
+					turnSpent = true
+					break
+				} else if key == blt.TK_M && m {
+					if c.MediumItem2 {
+						c.MediumItem2 = false
+					} else if c.MediumItem1 {
+						c.MediumItem1 = false
+					}
+					AddMessage("You stripped the valuables off your belt.")
+					(*b)[x][y].Treasure = true
+					(*b)[x][y].TreasureCol = "yellow"
+					(*b)[x][y].TreasureChar = TreasureCharMedium
+					turnSpent = true
+					break
+				} else if key == blt.TK_H && h {
+					c.HeavyItem1 = false
+					AddMessage("You dropped the treasure bag on the ground.")
+					(*b)[x][y].Treasure = true
+					(*b)[x][y].TreasureCol = "yellow"
+					(*b)[x][y].TreasureChar = TreasureCharHeavy
+					turnSpent = true
+					break
+				} else {
+					break
+				}
+			}
+		}
 	}
 	return turnSpent
 }

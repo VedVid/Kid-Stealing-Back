@@ -31,8 +31,8 @@ import "math/rand"
 
 
 const (
-	MonstersMin = 6
-	MonstersMax = 10
+	MonstersMin = 4
+	MonstersMax = 6
 )
 
 var (

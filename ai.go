@@ -209,11 +209,16 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			 // then gives up
 			c.OutOfFOV++
 			c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
+		// PLAYER NOT HIDDEN
 		case c.AITriggered == true &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) <= 1:
 			 // player is not hidden, next to the enemy;
 			 // therefore, enemy attacks!
+			c.AttackTarget((*cs)[0], &o, &b, cs, "")
+			c.LastSawX = p.X
+			c.LastSawY = p.Y
+			c.OutOfFOV = 0
 		case c.AITriggered == true &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&

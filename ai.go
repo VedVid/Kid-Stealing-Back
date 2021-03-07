@@ -91,6 +91,15 @@ func TriggerAI(b Board, p, c *Creature) {
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
 		}
+		if c.AITriggered == false {
+			c.Color = "#33a2ac"
+			c.ColorDark = "#33a2ac"
+			c.Char = "☺"
+		} else {
+			c.Color = "#d17519"
+			c.ColorDark = "#d17519"
+			c.Char = "☹"
+		}
 	}
 }
 

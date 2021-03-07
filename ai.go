@@ -184,8 +184,18 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 				c.LastSawX = p.X
 				c.LastSawY = p.Y
 			}
+		case c.AITriggered == true &&
+			 p.Hidden == true &&
+			 c.DistanceTo(p.X, p.Y) > 1 &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
+			 c.OutOfFOV < c.MaxOutOfFOV:
 			 // enemy is alerted,
 			 // but far from the hidden player
+			 // enemy is still actively searching
+			c.OutOfFOV++
+			c.MoveTowards(b, *cs, p.X, p.Y, ai)
+			c.LastSawX = p.X
+			c.LastSawY = p.Y
 		case c.AITriggered == true &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&

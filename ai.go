@@ -248,6 +248,17 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			 c.OutOfFOV >= c.MaxOutOfFOV:
 			c.OutOfFOV++
 			c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
+		default:
+			fmt.Println("AI corner case that has not been considered; continuing patrolling.")
+			if c.DistanceTo(c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1]) > 1 {
+				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
+			} else {
+				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
+				c.NextPoint++
+				if c.NextPoint >= len(c.PatrolPoints) {
+					c.NextPoint = 0
+				}
+			}
 		}
 	}
 }

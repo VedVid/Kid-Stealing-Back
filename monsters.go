@@ -151,6 +151,7 @@ func NewCreature(x, y int, b Board, monsterFile string) (*Creature, error) {
 	if monster.LastPosition == nil {
 		monster.LastPosition = []int{monster.X, monster.Y}
 	}
+	monster.MaxOutOfFOV = 10
 	return monster, err2
 }
 

@@ -89,6 +89,8 @@ type FighterProperties struct {
 	LastSawX       int
 	LastSawY       int
 	Hidden         bool
+	MaxOutOfFOV    int
+	OutOfFOV       int
 	LightItem1     bool
 	LightItem2     bool
 	LightItem3     bool

@@ -108,164 +108,62 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 	   But, on the other hand, ai has so many variations and edge cases that
 	   unifying monster's behavior would result in smaller flexibility. */
 	ai := c.AIType
+	p := (*cs)[0]
 	switch ai {
 	case PatrollingAI:
-		if c.AITriggered == true {
-			if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) > 1 {
-				if IsInFOV(b, c.X, c.Y, (*cs)[0].X, (*cs)[0].Y) {
-					c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
-				} else {
-					if c.DistanceTo(c.LastSawX, c.LastSawY) > 1 {
-						c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
-					} else {
-						if RandInt(100) < OutOfFOVToForgetChance {
-							c.AITriggered = false
-						}
-					}
-				}
-			} else {
-				c.AttackTarget((*cs)[0], &o, &b, cs, "")
-			}
-		} else {
-			if c.DistanceTo(c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1]) > 1 {
-				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
-			} else {
-				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
-				c.NextPoint++
-				if c.NextPoint >= len(c.PatrolPoints) {
-					c.NextPoint = 0
-				}
-			}
-		}
-	case MeleeDumbAI:
-		if c.AITriggered == true {
-			if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) > 1 {
-				c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
-			} else {
-				c.AttackTarget((*cs)[0], &o, &b, cs, "")
-			}
-		} else {
-			dx := RandRange(-1, 1)
-			dy := RandRange(-1, 1)
-			c.Move(dx, dy, b, *cs)
-		}
-	case MeleePatherAI:
-		// The same set of functions as for DumbAI.
-		// Just for clarity.
-		if c.AITriggered == true {
-			if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) > 1 {
-				c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
-			} else {
-				c.AttackTarget((*cs)[0], &o, &b, cs, "")
-			}
-		} else {
-			dx := RandRange(-1, 1)
-			dy := RandRange(-1, 1)
-			c.Move(dx, dy, b, *cs)
-		}
-	case RangedDumbAI:
-		if c.AITriggered == true {
-			if c.Equipment[SlotWeaponPrimary] != nil {
-				// Use primary ranged weapon.
-				if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) >= FOVLength-1 {
-					// TODO:
-					// For now, every ranged skill has range equal to FOVLength-1
-					// but it should change in future.
-					c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
-				} else {
-					// DumbAI will not check if target is valid
-					vec, err := NewVector(c.X, c.Y, (*cs)[0].X, (*cs)[0].Y)
-					if err != nil {
-						fmt.Println(err)
-					}
-					_ = ComputeVector(vec)
-					_, _, target, _ := ValidateVector(vec, b, *cs, o, StrRanged)
-					if target != nil {
-						c.AttackTarget(target, &o, &b, cs, "")
-					}
-				}
-			} else if c.Equipment[SlotWeaponSecondary] != nil {
-				// Use secondary ranged weapon.
-				if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) >= FOVLength-1 {
-					// TODO:
-					// For now, every ranged skill has range equal to FOVLength-1
-					// but it should change in future.
-					c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
-				} else {
-					// DumbAI will not check if target is valid
-					vec, err := NewVector(c.X, c.Y, (*cs)[0].X, (*cs)[0].Y)
-					if err != nil {
-						fmt.Println(err)
-					}
-					_ = ComputeVector(vec)
-					_, _, target, _ := ValidateVector(vec, b, *cs, o, StrRanged)
-					if target != nil {
-						c.AttackTarget(target, &o, &b, cs, "")
-					}
-				}
-			} else {
-				if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) > 1 {
-					c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
-				} else {
-					c.AttackTarget((*cs)[0], &o, &b, cs, "")
-				}
-			}
-		} else {
-			dx := RandRange(-1, 1)
-			dy := RandRange(-1, 1)
-			c.Move(dx, dy, b, *cs)
-		}
-	case RangedPatherAI: // It will depend on ranged weapons and equipment implementation
-		if c.AITriggered == true {
-			if c.Equipment[SlotWeaponPrimary] != nil {
-				if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) >= FOVLength-1 {
-					// TODO:
-					// For now, every ranged skill has range equal to FOVLength-1
-					// but it should change in future.
-					c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
-				} else {
-					vec, err := NewVector(c.X, c.Y, (*cs)[0].X, (*cs)[0].Y)
-					if err != nil {
-						fmt.Println(err)
-					}
-					_ = ComputeVector(vec)
-					_, _, target, _ := ValidateVector(vec, b, *cs, o, StrRanged)
-					if target != (*cs)[0] {
-						c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
-					} else {
-						c.AttackTarget(target, &o, &b, cs, "")
-					}
-				}
-			} else if c.Equipment[SlotWeaponSecondary] != nil {
-				if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) >= FOVLength-1 {
-					// TODO:
-					// For now, every ranged skill has range equal to FOVLength-1
-					// but it should change in future.
-					c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
-				} else {
-					vec, err := NewVector(c.X, c.Y, (*cs)[0].X, (*cs)[0].Y)
-					if err != nil {
-						fmt.Println(err)
-					}
-					_ = ComputeVector(vec)
-					_, _, target, _ := ValidateVector(vec, b, *cs, o, StrRanged)
-					if target != (*cs)[0] {
-						c.MoveTowards(b, *cs, (*cs)[0].X, (*cs)[0].Y, ai)
-					} else {
-						c.AttackTarget(target, &o, &b, cs, "")
-					}
-				}
-			} else {
-				if c.DistanceTo((*cs)[0].X, (*cs)[0].Y) > 1 {
-					c.MoveTowards(b, (*cs), (*cs)[0].X, (*cs)[0].Y, ai)
-				} else {
-					c.AttackTarget((*cs)[0], &o, &b, cs, "")
-				}
-			}
-		} else {
-			dx := RandRange(-1, 1)
-			dy := RandRange(-1, 1)
-			c.Move(dx, dy, b, *cs)
+		switch {
+		// 1A - IF NOT AI TRIGGERED
+		case c.AITriggered == false &&
+			 p.Hidden == true:
+			 // continue patrolling
+		case c.AITriggered == false &&
+			 p.Hidden == false &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false:
+			 // continue patrolling
+		case c.AITriggered == false &&
+			 p.Hidden == false &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
+			 // continue patrolling
+		// 1B - IF AI TRIGGERED
+		case c.AITriggered == true &&
+			 p.Hidden == true &&
+			 c.DistanceTo(p.X, p.Y) <= 1:
+			 // enemy is standing next to the player
+			 // even in player is, in theory, hidden
+			 // it's too close to, being alerted,
+			 // not notice the player;
+			 // therefore: attack!
+		case c.AITriggered == true &&
+			 p.Hidden == true &&
+			 c.DistanceTo(p.X, p.Y) > 1 &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&:
+			 // enemy is alerted,
+			 // but far from the hidden player
+		case c.AITriggered == true &&
+			 p.Hidden == true &&
+			 c.DistanceTo(p.X, p.Y) > 1 &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
+			 // enemy is alerted, close (but not too close)
+			 // to the hidden player;
+			 // maybe in the same room?
+		case c.AITriggered == true &&
+			 p.Hidden == false &&
+			 c.DistanceTo(p.X, p.Y) <= 1:
+			 // player is not hidden, next to the enemy;
+			 // therefore, enemy attacks!
+		case c.AITriggered == true &&
+			 p.Hidden == false &&
+			 c.DistanceTo(p.X, p.Y) > 1 &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false:
+			 // enemy is alerted, player is not hidden, but
+			 // not close (not in fov) to the enemy
+			 // timer here?
+		case c.AITriggered == true &&
+			 p.Hidden == false &&
+			 c.DistanceTo(p.X, p.Y) > 1 &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
+			 // enemy is alerted, not too close to the player,
+			 // but actually see the player
 		}
 	}
 }

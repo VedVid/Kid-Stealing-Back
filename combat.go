@@ -100,9 +100,6 @@ func (c *Creature) AttackTarget(t *Creature, o *Objects, b *Board, cs *Creatures
 	switch {
 	case att < def: // Attack score if lower than target defense.
 		if crit == false {
-			if playerAttacks {
-				AddMessage(strings.Title(t.Name) + " deflects your attack.")
-			}
 		} else {
 			dmg = att2 // Critical hit, but against heavily armored enemy.
 		}
@@ -117,11 +114,6 @@ func (c *Creature) AttackTarget(t *Creature, o *Objects, b *Board, cs *Creatures
 			dmg = att
 		} else {
 			dmg = att + att2 // Critical attack!
-			if playerAttacks {
-				AddMessage("[color=dark green]You landed a critical attack!")
-			} else {
-				AddMessage("[color=dark red]You got critically hit by " + c.Name + ".")
-			}
 		}
 	}
 	if t == (*cs)[0] {

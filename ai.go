@@ -152,6 +152,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 				}
 			}
 		// 1B - IF AI TRIGGERED
+		// PLAYER HIDDEN
 		case c.AITriggered == true &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) <= 1:
@@ -160,6 +161,10 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			 // it's too close to, being alerted,
 			 // not notice the player;
 			 // therefore: attack!
+			c.AttackTarget((*cs)[0], &o, &b, cs, "")
+			c.LastSawX = p.X
+			c.LastSawY = p.Y
+			c.OutOfFOV = 0
 		case c.AITriggered == true &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&

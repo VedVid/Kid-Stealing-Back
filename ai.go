@@ -199,10 +199,15 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 		case c.AITriggered == true &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
-			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
-			 // enemy is alerted, close (but not too close)
-			 // to the hidden player;
-			 // maybe in the same room?
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
+			 c.OutOfFOV >= c.MaxOutOfFOV:
+			 // enemy is alerted,
+			 // but far from the hidden player
+			 // enemy just checks the last place
+			 // where the player was seen
+			 // then gives up
+			c.OutOfFOV++
+			c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
 		case c.AITriggered == true &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) <= 1:

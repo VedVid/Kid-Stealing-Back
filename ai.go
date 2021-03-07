@@ -115,15 +115,42 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 		// 1A - IF NOT AI TRIGGERED
 		case c.AITriggered == false &&
 			 p.Hidden == true:
-			 // continue patrolling
+			 // player hidden, continue patrolling
+			if c.DistanceTo(c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1]) > 1 {
+				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
+			} else {
+				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
+				c.NextPoint++
+				if c.NextPoint >= len(c.PatrolPoints) {
+					c.NextPoint = 0
+				}
+			}
 		case c.AITriggered == false &&
 			 p.Hidden == false &&
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false:
-			 // continue patrolling
+			 // player not in FOV, continue patrolling
+			if c.DistanceTo(c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1]) > 1 {
+				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
+			} else {
+				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
+				c.NextPoint++
+				if c.NextPoint >= len(c.PatrolPoints) {
+					c.NextPoint = 0
+				}
+			}
 		case c.AITriggered == false &&
 			 p.Hidden == false &&
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
-			 // continue patrolling
+			 // enemy didn't notice player yet; continue patrolling
+			if c.DistanceTo(c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1]) > 1 {
+				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
+			} else {
+				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
+				c.NextPoint++
+				if c.NextPoint >= len(c.PatrolPoints) {
+					c.NextPoint = 0
+				}
+			}
 		// 1B - IF AI TRIGGERED
 		case c.AITriggered == true &&
 			 p.Hidden == true &&

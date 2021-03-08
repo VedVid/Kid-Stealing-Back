@@ -45,6 +45,13 @@ const (
 )
 
 const (
+	AINotTriggered = iota
+	AITriggeringPhase1
+	AITriggeringPhase2
+	AITriggered
+)
+
+const (
 	// Probability of triggering AI
 	AITrigger = 92
 	OutOfFOVToForgetChance = 60
@@ -87,11 +94,18 @@ func TriggerAI(b Board, p, c *Creature) {
 	   player if is in monster's FOV. */
 	if IsInFOV(b, c.X, c.Y, p.X, p.Y) == true && RandInt(100) <= AITrigger {
 		if b[p.X][p.Y].Hides == false {
-			c.AITriggered = true
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
+			switch c.AITriggered {
+			case AINotTriggered:
+				c.AITriggered = AITriggeringPhase1
+			case AITriggeringPhase1:
+				c.AITriggered = AITriggeringPhase2
+			case AITriggeringPhase2:
+				c.AITriggered = AITriggered
+			}
 		}
-		if c.AITriggered == false {
+		if c.AITriggered != AITriggered {
 			c.Color = "#33a2ac"
 			c.ColorDark = "#33a2ac"
 			c.Char = "☺"
@@ -122,7 +136,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 	case PatrollingAI:
 		switch {
 		// 1A - IF NOT AI TRIGGERED
-		case c.AITriggered == false &&
+		case c.AITriggered != AITriggered &&
 			 p.Hidden == true:
 			 // player hidden, continue patrolling
 			if c.DistanceTo(c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1]) > 1 {
@@ -134,7 +148,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 					c.NextPoint = 0
 				}
 			}
-		case c.AITriggered == false &&
+		case c.AITriggered != AITriggered &&
 			 p.Hidden == false &&
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false:
 			 // player not in FOV, continue patrolling
@@ -147,7 +161,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 					c.NextPoint = 0
 				}
 			}
-		case c.AITriggered == false &&
+		case c.AITriggered != AITriggered &&
 			 p.Hidden == false &&
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
 			 // enemy didn't notice player yet; continue patrolling
@@ -162,7 +176,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			}
 		// 1B - IF AI TRIGGERED
 		// PLAYER HIDDEN
-		case c.AITriggered == true &&
+		case c.AITriggered == AITriggered &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) <= 1:
 			 // enemy is standing next to the player
@@ -174,7 +188,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
 			c.OutOfFOV = 0
-		case c.AITriggered == true &&
+		case c.AITriggered == AITriggered &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
@@ -186,7 +200,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 				c.LastSawX = c.X
 				c.LastSawY = c.Y
 				if RandInt(100) < 50 {
-					c.AITriggered = false
+					c.AITriggered = AINotTriggered
 					// ZERO LAST SAW
 				}
 			} else {
@@ -194,7 +208,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 				c.LastSawX = p.X
 				c.LastSawY = p.Y
 			}
-		case c.AITriggered == true &&
+		case c.AITriggered == AITriggered &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
@@ -206,7 +220,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			c.MoveTowards(b, *cs, p.X, p.Y, ai)
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
-		case c.AITriggered == true &&
+		case c.AITriggered == AITriggered &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
@@ -219,13 +233,13 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			c.OutOfFOV++
 			if c.X == c.LastSawX && c.Y == c.LastSawY {
 				if RandInt(100) < 50 {
-					c.AITriggered = false
+					c.AITriggered = AINotTriggered
 				}
 			} else {
 				c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)
 			}
 		// PLAYER NOT HIDDEN
-		case c.AITriggered == true &&
+		case c.AITriggered == AITriggered &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) <= 1:
 			 // player is not hidden, next to the enemy;
@@ -234,7 +248,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
 			c.OutOfFOV = 0
-		case c.AITriggered == true &&
+		case c.AITriggered == AITriggered &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
@@ -244,7 +258,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			c.MoveTowards(b, *cs, p.X, p.Y, ai)
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
-		case c.AITriggered == true &&
+		case c.AITriggered == AITriggered &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
@@ -256,7 +270,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			c.MoveTowards(b, *cs, p.X, p.Y, ai)
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
-		case c.AITriggered == true &&
+		case c.AITriggered == AITriggered &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
 			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
@@ -264,7 +278,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			c.OutOfFOV++
 			if c.X == c.LastSawX && c.Y == c.LastSawY {
 				if RandInt(100) < 50 {
-					c.AITriggered = false
+					c.AITriggered = AINotTriggered
 				}
 			} else {
 				c.MoveTowards(b, *cs, c.LastSawX, c.LastSawY, ai)

@@ -109,7 +109,7 @@ func FindAdjacent(b Board, c *Creature, cs Creatures, nodes [][]*Node, frontiers
 				if b[x][y].Blocked == true {
 					continue //tile is blocked
 				}
-				if c.AITriggered == false {
+				if c.AITriggered != AITriggered {
 					if b[x][y].Char != "." && b[x][y].Char != "+" {
 						if b[x][y].Treasure == false {
 							continue

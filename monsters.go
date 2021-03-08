@@ -215,7 +215,7 @@ func (c *Creature) Move(tx, ty int, b Board, cs Creatures) bool {
 					if i == 0 {
 						continue
 					}
-					if IsInFOV(b, v.X, v.Y, c.X, c.Y) && v.AITriggered {
+					if IsInFOV(b, v.X, v.Y, c.X, c.Y) && v.AITriggered == AITriggered {
 						hidden = false
 					}
 				}
@@ -231,7 +231,7 @@ func (c *Creature) Move(tx, ty int, b Board, cs Creatures) bool {
 					if i == 0 {
 						continue
 					}
-					if IsInFOV(b, v.X, v.Y, c.X, c.Y) && v.AITriggered {
+					if IsInFOV(b, v.X, v.Y, c.X, c.Y) && v.AITriggered == AITriggered {
 						hidden = false
 					}
 				}

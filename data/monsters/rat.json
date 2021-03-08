@@ -8,7 +8,7 @@
     "Blocked":true,
     "BlocksSight":false,
     "AIType":3,
-    "AITriggered":false,
+    "AITriggered":0,
     "HPMax":1,
     "HPCurrent":1,
     "Attack":2,

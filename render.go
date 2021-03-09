@@ -272,14 +272,14 @@ func PrintCreatures(b Board, c Creatures) {
 				blt.Layer(j)
 				SmartClear(v.X, v.Y, MonsterEntity)
 			}
-		} else {
-			if RandInt(100) <= FootstepsChances && c[0].DistanceTo(v.X, v.Y) < 10 {
+		}
+
+
+
+		if IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == false {
+			if v.Char == "‼" {
 				blt.Layer(v.Layer)
-				ch := "‼"
-				if v.Char == "]" || v.Char == "[" {
-					ch = v.Char + v.Char
-				}
-				glyph := "[font=game][color=dark red]" + ch
+				glyph := "[font=game][color=" + v.Color + "]" + v.Char
 				SmartPrint(v.X, v.Y, MonsterEntity, glyph)
 				for j := 0; j < v.Layer; j++ {
 					blt.Layer(j)
@@ -287,6 +287,7 @@ func PrintCreatures(b Board, c Creatures) {
 				}
 			}
 		}
+
 	}
 	// Print player
 	blt.Layer(PlayerLayer)

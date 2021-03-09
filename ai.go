@@ -100,7 +100,7 @@ func TriggerAI(b Board, p, c *Creature) {
 	if p.Hidden == true {
 		fov = FOVLengthShort
 	}
-	if IsInFOV(b, c.X, c.Y, p.X, p.Y, fov) == true && RandInt(100) <= AITrigger {
+	if IsInFOV(b, c.X, c.Y, p.X, p.Y, FOVLength) == true && RandInt(100) <= AITrigger {
 		if b[p.X][p.Y].Hides == false {
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
@@ -113,16 +113,23 @@ func TriggerAI(b Board, p, c *Creature) {
 				c.AITriggered = AITriggered
 			}
 		}
-		if c.AITriggered != AITriggered {
-			c.Color = "#33a2ac"
-			c.ColorDark = "#33a2ac"
-			c.Char = "☺"
-		} else {
-			c.Color = "#d17519"
-			c.ColorDark = "#d17519"
-			c.Char = "☹"
-		}
 	}
+	if c.AITriggered != AITriggered {
+		c.Color = "#33a2ac"
+		c.ColorDark = "#33a2ac"
+		c.Char = "☺"
+	} else {
+		c.Color = "#d17519"
+		c.ColorDark = "#d17519"
+		c.Char = "☹"
+	}
+	if IsInFOV(b, p.X, p.Y, c.X, c.Y, fov) == false &&
+		p.DistanceTo(c.X, c.Y) < 10 &&
+		RandInt(100) <= FootstepsChances {
+			c.Color = "dark red"
+			c.ColorDark = "dark red"
+			c.Char = "‼"
+		}
 }
 
 func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {

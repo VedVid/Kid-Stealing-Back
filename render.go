@@ -273,9 +273,6 @@ func PrintCreatures(b Board, c Creatures) {
 				SmartClear(v.X, v.Y, MonsterEntity)
 			}
 		}
-
-
-
 		if IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == false {
 			if v.Char == "‼" {
 				blt.Layer(v.Layer)
@@ -287,7 +284,6 @@ func PrintCreatures(b Board, c Creatures) {
 				}
 			}
 		}
-
 	}
 	// Print player
 	blt.Layer(PlayerLayer)

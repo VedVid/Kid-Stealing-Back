@@ -144,7 +144,7 @@ func PrintBoard(b Board, c Creatures) {
 	   - is in player's field of view (prints "normal" color) or
 	   - is AlwaysVisible (prints dark color). */
 	fov := FOVLength
-	if c[0].Hidden == true {
+	if b[c[0].X][c[0].Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	for x := 0; x < MapSizeX; x++ {
@@ -188,7 +188,7 @@ func PrintObjects(b Board, o Objects, c Creatures) {
 	   Prints every object on its coords if certain conditions are met:
 	   AlwaysVisible bool is set to true, or is in player fov. */
 	fov := FOVLength
-	if c[0].Hidden == true {
+	if b[c[0].X][c[0].Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	for _, v := range o {
@@ -226,7 +226,7 @@ func PrintCreatures(b Board, c Creatures) {
 	   under the living monsters. */
 	// Print corpses
 	fov := FOVLength
-	if c[0].Hidden == true {
+	if b[c[0].X][c[0].Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	for i, v := range c {

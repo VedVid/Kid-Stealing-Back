@@ -47,7 +47,7 @@ func (c *Creature) Look(b Board, o Objects, cs Creatures) {
 	startX, startY := c.X, c.Y
 	targetX, targetY := startX, startY
 	fov := FOVLength
-	if c.Hidden == true {
+	if b[cs[0].X][cs[0].Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	for {
@@ -149,7 +149,7 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLe
 		finderLength = 1
 	}
 	fov := FOVLength
-	if c.Hidden == true {
+	if b[c.X][c.Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	turnSpent := false

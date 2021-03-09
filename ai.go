@@ -97,7 +97,7 @@ func TriggerAI(b Board, p, c *Creature) {
 	   AITrigger is probability to notice (and, therefore, switch AITriggered)
 	   player if is in monster's FOV. */
 	fov := FOVLength
-	if p.Hidden == true {
+	if b[p.X][p.Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	if IsInFOV(b, c.X, c.Y, p.X, p.Y, FOVLength) == true && RandInt(100) <= AITrigger {
@@ -148,7 +148,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 	ai := c.AIType
 	p := (*cs)[0]
 	fov := FOVLength
-	if p.Hidden == true {
+	if b[p.X][p.Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	switch ai {

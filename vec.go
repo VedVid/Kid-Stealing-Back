@@ -252,7 +252,7 @@ func PrintVector(vec *Vector, why string, color1, color2 string, b Board, o Obje
 	blt.Layer(LookLayer)
 	length := len(vec.TilesX)
 	fov := FOVLength
-	if c[0].Hidden == true {
+	if b[c[0].X][c[0].Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	for i := 0; i < length; i++ {

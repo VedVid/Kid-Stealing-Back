@@ -61,8 +61,8 @@ func MakeRoomsMap(b *Board) {
 			if x > borderIndexX || y > borderIndexY {
 				(*b)[x][y].Char = "."
 				(*b)[x][y].Name = "floor"
-				(*b)[x][y].Color = "light grey"
-				(*b)[x][y].ColorDark = "grey"
+				(*b)[x][y].Color = "lighter grey"
+				(*b)[x][y].ColorDark = "darker grey"
 				(*b)[x][y].Layer = BoardLayer
 				(*b)[x][y].Explored = true
 				(*b)[x][y].Slows = false
@@ -133,8 +133,8 @@ func MakeRoomsMap(b *Board) {
 					case ".":
 						(*b)[cx][cy].Char = "."
 						(*b)[cx][cy].Name = "floor"
-						(*b)[cx][cy].Color = "light grey"
-						(*b)[cx][cy].ColorDark = "grey"
+						(*b)[cx][cy].Color = "lighter grey"
+						(*b)[cx][cy].ColorDark = "darker grey"
 						(*b)[cx][cy].Layer = BoardLayer
 						(*b)[cx][cy].Explored = true
 						(*b)[cx][cy].Slows = false
@@ -381,8 +381,8 @@ func MakeRoomsMap(b *Board) {
 				for xx := 0; xx < roomSizeX; xx++ {
 					(*b)[x][y].Char = "."
 					(*b)[x][y].Name = "floor"
-					(*b)[x][y].Color = "light grey"
-					(*b)[x][y].ColorDark = "grey"
+					(*b)[x][y].Color = "lighter grey"
+					(*b)[x][y].ColorDark = "darker grey"
 					(*b)[x][y].Layer = BoardLayer
 					(*b)[x][y].Explored = true
 					(*b)[x][y].Slows = false
@@ -402,8 +402,8 @@ func MakeRoomsMap(b *Board) {
 				for yy := 0; yy < roomSizeY; yy++ {
 					(*b)[x][y].Char = "."
 					(*b)[x][y].Name = "floor"
-					(*b)[x][y].Color = "light grey"
-					(*b)[x][y].ColorDark = "grey"
+					(*b)[x][y].Color = "lighter grey"
+					(*b)[x][y].ColorDark = "darker grey"
 					(*b)[x][y].Layer = BoardLayer
 					(*b)[x][y].Explored = true
 					(*b)[x][y].Slows = false
@@ -480,8 +480,8 @@ func MakeRoomsMap(b *Board) {
 				} else if chance < floorChance {
 					(*b)[x][y].Char = "."
 					(*b)[x][y].Name = "floor"
-					(*b)[x][y].Color = "light grey"
-					(*b)[x][y].ColorDark = "grey"
+					(*b)[x][y].Color = "lighter grey"
+					(*b)[x][y].ColorDark = "darker grey"
 					(*b)[x][y].Layer = BoardLayer
 					(*b)[x][y].Explored = true
 					(*b)[x][y].Slows = false

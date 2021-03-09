@@ -119,8 +119,8 @@ func InitializeEmptyMap() Board {
 	for x := 0; x < MapSizeX; x++ {
 		for y := 0; y < MapSizeY; y++ {
 			var err error
-			b[x][y], err = NewTile(BoardLayer, x, y, ".", "floor", "light gray",
-				"dark gray", true, true, false, false, false, false, false, "", "")
+			b[x][y], err = NewTile(BoardLayer, x, y, ".", "floor", "lighter gray",
+				"darker gray", true, true, false, false, false, false, false, "", "")
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -132,8 +132,8 @@ func InitializeEmptyMap() Board {
 func ZeroTile(t *Tile) {
 	t.Char = "."
 	t.Name = "floor"
-	t.Color = "light gray"
-	t.ColorDark = "dark gray"
+	t.Color = "lighter gray"
+	t.ColorDark = "darker gray"
 	t.Layer = BoardLayer
 	t.AlwaysVisible = true
 	t.Explored = true

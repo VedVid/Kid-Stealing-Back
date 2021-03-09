@@ -128,7 +128,7 @@ func (c *Creature) MonstersInFov(b Board, cs Creatures) Creatures {
 	   Then function iterates through Creatures passed as argument, and
 	   adds every monster that is in c's fov, skipping source. */
 	fov := FOVLength
-	if c.Hidden == true {
+	if b[cs[0].X][cs[0].Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	var inFov = Creatures{}
@@ -152,7 +152,7 @@ func (c *Creature) ObjectsInFov(b Board, o Objects) Objects {
 	   MonstersInFov. It returns slice of Objects that are present
 	   in c's field of view. */
 	fov := FOVLength
-	if c.Hidden == true {
+	if b[c.X][c.Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	var inFov = Objects{}
@@ -194,7 +194,7 @@ func GetAllStringsInFovTile(sx, sy, tx, ty int, b Board, c Creatures, o Objects)
 	   to create slice of strings of objects in field of view. */
 	var s = []string{}
 	fov := FOVLength
-	if c[0].Hidden == true {
+	if b[c[0].X][c[0].Y].Hides == true {
 		fov = FOVLengthShort
 	}
 	if IsInFOV(b, sx, sy, tx, ty, fov) == true {

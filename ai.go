@@ -53,7 +53,7 @@ const (
 
 const (
 	// Probability of triggering AI
-	AITrigger = 92
+	AITrigger = 85
 	OutOfFOVToForgetChance = 60
 )
 

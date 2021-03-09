@@ -143,6 +143,10 @@ func PrintBoard(b Board, c Creatures) {
 	   is Explored already, and:
 	   - is in player's field of view (prints "normal" color) or
 	   - is AlwaysVisible (prints dark color). */
+	fov := FOVLength
+	if c[0].Hidden == true {
+		fov = FOVLengthShort
+	}
 	for x := 0; x < MapSizeX; x++ {
 		for y := 0; y < MapSizeY; y++ {
 			// Technically, "t" is new variable with own memory address...
@@ -157,7 +161,7 @@ func PrintBoard(b Board, c Creatures) {
 					glyph := "[font=game][color=" + t.TreasureCol + "]" + t.TreasureChar
 					SmartPrint(t.X, t.Y, MapEntity, glyph)
 				} else {
-					if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y) == true {
+					if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y, fov) == true {
 						glyph := "[font=game][color=" + t.Color + "]" + ch
 						SmartPrint(t.X, t.Y, MapEntity, glyph)
 					} else {
@@ -183,8 +187,12 @@ func PrintObjects(b Board, o Objects, c Creatures) {
 	   always pass "]]" instead of "]".
 	   Prints every object on its coords if certain conditions are met:
 	   AlwaysVisible bool is set to true, or is in player fov. */
+	fov := FOVLength
+	if c[0].Hidden == true {
+		fov = FOVLengthShort
+	}
 	for _, v := range o {
-		if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y) == true) ||
+		if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
 			((v.AlwaysVisible == true) && (b[v.X][v.Y].Explored == true)) {
 			blt.Layer(v.Layer)
 			ch := v.Char
@@ -217,6 +225,10 @@ func PrintCreatures(b Board, c Creatures) {
 	   This way, it is ensured that corpses will always be hidden
 	   under the living monsters. */
 	// Print corpses
+	fov := FOVLength
+	if c[0].Hidden == true {
+		fov = FOVLengthShort
+	}
 	for i, v := range c {
 		if i == 0 {
 			continue // Player will be drawn separately
@@ -224,7 +236,7 @@ func PrintCreatures(b Board, c Creatures) {
 		if v.Layer != DeadLayer {
 			continue
 		}
-		if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y) == true) ||
+		if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
 			(v.AlwaysVisible == true) {
 			blt.Layer(v.Layer)
 			ch := v.Char
@@ -247,7 +259,7 @@ func PrintCreatures(b Board, c Creatures) {
 		if v.Layer == DeadLayer {
 			continue
 		}
-		if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y) == true) ||
+		if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
 			(v.AlwaysVisible == true) {
 			blt.Layer(v.Layer)
 			ch := v.Char

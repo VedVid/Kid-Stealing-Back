@@ -96,7 +96,11 @@ func TriggerAI(b Board, p, c *Creature) {
 	   Enemy with AITriggered set to false will ignore the player existence.
 	   AITrigger is probability to notice (and, therefore, switch AITriggered)
 	   player if is in monster's FOV. */
-	if IsInFOV(b, c.X, c.Y, p.X, p.Y) == true && RandInt(100) <= AITrigger {
+	fov := FOVLength
+	if p.Hidden == true {
+		fov = FOVLengthShort
+	}
+	if IsInFOV(b, c.X, c.Y, p.X, p.Y, fov) == true && RandInt(100) <= AITrigger {
 		if b[p.X][p.Y].Hides == false {
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
@@ -136,6 +140,10 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 	   unifying monster's behavior would result in smaller flexibility. */
 	ai := c.AIType
 	p := (*cs)[0]
+	fov := FOVLength
+	if p.Hidden == true {
+		fov = FOVLengthShort
+	}
 	switch ai {
 	case PatrollingAI:
 		switch {
@@ -154,7 +162,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			}
 		case c.AITriggered != AITriggered &&
 			 p.Hidden == false &&
-			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false:
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y, fov) == false:
 			 // player not in FOV, continue patrolling
 			if c.DistanceTo(c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1]) > 1 {
 				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
@@ -167,7 +175,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			}
 		case c.AITriggered != AITriggered &&
 			 p.Hidden == false &&
-			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y, fov) == true:
 			 // enemy didn't notice player yet; continue patrolling
 			if c.DistanceTo(c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1]) > 1 {
 				c.MoveTowards(b, *cs, c.PatrolPoints[c.NextPoint][0], c.PatrolPoints[c.NextPoint][1], ai)
@@ -195,7 +203,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 		case c.AITriggered == AITriggered &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
-			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y, fov) == true:
 			 // enemy is alerted, close (but not too close)
 			 // to the hidden player;
 			 // maybe in the same room?
@@ -215,7 +223,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 		case c.AITriggered == AITriggered &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
-			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y, fov) == false &&
 			 c.OutOfFOV < c.MaxOutOfFOV:
 			 // enemy is alerted,
 			 // but far from the hidden player
@@ -227,7 +235,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 		case c.AITriggered == AITriggered &&
 			 p.Hidden == true &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
-			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y, fov) == false &&
 			 c.OutOfFOV >= c.MaxOutOfFOV:
 			 // enemy is alerted,
 			 // but far from the hidden player
@@ -255,7 +263,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 		case c.AITriggered == AITriggered &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
-			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == true:
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y, fov) == true:
 			 // enemy is alerted, not too close to the player,
 			 // but actually see the player
 			c.OutOfFOV = 0
@@ -265,7 +273,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 		case c.AITriggered == AITriggered &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
-			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y, fov) == false &&
 			 c.OutOfFOV < c.MaxOutOfFOV:
 			 // enemy is alerted, player is not hidden, but
 			 // not close (not in fov) to the enemy
@@ -277,7 +285,7 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 		case c.AITriggered == AITriggered &&
 			 p.Hidden == false &&
 			 c.DistanceTo(p.X, p.Y) > 1 &&
-			 IsInFOV(b, c.X, c.Y, p.X, p.Y) == false &&
+			 IsInFOV(b, c.X, c.Y, p.X, p.Y, fov) == false &&
 			 c.OutOfFOV >= c.MaxOutOfFOV:
 			c.OutOfFOV++
 			if c.X == c.LastSawX && c.Y == c.LastSawY {

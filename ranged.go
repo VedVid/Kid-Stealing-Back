@@ -46,6 +46,10 @@ func (c *Creature) Look(b Board, o Objects, cs Creatures) {
 	   Loop breaks with Escape, Space or Enter input. */
 	startX, startY := c.X, c.Y
 	targetX, targetY := startX, startY
+	fov := FOVLength
+	if c.Hidden == true {
+		fov = FOVLengthShort
+	}
 	for {
 		var mon = []string{}
 		var hps = []int{}
@@ -60,7 +64,7 @@ func (c *Creature) Look(b Board, o Objects, cs Creatures) {
 		PrintVector(vec, VectorWhyInspect, VectorColorNeutral, VectorColorNeutral, b, o, cs)
 		if b[targetX][targetY].Explored == true {
 			tt, cc, oo := GetAllThingsFromTile(targetX, targetY, b, cs, o)
-			if IsInFOV(b, c.X, c.Y, targetX, targetY) == true {
+			if IsInFOV(b, c.X, c.Y, targetX, targetY, fov) == true {
 				for _, v := range cc {
 					s := "[color=" + v.Color + "]" + v.Char + "[/color] " + v.Name + " "
 					mon = append(mon, s)
@@ -113,7 +117,7 @@ func PrintLookingMessage(monstersSlice, objectsSlice, tilesSlice []string, hpSli
 	blt.Refresh()
 }
 
-func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string) bool {
+func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLength int) bool {
 	/* Target is method of Creature, that takes game map, objects, and
 	   creatures as arguments. Returns bool that serves as indicator if
 	   action took some time or not.
@@ -140,16 +144,20 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string) bool 
 	      are in range and fov, but line of shot is not clear
 	    * in other cases, game will try to move cursor; invalid input
 	      is ignored */
-	finderLength := FOVLength
+	finderLength := fovLength
 	if dist == StrMelee {
 		finderLength = 1
+	}
+	fov := FOVLength
+	if c.Hidden == true {
+		fov = FOVLengthShort
 	}
 	turnSpent := false
 	var target *Creature
 	targets := c.FindTargets(finderLength, b, *cs, *o)
 	if dist == StrRanged || dist == StrThrowable {
 		if Game.LastTarget != nil && Game.LastTarget != c &&
-			IsInFOV(b, c.X, c.Y, Game.LastTarget.X, Game.LastTarget.Y) == true {
+			IsInFOV(b, c.X, c.Y, Game.LastTarget.X, Game.LastTarget.Y, fov) == true {
 			target = Game.LastTarget
 		} else {
 			var err error
@@ -160,7 +168,7 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string) bool 
 		}
 	} else {
 		if Game.LastTarget != nil && Game.LastTarget != c &&
-			IsInFOV(b, c.X, c.Y, Game.LastTarget.X, Game.LastTarget.Y) == true &&
+			IsInFOV(b, c.X, c.Y, Game.LastTarget.X, Game.LastTarget.Y, fov) == true &&
 			(c.X == Game.LastTarget.X || c.Y == Game.LastTarget.Y) {
 			target = Game.LastTarget
 		} else {

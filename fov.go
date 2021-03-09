@@ -30,9 +30,10 @@ import "math"
 
 const (
 	// Values for handling field of view algorithm execution.
-	FOVRays   = 360 // Whole area around player; it may not work properly with other values.
-	FOVLength = 5   // Sight range.
-	FOVStep   = 1
+	FOVRays        = 360 // Whole area around player; it may not work properly with other values.
+	FOVLength      = 5   // Sight range.
+	FOVLengthShort = 3
+	FOVStep        = 1
 )
 
 var (
@@ -81,7 +82,7 @@ func CastRays(b Board, sx, sy int) {
 	}
 }
 
-func IsInFOV(b Board, sx, sy, tx, ty int) bool {
+func IsInFOV(b Board, sx, sy, tx, ty, fovLength int) bool {
 	/* Function isInFOV checks if target (tx, ty) is in fov of source (sx, sy).
 	   Returns true if tx, ty == sx, sy; otherwise, it casts (FOVRays / fovStep)
 	   rays (bigger fovStep means faster but more error-prone algorithm)
@@ -92,8 +93,8 @@ func IsInFOV(b Board, sx, sy, tx, ty int) bool {
 	if sx == tx && sy == ty {
 		return true
 	}
-	if sx < tx-FOVLength || sx > tx+FOVLength ||
-		sy < ty-FOVLength || sy > ty+FOVLength {
+	if sx < tx-fovLength || sx > tx+fovLength ||
+		sy < ty-fovLength || sy > ty+fovLength {
 		return false
 	}
 	for i := 0; i < FOVRays; i += FOVStep {
@@ -101,7 +102,7 @@ func IsInFOV(b Board, sx, sy, tx, ty int) bool {
 		rayY := cosBase[i]
 		x := float64(sx)
 		y := float64(sy)
-		for j := 0; j < FOVLength; j++ {
+		for j := 0; j < fovLength; j++ {
 			x -= rayX
 			y -= rayY
 			if x < 0 || y < 0 || x > MapSizeX-1 || y > MapSizeY-1 {
@@ -126,6 +127,10 @@ func (c *Creature) MonstersInFov(b Board, cs Creatures) Creatures {
 	   these monsters that are in c's field of view.
 	   Then function iterates through Creatures passed as argument, and
 	   adds every monster that is in c's fov, skipping source. */
+	fov := FOVLength
+	if c.Hidden == true {
+		fov = FOVLengthShort
+	}
 	var inFov = Creatures{}
 	for i := 0; i < len(cs); i++ {
 		v := cs[i]
@@ -135,7 +140,7 @@ func (c *Creature) MonstersInFov(b Board, cs Creatures) Creatures {
 		if v.HPCurrent <= 0 {
 			continue
 		}
-		if IsInFOV(b, c.X, c.Y, v.X, v.Y) == true {
+		if IsInFOV(b, c.X, c.Y, v.X, v.Y, fov) == true {
 			inFov = append(inFov, cs[i])
 		}
 	}
@@ -146,10 +151,14 @@ func (c *Creature) ObjectsInFov(b Board, o Objects) Objects {
 	/* ObjectsInFov is method of Creature that works similar to
 	   MonstersInFov. It returns slice of Objects that are present
 	   in c's field of view. */
+	fov := FOVLength
+	if c.Hidden == true {
+		fov = FOVLengthShort
+	}
 	var inFov = Objects{}
 	for i := 0; i < len(o); i++ {
 		v := o[i]
-		if IsInFOV(b, c.X, c.Y, v.X, v.Y) == true {
+		if IsInFOV(b, c.X, c.Y, v.X, v.Y, fov) == true {
 			inFov = append(inFov, o[i])
 		}
 	}
@@ -184,7 +193,11 @@ func GetAllStringsInFovTile(sx, sy, tx, ty int, b Board, c Creatures, o Objects)
 	/* GetAllStringInFovTile is function that uses IsInFOV and GetAllStringsFromTile
 	   to create slice of strings of objects in field of view. */
 	var s = []string{}
-	if IsInFOV(b, sx, sy, tx, ty) == true {
+	fov := FOVLength
+	if c[0].Hidden == true {
+		fov = FOVLengthShort
+	}
+	if IsInFOV(b, sx, sy, tx, ty, fov) == true {
 		return GetAllStringsFromTile(tx, ty, b, c, o)
 	}
 	return s

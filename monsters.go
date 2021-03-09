@@ -215,7 +215,7 @@ func (c *Creature) Move(tx, ty int, b Board, cs Creatures) bool {
 					if i == 0 {
 						continue
 					}
-					if IsInFOV(b, v.X, v.Y, c.X, c.Y) && v.AITriggered == AITriggered {
+					if IsInFOV(b, v.X, v.Y, c.X, c.Y, FOVLength) && v.AITriggered == AITriggered {
 						hidden = false
 					}
 				}
@@ -231,7 +231,7 @@ func (c *Creature) Move(tx, ty int, b Board, cs Creatures) bool {
 					if i == 0 {
 						continue
 					}
-					if IsInFOV(b, v.X, v.Y, c.X, c.Y) && v.AITriggered == AITriggered {
+					if IsInFOV(b, v.X, v.Y, c.X, c.Y, FOVLength) && v.AITriggered == AITriggered {
 						hidden = false
 					}
 				}
@@ -628,7 +628,7 @@ func SpawnMonsters(b Board, c *Creatures) {
 					// enemies next to the map center
 					x = RandRange(0, (MapSizeX-4) / 2)
 					y = RandRange(0, (MapSizeY-4) / 2)
-					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y) == false {
+					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y, FOVLength) == false {
 						break
 					}
 				}
@@ -639,7 +639,7 @@ func SpawnMonsters(b Board, c *Creatures) {
 				for {
 					x = RandRange((MapSizeX+4) / 2, MapSizeX-1)
 					y = RandRange(0, (MapSizeY-4) / 2)
-					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y) == false {
+					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y, FOVLength) == false {
 						break
 					}
 				}
@@ -650,7 +650,7 @@ func SpawnMonsters(b Board, c *Creatures) {
 				for {
 					x = RandRange((MapSizeX+4) / 2, MapSizeX-1)
 					y = RandRange((MapSizeY+4) / 2, MapSizeY-1)
-					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y) == false {
+					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y, FOVLength) == false {
 						break
 					}
 				}
@@ -661,7 +661,7 @@ func SpawnMonsters(b Board, c *Creatures) {
 				for {
 					x = RandRange(0, (MapSizeX-4) / 2)
 					y = RandRange((MapSizeY+4) / 2, MapSizeY-1)
-					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y) == false {
+					if b[x][y].Char == "." && IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y, FOVLength) == false {
 						break
 					}
 				}
@@ -707,7 +707,7 @@ func SpawnMonsters(b Board, c *Creatures) {
 					x = RandRange(1, MapSizeX-2)
 					y = MapSizeY - 2
 				}
-				if IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y) == false {
+				if IsInFOV(b, (*c)[0].X, (*c)[0].Y, x, y, FOVLength) == false {
 					break
 				}
 			}

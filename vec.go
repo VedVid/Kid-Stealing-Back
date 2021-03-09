@@ -251,6 +251,10 @@ func PrintVector(vec *Vector, why string, color1, color2 string, b Board, o Obje
 	RenderAll(b, o, c)
 	blt.Layer(LookLayer)
 	length := len(vec.TilesX)
+	fov := FOVLength
+	if c[0].Hidden == true {
+		fov = FOVLengthShort
+	}
 	for i := 0; i < length; i++ {
 		if i == 0 && length > 1 {
 			// Do not draw over player, unless he is targeting self.
@@ -266,7 +270,7 @@ func PrintVector(vec *Vector, why string, color1, color2 string, b Board, o Obje
 				}
 			} else if why == VectorWhyTarget {
 				if IsInFOV(b,
-					vec.StartX, vec.StartY, vec.TargetX, vec.TargetY) == true {
+					vec.StartX, vec.StartY, vec.TargetX, vec.TargetY, fov) == true {
 					if vec.Values[i] == true {
 						PrintRangedCharacter(x, y, color1, true)
 					} else {
@@ -275,7 +279,7 @@ func PrintVector(vec *Vector, why string, color1, color2 string, b Board, o Obje
 				} else {
 					if IsInFOV(b,
 						vec.StartX, vec.StartY,
-						vec.TilesX[i], vec.TilesY[i]) == true {
+						vec.TilesX[i], vec.TilesY[i], fov) == true {
 						PrintRangedCharacter(x, y, color1, true)
 					} else {
 						PrintRangedCharacter(x, y, color2, false)

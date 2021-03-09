@@ -4,6 +4,6 @@
 
 - start with unexplored dungeon
 
-- maybe hidden player should have shorter FOV? it would need adding some kind of "footsteps" system
+- maybe hidden player should have shorter FOV?
 
 - NEED TO CHECK WHAT IS DEFAULT STATE OF LAST SAW AND HOW IT MUTATES

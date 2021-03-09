@@ -57,6 +57,10 @@ const (
 	OutOfFOVToForgetChance = 60
 )
 
+const (
+	FootstepsChances = 20
+)
+
 func CreaturesTakeTurn(b Board, c *Creatures, o Objects, playerSpeed int) {
 	/* Function CreaturesTakeTurn is supposed to handle all enemy creatures
 	   actions: movement, attacking, etc.

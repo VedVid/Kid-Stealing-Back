@@ -97,6 +97,7 @@ type FighterProperties struct {
 	MediumItem1    bool
 	MediumItem2    bool
 	HeavyItem1     bool
+	StoleAnything  bool
 }
 
 type ObjectProperties struct {

@@ -109,6 +109,7 @@ func NewPlayer(x, y int) (*Creature, error) {
 		player.PatrolPoints = [][]int{}
 	}
 	player.Speed = SpeedFast
+	player.StoleAnything = false
 	return player, err2
 }
 

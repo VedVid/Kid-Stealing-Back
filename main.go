@@ -74,7 +74,7 @@ func main() {
 			UpdateScores(*actors)
 			SaveScores(HighScores)
 			DeleteSaves()
-			blt.Read()
+			PrintOverlay(*cells, PlayerDied, (*actors)[0])
 			break
 		}
 		key := ReadInput()

@@ -53,9 +53,14 @@ const (
 const (
 	_ = iota
 	HiddenInTunnel
+	FinishedGameWithAllTreasures
+	FinishedGameWithSomeTreasures
+	FinishedGameWithoutTreasures
+	FinishedGameWithoutExploringAllTiles
+	PlayerDied
 )
 
-func PrintOverlay(b Board, situation int) {
+func PrintOverlay(b Board, situation int, c *Creature) {
 	blt.Layer(BoardLayer)
 	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
 	blt.Layer(DeadLayer)
@@ -65,6 +70,8 @@ func PrintOverlay(b Board, situation int) {
 	blt.Layer(CreaturesLayer)
 	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
 	blt.Layer(PlayerLayer)
+	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
+	blt.Layer(OverlayLayer)
 	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
 	blt.Refresh()
 	blt.Layer(OverlayLayer)
@@ -81,28 +88,28 @@ func PrintOverlay(b Board, situation int) {
 				}
 			}
 		}
-		msg1 := "[font=ui]You are safe, hidden in the old tunnel."
+		msg1 := "[font=ui]You are about to hide in the old tunnel."
 		msg2 := ""
 		msg3 := ""
 		msg4 := ""
-		c := -1
+		cc := -1
 		if unexplored == 0 && treasures == 0 {
 			msg2 = "[font=ui]You managed to stole back all the items\nrobbed by the invaders."
 			msg3 = "[font=ui]Good job, kid.\nNow all you need to do is to wait\nuntil the vikings will leave this place."
 			msg4 = "[font=ui](1) Wait..."
-			c = 0
+			cc = 0
 		}
 		if unexplored == 0 && treasures > 0 {
 			msg2 = "[font=ui]The vikings still have the stolen goods..."
 			msg3 = "[font=ui]Are you going to go back to the keep,\nor rather play it safe and wait\nuntil the invaders will leave this place?"
 			msg4 = "[font=ui](1) Go back   (2) Wait"
-			c = 1
+			cc = 1
 		}
 		if unexplored > 0 {
 			msg2 = "[font=ui]There are still places in this keep that you did not visit."
 			msg3 = "[font=ui]Are you going to go back to the keep,\nor rather play it safe and wait\nuntil the invaders will leave this place?"
 			msg4 = "[font=ui](1) Go back   (2) Wait"
-			c = 2
+			cc = 2
 		}
 		SmartPrint(6, 3, UIEntity, msg1)
 		SmartPrint(6, 6, UIEntity, msg2)
@@ -112,22 +119,66 @@ func PrintOverlay(b Board, situation int) {
 		for {
 			key := ReadInput()
 			if key == blt.TK_1 {
-				if c == 0 {
-					blt.Close()
-					os.Exit(0)
+				if cc == 0 {
+					PrintOverlay(b, FinishedGameWithAllTreasures, c)
 				}
-				if c == 1 || c == 2 {
+				if cc == 1 || cc == 2 {
 					break
 				}
 			} else if key == blt.TK_2 {
-				if c == 0 {
-					break
-				} else if c == 1 || c == 2 {
-					blt.Close()
-					os.Exit(0)
+				if cc == 0 {
+					continue
+				} else if cc == 1 {
+					if c.StoleAnything {
+						PrintOverlay(b, FinishedGameWithSomeTreasures, c)
+					} else {
+						PrintOverlay(b, FinishedGameWithoutTreasures, c)
+					}
+				} else if cc == 2 {
+					PrintOverlay(b, FinishedGameWithoutExploringAllTiles, c)
 				}
 			}
 		}
+	}
+	if situation == FinishedGameWithAllTreasures {
+		msg := "[font=ui]Congratulations! You finished the game,\ncollecting all the stolen treasures.\n\nPress any key to exit..."
+		SmartPrint(6, 8, UIEntity, msg)
+		blt.Refresh()
+		_ = ReadInput()
+		blt.Close()
+		os.Exit(0)
+	}
+	if situation == FinishedGameWithSomeTreasures {
+		msg := "[font=ui]Congratulations! You finished the game,\nstealing back some robbed treasures.\n\nPress any key to exit..."
+		SmartPrint(6, 8, UIEntity, msg)
+		blt.Refresh()
+		_ = ReadInput()
+		blt.Close()
+		os.Exit(0)
+	}
+	if situation == FinishedGameWithoutTreasures {
+		msg := "[font=ui]You finished the game.\nMaybe you didn't recover any valuables,\nbut you are alive, at least.\n\nPress any key to exit..."
+		SmartPrint(6, 8, UIEntity, msg)
+		blt.Refresh()
+		_ = ReadInput()
+		blt.Close()
+		os.Exit(0)
+	}
+	if situation == FinishedGameWithoutExploringAllTiles {
+		msg := "[font=ui]You finished the game.\nYou didn't have a chance to explore every corner,\nbut you are alive, at least.\n\nPress any key to exit..."
+		SmartPrint(6, 8, UIEntity, msg)
+		blt.Refresh()
+		_ = ReadInput()
+		blt.Close()
+		os.Exit(0)
+	}
+	if situation == PlayerDied {
+		msg := "[font=ui]The vikings caught you unaware.\nYou couldn't fight back, and\nand the enemies had no mercy.\n\nPress any key to exit..."
+		SmartPrint(6, 8, UIEntity, msg)
+		blt.Refresh()
+		_ = ReadInput()
+		blt.Close()
+		os.Exit(0)
 	}
 }
 

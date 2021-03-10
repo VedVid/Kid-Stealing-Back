@@ -203,7 +203,11 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			 // it's too close to, being alerted,
 			 // not notice the player;
 			 // therefore: attack!
-			c.AttackTarget((*cs)[0], &o, &b, cs, "")
+			if c.X == (*cs)[0].X || c.Y == (*cs)[0].Y {
+				c.AttackTarget((*cs)[0], &o, &b, cs, "")
+			} else {
+				c.MoveTowards(b, *cs, p.X, p.Y, ai)
+			}
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
 			c.OutOfFOV = 0
@@ -263,7 +267,11 @@ func HandleAI(b Board, cs *Creatures, o Objects, c *Creature) {
 			 c.DistanceTo(p.X, p.Y) <= 1:
 			 // player is not hidden, next to the enemy;
 			 // therefore, enemy attacks!
-			c.AttackTarget((*cs)[0], &o, &b, cs, "")
+			if c.X == (*cs)[0].X || c.Y == (*cs)[0].Y {
+				c.AttackTarget((*cs)[0], &o, &b, cs, "")
+			} else {
+				c.MoveTowards(b, *cs, p.X, p.Y, ai)
+			}
 			c.LastSawX = p.X
 			c.LastSawY = p.Y
 			c.OutOfFOV = 0

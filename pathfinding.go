@@ -256,7 +256,26 @@ func (c *Creature) MoveTowards(b Board, cs Creatures, tx, ty int, ai int) {
 	   In this project, however, I assume that every monster is kind
 	   of "smart" so right now it will just utilize MoveTowardsPath
 	   for all kind of monsters. */
-	_ = c.MoveTowardsPath(b, cs, tx, ty)
+	err := c.MoveTowardsPath(b, cs, tx, ty)
+	if err != nil {
+		if RandInt(100) < 75 {
+			x, y := 0, 0
+			if RandInt(100) < 50 {
+				if RandInt(100) < 50 {
+					y = -1
+				} else {
+					y = 1
+				}
+			} else {
+				if RandInt(100) < 50 {
+					x = -1
+				} else {
+					x = 1
+				}
+			}
+			c.Move(x, y, b, cs)
+		}
+	}
 }
 
 func (c *Creature) DistanceTo(tx, ty int) int {

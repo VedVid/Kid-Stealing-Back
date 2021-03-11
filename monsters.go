@@ -273,6 +273,7 @@ func (c *Creature) UseEnvironment(b *Board) bool {
 			Game.HeavyStolen++
 		}
 		PrintOverlay(*b, HiddenInTunnel, c)
+		Game.Breaks++
 		turnSpent = true
 	}
 	return turnSpent

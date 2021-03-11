@@ -60,5 +60,6 @@ func (g GameData) CalculatePoints() int {
 	for _, v := range g.SpecialPoints {
 		points += specialPoints[v]
 	}
+	points -= g.Breaks * 100
 	return points
 }

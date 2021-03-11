@@ -43,8 +43,8 @@ var specialPoints = map[int]int{
 
 
 func UpdateScores() {
-	var tempScore = Score{time.Now().Format("20060102T1504"), Game.Points}
-	HighScores.Entries = append(HighScores.Entries, tempScore)
+	Game.Score = Score{time.Now().Format("20060102T150405"), Game.Points}
+	HighScores.Entries = append(HighScores.Entries, Game.Score)
 	sort.Slice(HighScores.Entries, func(i, j int) bool {
 		return HighScores.Entries[i].Points > HighScores.Entries[j].Points
 	})

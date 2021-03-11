@@ -201,12 +201,29 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 	}
 	if situation == PrintHighScores {
 		SmartPrint(6, 3, UIEntity, "[font=ui]HIGH SCORES")
+		curY := 0
 		for i, v := range HighScores.Entries {
-			if i >= 10 {
-				break
+			if i >= 10 && v != Game.Score {
+				continue
 			}
-			SmartPrint(6, 4+i, UIEntity,
-					"[font=ui]" + strconv.Itoa(i+1) + ". " + strconv.Itoa(v.Points) + "  -  " + v.PlayerName)
+			if i < 10 {
+				curY++
+				if v != Game.Score {
+					SmartPrint(6, 4+curY, UIEntity,
+						"[font=ui]" + strconv.Itoa(i+1) + ". " + strconv.Itoa(v.Points) + "  -  " + v.PlayerName)
+				} else {
+					SmartPrint(6, 4+curY, UIEntity,
+						"[font=ui][color=yellow]" + strconv.Itoa(i+1) + ". " + strconv.Itoa(v.Points) + "  -  " + v.PlayerName)
+				}
+			} else {
+				if v == Game.Score {
+					curY++
+					SmartPrint(10, 4+curY, UIEntity, "[font=ui] .....")
+					curY++
+					SmartPrint(6, 4+curY, UIEntity,
+						"[font=ui][color=yellow]" + strconv.Itoa(i+1) + ". " + strconv.Itoa(v.Points) + "  -  " + v.PlayerName)
+				}
+			}
 		}
 		blt.Refresh()
 		_ = ReadInput()

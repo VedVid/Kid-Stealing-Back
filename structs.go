@@ -160,6 +160,7 @@ type GameData struct {
 	HeavyStolen    int
 	SpecialPoints  []int
 	Breaks         int
+	Score          Score
 }
 
 type Score struct {

@@ -38,7 +38,7 @@ var KeyboardLayout int
 var CustomControls bool
 
 var MsgBuf = []string{}
-var Game = GameData{[]string{}, 0, []string{}, 0, 0, 0, 0, nil, 20, 1, 1, 10, 0, 0, 0, 0, 0, 0, []int{}, -1}
+var Game = GameData{[]string{}, 0, []string{}, 0, 0, 0, 0, nil, 20, 1, 1, 10, 0, 0, 0, 0, 0, 0, []int{}, -1, Score{"", 0}}
 var HighScores = Scores{[]Score{}}
 
 var GlobalSeed int64

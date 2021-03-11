@@ -28,6 +28,7 @@ package main
 
 import (
 	"os"
+	"strconv"
 
 	blt "bearlibterminal"
 )
@@ -58,6 +59,7 @@ const (
 	FinishedGameWithoutTreasures
 	FinishedGameWithoutExploringAllTiles
 	PlayerDied
+	PrintHighScores
 )
 
 func PrintOverlay(b Board, situation int, c *Creature) {
@@ -153,8 +155,7 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 		SmartPrint(6, 8, UIEntity, msg)
 		blt.Refresh()
 		_ = ReadInput()
-		blt.Close()
-		os.Exit(0)
+		PrintOverlay(b, PrintHighScores, c)
 	}
 	if situation == FinishedGameWithSomeTreasures {
 		Game.Points = Game.CalculatePoints()
@@ -163,8 +164,7 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 		SmartPrint(6, 8, UIEntity, msg)
 		blt.Refresh()
 		_ = ReadInput()
-		blt.Close()
-		os.Exit(0)
+		PrintOverlay(b, PrintHighScores, c)
 	}
 	if situation == FinishedGameWithoutTreasures {
 		Game.SpecialPoints = append(Game.SpecialPoints, StoleNothing)
@@ -174,8 +174,7 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 		SmartPrint(6, 8, UIEntity, msg)
 		blt.Refresh()
 		_ = ReadInput()
-		blt.Close()
-		os.Exit(0)
+		PrintOverlay(b, PrintHighScores, c)
 	}
 	if situation == FinishedGameWithoutExploringAllTiles {
 		Game.Points = Game.CalculatePoints()
@@ -184,8 +183,7 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 		SmartPrint(6, 8, UIEntity, msg)
 		blt.Refresh()
 		_ = ReadInput()
-		blt.Close()
-		os.Exit(0)
+		PrintOverlay(b, PrintHighScores, c)
 	}
 	if situation == PlayerDied {
 		Game.SpecialPoints = append(Game.SpecialPoints, Dieded)
@@ -193,6 +191,19 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 		UpdateScores()
 		msg := "[font=ui]The vikings caught you unaware.\nYou couldn't fight back, and\nand the enemies had no mercy.\n\nPress any key to exit..."
 		SmartPrint(6, 8, UIEntity, msg)
+		blt.Refresh()
+		_ = ReadInput()
+		PrintOverlay(b, PrintHighScores, c)
+	}
+	if situation == PrintHighScores {
+		SmartPrint(6, 3, UIEntity, "[font=ui]HIGH SCORES")
+		for i, v := range HighScores.Entries {
+			if i >= 10 {
+				break
+			}
+			SmartPrint(6, 4+i, UIEntity,
+					"[font=ui]" + strconv.Itoa(i+1) + ". " + strconv.Itoa(v.Points) + "  -  " + v.PlayerName)
+		}
 		blt.Refresh()
 		_ = ReadInput()
 		blt.Close()

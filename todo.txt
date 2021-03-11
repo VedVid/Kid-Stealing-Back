@@ -7,3 +7,7 @@
 - NEED TO CHECK WHAT IS DEFAULT STATE OF LAST SAW AND HOW IT MUTATES
 
 - High Scores etc
+
+- add penalties for multiple hatching
+
+- FIX: I still can drop multiple treasures on one tile

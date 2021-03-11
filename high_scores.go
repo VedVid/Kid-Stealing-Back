@@ -27,11 +27,38 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package main
 
 import "sort"
+import "time"
 
-func UpdateScores(c Creatures) {
-	var tempScore = Score{c[0].Name, Game.Points}
+const (
+	AllTreasuresStolen = iota
+	Dieded
+	StoleNothing
+)
+
+var specialPoints = map[int]int{
+	AllTreasuresStolen: 500,
+	Dieded: -500,
+	StoleNothing: -250,
+}
+
+
+func UpdateScores() {
+	var tempScore = Score{time.Now().Format("20060102T1504"), Game.Points}
 	HighScores.Entries = append(HighScores.Entries, tempScore)
 	sort.Slice(HighScores.Entries, func(i, j int) bool {
 		return HighScores.Entries[i].Points > HighScores.Entries[j].Points
 	})
+}
+
+func (g GameData) CalculatePoints() int {
+	points := 0
+	points -= g.TurnCounter
+	points -= g.TotalHPLost * 10
+	points += g.SmallStolen * 100
+	points += g.MediumStolen * 250
+	points += g.HeavyStolen * 500
+	for _, v := range g.SpecialPoints {
+		points += specialPoints[v]
+	}
+	return points
 }

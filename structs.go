@@ -155,6 +155,10 @@ type GameData struct {
 	WaveCur        int
 	LivingMonsters int
 	BreakTime      int
+	SmallStolen    int
+	MediumStolen   int
+	HeavyStolen    int
+	SpecialPoints  []int
 }
 
 type Score struct {

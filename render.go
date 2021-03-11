@@ -135,12 +135,20 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 						PrintOverlay(b, FinishedGameWithoutTreasures, c)
 					}
 				} else if cc == 2 {
-					PrintOverlay(b, FinishedGameWithoutExploringAllTiles, c)
+					if c.StoleAnything {
+						PrintOverlay(b, FinishedGameWithoutExploringAllTiles, c)
+					} else {
+						PrintOverlay(b, FinishedGameWithoutTreasures, c)
+					}
 				}
 			}
 		}
 	}
 	if situation == FinishedGameWithAllTreasures {
+		Game.SpecialPoints = append(Game.SpecialPoints, AllTreasuresStolen)
+		Game.Points = Game.CalculatePoints()
+		UpdateScores()
+		SaveScores(HighScores)
 		msg := "[font=ui]Congratulations! You finished the game,\ncollecting all the stolen treasures.\n\nPress any key to exit..."
 		SmartPrint(6, 8, UIEntity, msg)
 		blt.Refresh()
@@ -149,6 +157,8 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 		os.Exit(0)
 	}
 	if situation == FinishedGameWithSomeTreasures {
+		Game.Points = Game.CalculatePoints()
+		UpdateScores()
 		msg := "[font=ui]Congratulations! You finished the game,\nstealing back some robbed treasures.\n\nPress any key to exit..."
 		SmartPrint(6, 8, UIEntity, msg)
 		blt.Refresh()
@@ -157,6 +167,9 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 		os.Exit(0)
 	}
 	if situation == FinishedGameWithoutTreasures {
+		Game.SpecialPoints = append(Game.SpecialPoints, StoleNothing)
+		Game.Points = Game.CalculatePoints()
+		UpdateScores()
 		msg := "[font=ui]You finished the game.\nMaybe you didn't recover any valuables,\nbut you are alive, at least.\n\nPress any key to exit..."
 		SmartPrint(6, 8, UIEntity, msg)
 		blt.Refresh()
@@ -165,6 +178,8 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 		os.Exit(0)
 	}
 	if situation == FinishedGameWithoutExploringAllTiles {
+		Game.Points = Game.CalculatePoints()
+		UpdateScores()
 		msg := "[font=ui]You finished the game.\nYou didn't have a chance to explore every corner,\nbut you are alive, at least.\n\nPress any key to exit..."
 		SmartPrint(6, 8, UIEntity, msg)
 		blt.Refresh()
@@ -173,6 +188,9 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 		os.Exit(0)
 	}
 	if situation == PlayerDied {
+		Game.SpecialPoints = append(Game.SpecialPoints, Dieded)
+		Game.Points = Game.CalculatePoints()
+		UpdateScores()
 		msg := "[font=ui]The vikings caught you unaware.\nYou couldn't fight back, and\nand the enemies had no mercy.\n\nPress any key to exit..."
 		SmartPrint(6, 8, UIEntity, msg)
 		blt.Refresh()

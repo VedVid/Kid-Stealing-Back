@@ -38,7 +38,7 @@ var KeyboardLayout int
 var CustomControls bool
 
 var MsgBuf = []string{}
-var Game = GameData{[]string{}, 0, []string{}, 0, 0, 0, 0, nil, 20, 1, 1, 10, 0, 0, 0}
+var Game = GameData{[]string{}, 0, []string{}, 0, 0, 0, 0, nil, 20, 1, 1, 10, 0, 0, 0, 0, 0, 0, []int{}}
 var HighScores = Scores{[]Score{}}
 
 var GlobalSeed int64
@@ -68,11 +68,8 @@ func main() {
 			}
 			(*actors)[0].Restore()
 		}
-		Game.Points = Game.CalculatePoints()
 		RenderAll(*cells, *objs, *actors)
 		if (*actors)[0].HPCurrent <= 0 {
-			UpdateScores(*actors)
-			SaveScores(HighScores)
 			DeleteSaves()
 			PrintOverlay(*cells, PlayerDied, (*actors)[0])
 			break
@@ -220,16 +217,6 @@ func StartGame(b *Board, c *Creatures, o *Objects) {
 		fmt.Println("Error: save files are corrupted: " + txt)
 		panic(-1)
 	}
-}
-
-func (g GameData) CalculatePoints() int {
-	points := 0
-	points += g.TurnCounter
-	points -= g.TotalHPLost * 5
-	points += g.TotalDMGDealt * 5
-	points += (g.WaveNo - 1) * 100
-	points += g.KillPoints
-	return points
 }
 
 func init() {

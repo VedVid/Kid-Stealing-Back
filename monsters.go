@@ -248,16 +248,30 @@ func (c *Creature) UseEnvironment(b *Board) bool {
 		return turnSpent
 	}
 	if (*b)[c.X][c.Y].Name == "Hatch" {
-		if c.LightItem1 || c.LightItem2 || c.LightItem3 ||
-			c.MediumItem1 || c.MediumItem2 || c.HeavyItem1 {
-				c.StoleAnything = true
-				c.LightItem1 = false
-				c.LightItem2 = false
-				c.LightItem3 = false
-				c.MediumItem1 = false
-				c.MediumItem2 = false
-				c.HeavyItem1 = false
-			}
+		if c.LightItem1 {
+			c.StoleAnything = true
+			Game.SmallStolen++
+		}
+		if c.LightItem2 {
+			c.StoleAnything = true
+			Game.SmallStolen++
+		}
+		if c.LightItem3 {
+			c.StoleAnything = true
+			Game.SmallStolen++
+		}
+		if c.MediumItem1 {
+			c.StoleAnything = true
+			Game.MediumStolen++
+		}
+		if c.MediumItem2 {
+			c.StoleAnything = true
+			Game.MediumStolen++
+		}
+		if c.HeavyItem1 {
+			c.StoleAnything = true
+			Game.HeavyStolen++
+		}
 		PrintOverlay(*b, HiddenInTunnel, c)
 		turnSpent = true
 	}

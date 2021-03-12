@@ -98,6 +98,9 @@ type FighterProperties struct {
 	MediumItem2    bool
 	HeavyItem1     bool
 	StoleAnything  bool
+	Staggered      int
+	StaggeredMax   int
+	StaggeredMin   int
 }
 
 type ObjectProperties struct {

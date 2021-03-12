@@ -368,6 +368,9 @@ func PrintCreatures(b Board, c Creatures) {
 				ch = v.Char + v.Char
 			}
 			glyph := "[font=game][color=" + v.Color + "]" + ch
+			if v.Staggered > 0 {
+				glyph = "[font=game][color=dark yellow]" + ch
+			}
 			SmartPrint(v.X, v.Y, MonsterEntity, glyph)
 			for j := 0; j < v.Layer; j++ {
 				blt.Layer(j)

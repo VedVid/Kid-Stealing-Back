@@ -34,5 +34,8 @@
     "NextPoint": 1,
     "LastPosition": null,
     "LastSawX": -1,
-    "LastSawY": -1
+    "LastSawY": -1,
+    "Staggered": 0,
+    "StaggeredMax": 5,
+    "StaggeredMin": 2
 }

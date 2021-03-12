@@ -74,6 +74,11 @@ func CreaturesTakeTurn(b Board, c *Creatures, o Objects, playerSpeed int) {
 		if ai == NoAI || ai == PlayerAI {
 			continue
 		}
+		if v.Staggered > 0 {
+			v.Staggered--
+			v.AITriggered = AITriggered
+			continue
+		}
 /*
 		if Game.TurnCounter%SpeedValues[v.Speed] == 0 {
 			if v.Speed < SpeedNormal {

@@ -220,7 +220,7 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLe
 			}
 			if monsterAimed != nil && monsterAimed != c && monsterAimed.HPCurrent > 0 && valid == true {
 				Game.LastTarget = monsterAimed
-				c.AttackTarget(monsterAimed, o, &b, cs, dist)
+				monsterAimed.Staggered = RandRange(monsterAimed.StaggeredMin, monsterAimed.StaggeredMax)
 			} else {
 				if monsterAimed == c {
 					break // Do not hurt yourself.
@@ -228,14 +228,14 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLe
 				if monsterHit != nil {
 					if monsterHit.HPCurrent > 0 {
 						Game.LastTarget = monsterHit
-						c.AttackTarget(monsterHit, o, &b, cs, dist)
+						monsterHit.Staggered = RandRange(monsterHit.StaggeredMin, monsterHit.StaggeredMax)
 					}
 				} else {
 					vx, vy := FindVectorDirection(vec)
 					v := ExtrapolateVector(vec, vx, vy)
 					_, _, monsterHitIndirectly, _ := ValidateVector(v, b, targets, *o, dist)
 					if monsterHitIndirectly != nil {
-						c.AttackTarget(monsterHitIndirectly, o, &b, cs, dist)
+						monsterHitIndirectly.Staggered = RandRange(monsterHitIndirectly.StaggeredMin, monsterHitIndirectly.StaggeredMax)
 					}
 				}
 			}

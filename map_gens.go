@@ -449,6 +449,57 @@ func MakeRoomsMap(b *Board) {
 			}
 		}
 	}
+	// Add some throwables
+	throwablesNo1 := RandRange(3, 7)
+	throwablesNo2 := RandRange(3, 7)
+	throwablesNo3 := RandRange(3, 7)
+	throwablesNo4 := RandRange(3, 7)
+	for {
+		if throwablesNo1 <= 0 && throwablesNo2 <= 0 && throwablesNo3 <= 0 && throwablesNo4 <= 0 {
+			break
+		}
+		x, y := RandInt(MapSizeX-1), RandInt(MapSizeY-1)
+		if (*b)[x][y].Treasure == false && (*b)[x][y].Char == "." {
+			if x < MapSizeX/2 && y < MapSizeY/2 {
+				if throwablesNo1 > 0 {
+					(*b)[x][y].Name = "pebble"
+					(*b)[x][y].Char = "…"
+					(*b)[x][y].Color = "#304e66"
+					throwablesNo1--
+				} else {
+					continue
+				}
+			} else if x >= MapSizeX/2 && y < MapSizeY/2 {
+				if throwablesNo2 > 0 {
+					(*b)[x][y].Name = "pebble"
+					(*b)[x][y].Char = "…"
+					(*b)[x][y].Color = "#304e66"
+					throwablesNo2--
+				} else {
+					continue
+				}
+			} else if x >= MapSizeX/2 && y >= MapSizeY/2 {
+				if throwablesNo3 > 0 {
+					(*b)[x][y].Name = "pebble"
+					(*b)[x][y].Char = "…"
+					(*b)[x][y].Color = "#304e66"
+					throwablesNo3--
+				} else {
+					continue
+				}
+			} else if x < MapSizeX/2 && y >= MapSizeY/2 {
+				if throwablesNo4 > 0 {
+					(*b)[x][y].Name = "pebble"
+					(*b)[x][y].Char = "…"
+					(*b)[x][y].Color = "#304e66"
+					throwablesNo4--
+				} else {
+					continue
+				}
+			}
+		}
+	}
+
 	// Remove some doors
 	wallChance := 40
 	floorChance := 55

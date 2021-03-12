@@ -420,6 +420,15 @@ func (c *Creature) PickUp(b *Board) bool {
 					turnSpent = true
 				}
 			}
+		} else if (*b)[c.X][c.Y].Char == "…" {
+			if c.ThrowablesCur < c.ThrowablesMax {
+				c.ThrowablesCur++
+				(*b)[c.X][c.Y].Char = "."
+				(*b)[c.X][c.Y].Name = "floor"
+				(*b)[c.X][c.Y].Color = "lighter grey"
+			} else {
+				AddMessage("You don't have a place for more pebbles.")
+			}
 		}
 	}
 	encm := 0

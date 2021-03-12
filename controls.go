@@ -48,7 +48,7 @@ const (
 	StrUseEnvironment = "USE_ENVIRONMENT"
 
 	StrRanged    = "RANGED"
-	StrThrowable = "THROWABLE"
+	StrThrowable = "THROW"
 	StrMelee     = "MELEE"
 
 	StrEnemiesAlwaysVisible = "ENEMIES_ALWAYS_VISIBLE"
@@ -64,6 +64,7 @@ var Actions = []string{
 	StrLook,
 	StrPickup,
 	StrDrop,
+	StrThrowable,
 	StrUseEnvironment,
 	StrEnemiesAlwaysVisible,
 }
@@ -78,6 +79,7 @@ var CommandKeys = map[int]string{
 	blt.TK_L:     StrLook,
 	blt.TK_G:     StrPickup,
 	blt.TK_D:     StrDrop,
+	blt.TK_F:     StrThrowable,
 	blt.TK_ENTER: StrUseEnvironment,
 	blt.TK_1:     StrEnemiesAlwaysVisible,
 }
@@ -113,9 +115,14 @@ func Command(com string, p *Creature, b *Board, c *Creatures, o *Objects) bool {
 		turnSpent = p.PickUp(b)
 	case StrDrop:
 		turnSpent = p.Drop(b)
+	case StrThrowable:
+		fov := FOVLength
+		if (*b)[p.X][p.Y].Hides == true {
+			fov = FOVLengthShort
+		}
+		turnSpent = p.Target(*b, o, c, StrThrowable, fov)
 	case StrUseEnvironment:
 		turnSpent = p.UseEnvironment(b)
-
 	case StrEnemiesAlwaysVisible:
 		for i := 0; i < len(*c); i++ {
 			(*c)[i].AlwaysVisible = true

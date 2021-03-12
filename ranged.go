@@ -205,7 +205,7 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLe
 		}
 		if (key == blt.TK_F && dist == StrRanged) ||
 			(key == blt.TK_D && dist == StrMelee) ||
-			(key == blt.TK_T && dist == StrThrowable) {
+			(key == blt.TK_F && dist == StrThrowable) {
 			monsterAimed := FindMonsterByXY(targetX, targetY, *cs)
 			if dist == StrRanged {
 				if c.RangedCurAmmo <= 0 {
@@ -214,7 +214,7 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLe
 				}
 			} else if dist == StrThrowable {
 				if c.ThrowablesCur <= 0 {
-					AddMessage("[color=dark yellow]You don't have throwables anymore!")
+					AddMessage("You don't have anything to throw!")
 					break
 				}
 			}

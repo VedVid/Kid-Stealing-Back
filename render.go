@@ -422,7 +422,7 @@ func PrintUI(c *Creature) {
 	blt.Print(UIPosX, UIPosY+UIFontSpacingY, "[font=game]"+hp)
 	throwables := ""
 	for i := 0; i < c.ThrowablesMax; i++ {
-		if i <= c.ThrowablesCur {
+		if i < c.ThrowablesCur {
 			throwables += "[color=#304e66]♦"
 		} else {
 			throwables += "[/color][color=#1a394f]♢"

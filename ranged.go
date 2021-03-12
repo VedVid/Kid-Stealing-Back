@@ -205,7 +205,8 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLe
 		}
 		if (key == blt.TK_F && dist == StrRanged) ||
 			(key == blt.TK_D && dist == StrMelee) ||
-			(key == blt.TK_F && dist == StrThrowable) {
+			(key == blt.TK_F && dist == StrThrowable) ||
+			(key == blt.TK_ENTER && dist == StrThrowable) {
 			monsterAimed := FindMonsterByXY(targetX, targetY, *cs)
 			if dist == StrRanged {
 				if c.RangedCurAmmo <= 0 {

@@ -242,7 +242,7 @@ func (c *Creature) Move(tx, ty int, b Board, cs Creatures) bool {
 	return turnSpent
 }
 
-func (c *Creature) UseEnvironment(b *Board) bool {
+func (c *Creature) UseEnvironment(b *Board, o *Objects, cs *Creatures) bool {
 	turnSpent := false
 	if c.AIType != PlayerAI {
 		return turnSpent
@@ -275,6 +275,14 @@ func (c *Creature) UseEnvironment(b *Board) bool {
 		PrintOverlay(*b, HiddenInTunnel, c)
 		Game.Breaks++
 		turnSpent = true
+	}
+	if (*b)[c.X][c.Y].Char == "…" {
+		turnSpent = c.Target(*b, o, cs, StrThrowable, FOVLength)
+		if turnSpent {
+			(*b)[c.X][c.Y].Char = "."
+			(*b)[c.X][c.Y].Name = "floor"
+			(*b)[c.X][c.Y].Color = "lighter grey"
+		}
 	}
 	return turnSpent
 }

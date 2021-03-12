@@ -122,7 +122,7 @@ func Command(com string, p *Creature, b *Board, c *Creatures, o *Objects) bool {
 		}
 		turnSpent = p.Target(*b, o, c, StrThrowable, fov)
 	case StrUseEnvironment:
-		turnSpent = p.UseEnvironment(b)
+		turnSpent = p.UseEnvironment(b, o, c)
 	case StrEnemiesAlwaysVisible:
 		for i := 0; i < len(*c); i++ {
 			(*c)[i].AlwaysVisible = true

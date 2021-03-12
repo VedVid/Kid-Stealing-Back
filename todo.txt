@@ -3,11 +3,3 @@
 - environmental interactions, like throwing a bottles to stagger an enemy
 
 - start with unexplored dungeon
-
-- NEED TO CHECK WHAT IS DEFAULT STATE OF LAST SAW AND HOW IT MUTATES
-
-- High Scores etc
-
-- add penalties for multiple hatching
-
-- FIX: I still can drop multiple treasures on one tile

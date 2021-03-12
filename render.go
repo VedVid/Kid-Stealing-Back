@@ -420,6 +420,15 @@ func PrintUI(c *Creature) {
 		hp += "[/color][color=darker red]♡"
 	}
 	blt.Print(UIPosX, UIPosY+UIFontSpacingY, "[font=game]"+hp)
+	throwables := ""
+	for i := 0; i <= c.ThrowablesMax; i++ {
+		if i <= c.ThrowablesCur {
+			throwables += "[color=#304e66]♦"
+		} else {
+			throwables += "[/color][color=#1a394f]♢"
+		}
+	}
+	blt.Print(UIPosX, UIPosY+(2*UIFontSpacingY), "[font=game]"+throwables)
 	enc := ""
 	if c.LightItem1 == true {
 		enc += "[color=yellow]" + TreasureCharLight
@@ -472,7 +481,7 @@ func PrintUI(c *Creature) {
 	case 3:
 		enc += "[color=dark red]█"
 	}
-	blt.Print(UIPosX, UIPosY+(2*UIFontSpacingY), "[font=game]"+enc)
+	blt.Print(UIPosX, UIPosY+(3*UIFontSpacingY), "[font=game]"+enc)
 
 	/*
 		name := "Player"

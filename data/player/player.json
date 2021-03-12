@@ -18,8 +18,8 @@
     "TurnCounter": 0,
     "RangedMaxAmmo": 12,
     "RangedCurAmmo": 12,
-    "ThrowablesMax": 3,
-    "ThrowablesCur": 3,
+    "ThrowablesMax": 5,
+    "ThrowablesCur": 5,
     "ChallengeLevel": 0,
     "Equipment":[
         {

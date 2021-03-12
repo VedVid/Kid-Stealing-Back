@@ -222,7 +222,7 @@ func StartGame(b *Board, c *Creatures, o *Objects) {
 func init() {
 	GlobalSeed = time.Now().UTC().UnixNano()
 	rand.Seed(GlobalSeed)
-	fmt.Println(GlobalSeed)
+	fmt.Println("Seed:", GlobalSeed)
 	InitializeFOVTables()
 	InitializeBLT()
 	InitializeKeyboardLayouts()

@@ -282,7 +282,7 @@ func (c *Creature) UseEnvironment(b *Board) bool {
 func (c *Creature) Drop(b *Board) bool {
 	turnSpent := false
 	x, y := c.X, c.Y
-	if (*b)[x][y].Char != "." {
+	if (*b)[x][y].Char != "." || (*b)[x][y].Treasure {
 		AddMessage("This tile is already occupied.")
 	} else {
 		msg := ""

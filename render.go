@@ -53,6 +53,7 @@ const (
 
 const (
 	_ = iota
+	StartScreen
 	HiddenInTunnel
 	FinishedGameWithAllTreasures
 	FinishedGameWithSomeTreasures
@@ -77,6 +78,13 @@ func PrintOverlay(b Board, situation int, c *Creature) {
 	blt.ClearArea(0, 0, MapSizeX*GameFontSpacingX, MapSizeY*GameFontSpacingY)
 	blt.Refresh()
 	blt.Layer(OverlayLayer)
+	if situation == StartScreen {
+		blt.Print(10*UIFontSpacingX, 5*UIFontSpacingY, "[font=ui]The Story About")
+		blt.Print(5*TitleFontSpacingX, 5*TitleFontSpacingX, "[font=title]The Kid\nWho Stole\nThe Relics\nBack")
+		blt.Print(24*UIFontSpacingX, 30*UIFontSpacingY, "[font=ui]By Tomasz \"VedVid\" Nowakowski, during 7DRL2021")
+		blt.Refresh()
+		_ = ReadInput()
+	}
 	if situation == HiddenInTunnel {
 		treasures := 0
 		unexplored := 0

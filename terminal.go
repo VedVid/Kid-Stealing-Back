@@ -64,12 +64,18 @@ var (
 	UIFontSpacingY    = UIFontSize / ReferenceFontSize
 	UIFontSpacing     = strconv.Itoa(UIFontSpacingX) + "x" +
 		strconv.Itoa(UIFontSpacingY)
-	GameFontName     = "Deferral-Square.ttf"
-	GameFontSize     = 12
-	GameFontSpacingX = UIFontSize / ReferenceFontSize
-	GameFontSpacingY = UIFontSize / ReferenceFontSize
-	GameFontSpacing  = strconv.Itoa(GameFontSpacingX) + "x" +
+	GameFontName      = "Deferral-Square.ttf"
+	GameFontSize      = 12
+	GameFontSpacingX  = UIFontSize / ReferenceFontSize
+	GameFontSpacingY  = UIFontSize / ReferenceFontSize
+	GameFontSpacing   = strconv.Itoa(GameFontSpacingX) + "x" +
 		strconv.Itoa(GameFontSpacingY)
+	TitleFontName     = "NovaMono-Regular.ttf"
+	TitleFontSize     = 36
+	TitleFontSpacingX = TitleFontSize / ReferenceFontSize / 2
+	TitleFontSpacingY = TitleFontSize / ReferenceFontSize
+	TitleFontSpacing  = strconv.Itoa(TitleFontSpacingX) + "x" +
+		strconv.Itoa(TitleFontSpacingY)
 )
 
 func constrainThreads() {
@@ -94,6 +100,9 @@ func InitializeBLT() {
 	gameFont := "game font: " + GameFontName + ", size=" +
 		strconv.Itoa(GameFontSize) + ", spacing=" + GameFontSpacing
 	blt.Set(gameFont)
+	titleFont := "title font: " + TitleFontName + ", size=" +
+		strconv.Itoa(TitleFontSize) + ", spacing=" + TitleFontSpacing
+	blt.Set(titleFont)
 	blt.Clear()
 	blt.Refresh()
 }

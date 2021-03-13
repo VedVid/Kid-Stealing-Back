@@ -53,6 +53,7 @@ func main() {
 	blt.Composition(blt.TK_ON)
 	StartGame(cells, actors, objs)
 	SpawnMonsters(*cells, actors)
+	PrintOverlay(*cells, StartScreen, (*actors)[0])
 	for {
 		if Game.WaveCur >= Game.WaveMax && Game.LivingMonsters <= 0 {
 			AddMessage("You fought well. Now, there is some time to rest.")

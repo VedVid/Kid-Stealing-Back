@@ -94,19 +94,42 @@ func PrintLookingMessage(monstersSlice, objectsSlice, tilesSlice []string) {
 	/* */
 	y := 0
 	for _, v := range monstersSlice {
-		blt.Print(UIPosX, (UIPosY+9+y)*UIFontSpacingY, "[font=ui]"+v+
+		blt.Print(UIPosX+UIFontSpacingX, (UIPosY+9+y)*UIFontSpacingY, "[font=ui]"+v+
 			"[/font]")
 		y++
 	}
 	for _, v := range objectsSlice {
-		blt.Print(UIPosX, (UIPosY+9+y)*UIFontSpacingY, "[font=ui]"+v+"[/font]")
+		blt.Print(UIPosX+UIFontSpacingX, (UIPosY+9+y)*UIFontSpacingY, "[font=ui]"+v+"[/font]")
 		y++
 	}
 	for _, v := range tilesSlice {
-		blt.Print(UIPosX, (UIPosY+9+y)*UIFontSpacingY, "[font=ui]"+v+"[/font]")
+		blt.Print(UIPosX+UIFontSpacingX, (UIPosY+9+y)*UIFontSpacingY, "[font=ui]"+v+"[/font]")
 		y++
 	}
 	blt.Refresh()
+}
+
+func PrintLookingMessageTiles(c Creatures, o Objects, t *Tile) {
+	y := 0
+	for _, v := range c {
+		blt.Color(blt.ColorFromName(v.Color))
+		ch := v.Tile
+		SmartPut(UIPosX, (UIPosY+9+y)*UIFontSpacingY, MapEntity, ch)
+		y++
+	}
+	for _, v := range o {
+		blt.Color(blt.ColorFromName(v.Color))
+		ch := v.Tile
+		SmartPut(UIPosX, (UIPosY+9+y)*UIFontSpacingY, MapEntity, ch)
+		y++
+	}
+	if t != nil {
+		blt.Color(blt.ColorFromName(t.Color))
+		ch := t.Tile
+		SmartPut(UIPosX, (UIPosY+9+y)*UIFontSpacingY, MapEntity, ch)
+		y++
+	}
+	blt.Color(blt.ColorFromName("white"))
 }
 
 func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLength int) bool {

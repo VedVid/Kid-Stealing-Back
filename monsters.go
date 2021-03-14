@@ -286,6 +286,7 @@ func (c *Creature) UseEnvironment(b *Board, o *Objects, cs *Creatures) bool {
 			(*b)[c.X][c.Y].Tile = TileFloorI
 			(*b)[c.X][c.Y].Name = "floor"
 			(*b)[c.X][c.Y].Color = "lighter grey"
+			c.ThrowablesCur++
 		}
 	}
 	return turnSpent

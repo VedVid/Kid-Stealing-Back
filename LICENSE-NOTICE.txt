@@ -1,0 +1,37 @@
+Steamacre use following libraries and assets:
+
+
+1. BearLibTerminal -- http://foo.wyrd.name/en:bearlibterminal (access 20200913)
+   Library that creates terminal-like window.
+   Made by Cfyz.
+   Released under the MIT license.
+   Text included in ./licenses/BearLibTerminal/
+
+
+2. NovaMono-Regular.ttf -- https://fonts.google.com/specimen/Nova+Mono (access 20200913)
+   Stylish monospaced font.
+   Made by Wojciech Kalinowski.
+   Released under the OFL license.
+   Text included in ./licenses/NovaMono/
+
+3. PTMono-Regular.ttf -- https://fonts.google.com/specimen/PT+Mono (access 20200913)
+   Monospaced font with the ideal proportions.
+   Made by ParaType -- https://www.paratype.com/ (access 20200913)
+   Released under the OFL license.
+   Text included in ./licenses/PTMono/
+
+4. Deferral-Square.ttf -- https://github.com/brianbruggeman/Deferral (access 20210313)
+   Square font, perfect for roguelikes.
+   Made by Brian Bruggeman
+   Released under the MIT license.
+   Text included in ./licenses/DeferralSquare/
+
+5. Scroll-o-Sprites -- http://quale-art.blogspot.com/ (not accessible anymore)
+   As of 20210314, the website is archived by web.archie.org:
+      https://web.archive.org/web/20170523183620/http://quale-art.blogspot.com/
+   The tileset itself is still available on Imgur:
+      https://imgur.com/a/uHx4k (access 20210314)
+   Small but very well made roguelike tileset, 16x16px.
+   Made by Quale.
+   Released under the CC-BY-3.0 license.
+   Text and info about modifications included in ./licenses/ScrolloSprites

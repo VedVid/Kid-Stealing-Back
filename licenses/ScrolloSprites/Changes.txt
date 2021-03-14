@@ -1,0 +1,12 @@
+"About The Kid Who Stole The Relics Back" uses the modified Scroll-o-Sprites tileset.
+
+I made the changes as stated below.
+
+1. While the tileset originally is meant as 16x16px, I adapted it to the game grid that is 18x18px. For most sprites, I just added 1px transparent background on the every side. Exception is the wall tile - the right side of the wall was slightly cut off.
+2. All tiles are white (instead of original color: #eeeecc), and I replaced the original background (#111133) with the transparent one. 
+3. The "cross.png" tile has been enlarged a little.
+4. Originally, the "looking" tile has the additional circle in the middle (original tile you can find in the "Symbols" group in the original Scroll-o-sprites.
+5. "pillar.png" is tile made by me, and it is not part of the Scroll-o-sprites tileset.
+6. "viking.png" and "vikingangry.png" are modified "Charaters" from the original tileset. The "viking.png" smiles, and "vikingangry.png" has does not, and holds his sword higher.
+
+The original tileset is redistributed with game archive, in "data/tiles/original_tileset" directory.

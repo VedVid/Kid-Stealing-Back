@@ -490,7 +490,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Name = "pebble"
 					(*b)[x][y].Char = "…"
 					(*b)[x][y].Color = "#304e66"
-					(*b)[x][y].Tile = TileFloorI
+					(*b)[x][y].Tile = TilePebbleI
 					throwablesNo1--
 				} else {
 					continue
@@ -500,7 +500,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Name = "pebble"
 					(*b)[x][y].Char = "…"
 					(*b)[x][y].Color = "#304e66"
-					(*b)[x][y].Tile = TileFloorI
+					(*b)[x][y].Tile = TilePebbleI
 					throwablesNo2--
 				} else {
 					continue
@@ -510,7 +510,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Name = "pebble"
 					(*b)[x][y].Char = "…"
 					(*b)[x][y].Color = "#304e66"
-					(*b)[x][y].Tile = TileFloorI
+					(*b)[x][y].Tile = TilePebbleI
 					throwablesNo3--
 				} else {
 					continue
@@ -520,7 +520,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Name = "pebble"
 					(*b)[x][y].Char = "…"
 					(*b)[x][y].Color = "#304e66"
-					(*b)[x][y].Tile = TileFloorI
+					(*b)[x][y].Tile = TilePebbleI
 					throwablesNo4--
 				} else {
 					continue

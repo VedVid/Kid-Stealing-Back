@@ -444,7 +444,7 @@ func (c *Creature) PickUp(b *Board) bool {
 				(*b)[c.X][c.Y].Color = "lighter grey"
 				turnSpent = true
 			} else {
-				AddMessage("You don't have a place for more pebbles.")
+				AddMessage("You don't have a room for more pebbles.")
 			}
 		}
 	}

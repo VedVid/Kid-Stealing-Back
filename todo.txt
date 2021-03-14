@@ -7,7 +7,5 @@
 - sometimes player can't hide from the enemy even if it is out of FOV - depends on the distance?
 
 - tiles:
-    - angry viking
-    - footsteps
     - pebble
     - "ranged" - looking (both icon and UI), firing

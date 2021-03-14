@@ -58,6 +58,8 @@ var (
 	TileWallS           = "U+E00E"
 	TileFootstepsI      = 0xE00F
 	TileFootstepsS      = "U+E00F"
+	TilePebbleI         = 0xE010
+	TilePebbleS         = "U+E010"
 )
 
 func SetTiles() {
@@ -76,4 +78,5 @@ func SetTiles() {
 	_ = SetGlyph("./data/tiles/vikingangry.png", TileVikingAngryS)
 	_ = SetGlyph("./data/tiles/wall.png", TileWallS)
 	_ = SetGlyph("./data/tiles/footsteps.png", TileFootstepsS)
+	_ = SetGlyph("./data/tiles/pebbles.png", TilePebbleS)
 }

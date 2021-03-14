@@ -253,13 +253,21 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLe
 		valid, _, monsterHit, _ := ValidateVector(vec, b, targets, *o, dist)
 		PrintVector(vec, VectorWhyTarget, VectorColorGood, VectorColorBad, b, *o, *cs)
 		if monsterHit != nil {
-			s := "[color=" + monsterHit.Color + "]" + monsterHit.Char +
-				"[/color] " + monsterHit.Name + " "
-			PrintLookingMessage([]string{s}, nil, nil)
+			if Tiles {
+				PrintLookingMessageTiles(Creatures{monsterHit}, Objects{}, nil)
+			} else {
+				s := "[color=" + monsterHit.Color + "]" + monsterHit.Char +
+					"[/color] " + monsterHit.Name + " "
+				PrintLookingMessage([]string{s}, nil, nil)
+			}
 		} else if targetX == (*cs)[0].X && targetY == (*cs)[0].Y {
-			s := "[color=" + (*cs)[0].Color + "]" + (*cs)[0].Char + "[/color] " +
-				(*cs)[0].Name + " "
-			PrintLookingMessage([]string{s}, nil, nil)
+			if Tiles {
+				PrintLookingMessageTiles(Creatures{(*cs)[0]}, Objects{}, nil)
+			} else {
+				s := "[color=" + (*cs)[0].Color + "]" + (*cs)[0].Char + "[/color] " +
+					(*cs)[0].Name + " "
+				PrintLookingMessage([]string{s}, nil, nil)
+			}
 		}
 		key := ReadInput()
 		if key == blt.TK_ESCAPE {

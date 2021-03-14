@@ -109,6 +109,11 @@ func SmartPrint(x, y, entity int, s string) {
 	blt.Print(newX, newY, s)
 }
 
+func SmartPut(x, y, entity int, tile int) {
+	newX, newY := FixCoords(x, y, entity)
+	blt.Put(newX, newY, tile)
+}
+
 func SmartClear(x, y, entity int) {
 	newX, newY := FixCoords(x, y, entity)
 	blt.ClearArea(newX, newY, GameFontSpacingX, GameFontSpacingY)

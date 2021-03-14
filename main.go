@@ -34,7 +34,7 @@ import (
 	"time"
 )
 
-const Tiles = false
+const Tiles = true
 
 var KeyboardLayout int
 var CustomControls bool

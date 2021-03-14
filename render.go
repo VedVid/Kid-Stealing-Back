@@ -263,25 +263,24 @@ func PrintBoard(b Board, c Creatures) {
 				t := b[x][y] // Should it be *b[x][y]?
 				blt.Layer(t.Layer)
 				if t.Explored == true {
-					ch := t.Char
-					if t.Char == "[" || t.Char == "]" {
-						ch = t.Char + t.Char
-					}
+					ch := t.Tile
 					if t.Treasure == true {
-						glyph := "[font=game][color=" + t.TreasureCol + "]" + t.TreasureChar
-						SmartPrint(t.X, t.Y, MapEntity, glyph)
+						ch = t.TreasureTile
+						blt.Color(blt.ColorFromName(t.TreasureCol))
+						SmartPut(t.X, t.Y, MapEntity, ch)
 					} else {
 						if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y, fov) == true {
-							glyph := "[font=game][color=" + t.Color + "]" + ch
-							SmartPrint(t.X, t.Y, MapEntity, glyph)
+							blt.Color(blt.ColorFromName(t.Color))
+							SmartPut(t.X, t.Y, MapEntity, ch)
 						} else {
 							if t.AlwaysVisible == true {
-								glyph := "[font=game][color=" + t.ColorDark + "]" + ch
-								SmartPrint(t.X, t.Y, MapEntity, glyph)
+								blt.Color(blt.ColorFromName(t.ColorDark))
+								SmartPut(t.X, t.Y, MapEntity, ch)
 							}
 						}
 					}
 				}
+				blt.Color(blt.ColorFromName("white"))
 			}
 		}
 	} else {
@@ -398,17 +397,15 @@ func PrintCreatures(b Board, c Creatures) {
 			if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
 				(v.AlwaysVisible == true) {
 				blt.Layer(v.Layer)
-				ch := v.Char
-				if v.Char == "]" || v.Char == "[" {
-					ch = v.Char + v.Char
-				}
-				glyph := "[font=game][color=" + v.Color + "]" + ch
-				SmartPrint(v.X, v.Y, MonsterEntity, glyph)
+				ch := v.Tile
+				blt.Color(blt.ColorFromName(v.Color))
+				SmartPut(v.X, v.Y, MapEntity, ch)
 				for j := 0; j < v.Layer; j++ {
 					blt.Layer(j)
 					SmartClear(v.X, v.Y, MonsterEntity)
 				}
 			}
+			blt.Color(blt.ColorFromName("white"))
 		}
 		// Print living creatures
 		for i, v := range c {
@@ -421,15 +418,12 @@ func PrintCreatures(b Board, c Creatures) {
 			if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
 				(v.AlwaysVisible == true) {
 				blt.Layer(v.Layer)
-				ch := v.Char
-				if v.Char == "]" || v.Char == "[" {
-					ch = v.Char + v.Char
-				}
-				glyph := "[font=game][color=" + v.Color + "]" + ch
+				ch := v.Tile
+				blt.Color(blt.ColorFromName(v.Color))
 				if v.Staggered > 0 {
-					glyph = "[font=game][color=dark yellow]" + ch
+					blt.Color(blt.ColorFromName("dark yellow"))
 				}
-				SmartPrint(v.X, v.Y, MonsterEntity, glyph)
+				SmartPut(v.X, v.Y, MapEntity, ch)
 				for j := 0; j < v.Layer; j++ {
 					blt.Layer(j)
 					SmartClear(v.X, v.Y, MonsterEntity)
@@ -446,6 +440,7 @@ func PrintCreatures(b Board, c Creatures) {
 					}
 				}
 			}
+			blt.Color(blt.ColorFromName("white"))
 		}
 		// Print player
 		blt.Layer(PlayerLayer)
@@ -457,12 +452,13 @@ func PrintCreatures(b Board, c Creatures) {
 				playerColor = "dark gray"
 			}
 		}
-		SmartPrint(c[0].X, c[0].Y,
-			MonsterEntity, "[font=game][color="+playerColor+"]"+c[0].Char)
+		blt.Color(blt.ColorFromName(playerColor))
+		SmartPut(c[0].X, c[0].Y, MapEntity, c[0].Tile)
 		for i := 0; i < PlayerLayer; i++ {
 			blt.Layer(i)
 			SmartClear(c[0].X, c[0].Y, MonsterEntity)
 		}
+		blt.Color(blt.ColorFromName("white"))
 	} else {
 		for i, v := range c {
 			if i == 0 {

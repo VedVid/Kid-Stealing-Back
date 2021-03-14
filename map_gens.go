@@ -135,7 +135,7 @@ func MakeRoomsMap(b *Board) {
 					switch ch {
 					case ".":
 						(*b)[cx][cy].Char = "."
-						(*b)[cx][cy].Tile = TileWallI
+						(*b)[cx][cy].Tile = TileFloorI
 						(*b)[cx][cy].Name = "floor"
 						(*b)[cx][cy].Color = "lighter grey"
 						(*b)[cx][cy].ColorDark = "darker grey"

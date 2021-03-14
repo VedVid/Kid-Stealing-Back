@@ -28,38 +28,39 @@ package main
 
 
 var (
-	TileChairI          = 0x11A00
-	TileChairS          = "U+11A00"
-	TileCrumblingWallI  = 0x11A01
-	TileCrumblingWallS  = "U+11A01"
-	TileDoorsI          = 0x11A02
-	TileDoorsS          = "U+11A02"
-	TileFloorI          = 0x11A03
-	TileFloorS          = "U+11A03"
-	TileHatchI          = 0x11A04
-	TileHatchS          = "U+11A04"
-	TilePillarI         = 0x11A05
-	TilePillarS         = "U+11A05"
-	TilePlayerI         = 0x11A06
-	TilePlayerS         = "U+11A06"
-	TileTableI          = 0x11A07
-	TileTableS          = "U+11A07"
-	TileTreasureHeavyI  = 0x11A08
-	TileTreasureHeavyS  = "U+11A08"
-	TileTreasureLightI  = 0x11A09
-	TileTreasureLightS  = "U+11A09"
-	TileTreasureMediumI = 0x11A0A
-	TileTreasureMediumS = "U+11A0A"
-	TileVikingI         = 0x11A0B
-	TileVikingS         = "U+11A0B"
-	TileWallI           = 0x11A0C
-	TileWallS           = "U+11A0C"
+	TileChairI          = 0xE001
+	TileChairS          = "U+E001"
+	TileCrumblingWallI  = 0xE002
+	TileCrumblingWallS  = "U+E002"
+	TileDoorsI          = 0xE003
+	TileDoorsS          = "U+E003"
+	TileFloorI          = 0xE004
+	TileFloorS          = "U+E004"
+	TileHatchI          = 0xE005
+	TileHatchS          = "U+E005"
+	TilePillarI         = 0xE006
+	TilePillarS         = "U+E006"
+	TilePlayerI         = 0xE007
+	TilePlayerS         = "U+E007"
+	TileTableI          = 0xE008
+	TileTableS          = "U+E008"
+	TileTreasureHeavyI  = 0xE009
+	TileTreasureHeavyS  = "U+E009"
+	TileTreasureLightI  = 0xE00A
+	TileTreasureLightS  = "U+E00A"
+	TileTreasureMediumI = 0xE00B
+	TileTreasureMediumS = "U+E00B"
+	TileVikingI         = 0xE00C
+	TileVikingS         = "U+E00C"
+	TileWallI           = 0xE00D
+	TileWallS           = "U+E00D"
 )
 
 func SetTiles() {
 	_ = SetGlyph("./data/tiles/chair.png", TileChairS)
 	_ = SetGlyph("./data/tiles/crumblingwall.png", TileCrumblingWallS)
 	_ = SetGlyph("./data/tiles/doors.png", TileDoorsS)
+	_ = SetGlyph("./data/tiles/floor.png", TileFloorS)
 	_ = SetGlyph("./data/tiles/hatch.png", TileHatchS)
 	_ = SetGlyph("./data/tiles/pillar.png", TilePillarS)
 	_ = SetGlyph("./data/tiles/player.png", TilePlayerS)

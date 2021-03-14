@@ -76,6 +76,8 @@ var (
 	TitleFontSpacingY = TitleFontSize / ReferenceFontSize
 	TitleFontSpacing  = strconv.Itoa(TitleFontSpacingX) + "x" +
 		strconv.Itoa(TitleFontSpacingY)
+	TileSizeX         = 18
+	TileSizeY         = 18
 )
 
 func constrainThreads() {

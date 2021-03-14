@@ -151,26 +151,34 @@ func PrintLookingMessage(monstersSlice, objectsSlice, tilesSlice []string) {
 }
 
 func PrintLookingMessageTiles(c Creatures, o Objects, t *Tile) {
+	blt.Layer(UILayer)
 	y := 0
 	for _, v := range c {
 		blt.Color(blt.ColorFromName(v.Color))
 		ch := v.Tile
-		SmartPut(UIPosX, (UIPosY+9+y)*UIFontSpacingY, MapEntity, ch)
+		blt.Put(UIPosX+UIFontSpacingX, (UIPosY+9+y)*UIFontSpacingY, ch)
+		blt.Print(UIPosX+(TileSizeX/2)+UIFontSpacingX, (UIPosY+9+y)*UIFontSpacingY,
+			"[font=ui][color=white][offset=0,3]" + v.Name)
 		y++
 	}
 	for _, v := range o {
 		blt.Color(blt.ColorFromName(v.Color))
 		ch := v.Tile
-		SmartPut(UIPosX, (UIPosY+9+y)*UIFontSpacingY, MapEntity, ch)
+		blt.Put(UIPosX+UIFontSpacingX, (UIPosY+9+y)*UIFontSpacingY, ch)
+		blt.Print(UIPosX+(TileSizeX/2)+UIFontSpacingX, (UIPosY+9+y)*UIFontSpacingY,
+			"[font=ui][color=white][offset=0,3]" + v.Name)
 		y++
 	}
 	if t != nil {
 		blt.Color(blt.ColorFromName(t.Color))
 		ch := t.Tile
-		SmartPut(UIPosX, (UIPosY+9+y)*UIFontSpacingY, MapEntity, ch)
+		blt.Put(UIPosX+UIFontSpacingX, (UIPosY+9+y)*UIFontSpacingY, ch)
+		blt.Print(UIPosX+(TileSizeX/2)+UIFontSpacingX, (UIPosY+9+y)*UIFontSpacingY,
+			"[font=ui][color=white][offset=0,3]" + t.Name)
 		y++
 	}
 	blt.Color(blt.ColorFromName("white"))
+	blt.Refresh()
 }
 
 func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLength int) bool {

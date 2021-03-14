@@ -8,5 +8,6 @@ I made the changes as stated below.
 4. Originally, the "looking" tile has the additional circle in the middle (original tile you can find in the "Symbols" group in the original Scroll-o-sprites.
 5. "pillar.png" is tile made by me, and it is not part of the Scroll-o-sprites tileset.
 6. "viking.png" and "vikingangry.png" are modified "Charaters" from the original tileset. The "viking.png" smiles, and "vikingangry.png" has does not, and holds his sword higher.
+7. The shape of "stone.png" and and "heart.png" remains the same as original, but there are additional "stoneempty.png" and "heartempty.png" tiles that have only the contour remaining.
 
 The original tileset is redistributed with game archive, in "data/tiles/original_tileset" directory.

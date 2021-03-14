@@ -64,6 +64,14 @@ var (
 	TileLookingS        = "U+E011"
 	TileCrossI          = 0xE012
 	TileCrossS          = "U+E012"
+	TileHeartI          = 0xE013
+	TileHeartS          = "U+E013"
+	TileHeartEmptyI     = 0xE014
+	TileHeartEmptyS     = "U+E014"
+	TileStoneI          = 0xE015
+	TileStoneS          = "U+E015"
+	TileStoneEmptyI     = 0xE016
+	TileStoneEmptyS     = "U+E016"
 )
 
 func SetTiles() {
@@ -85,4 +93,8 @@ func SetTiles() {
 	_ = SetGlyph("./data/tiles/pebbles.png", TilePebbleS)
 	_ = SetGlyph("./data/tiles/looking.png", TileLookingS)
 	_ = SetGlyph("./data/tiles/cross.png", TileCrossS)
+	_ = SetGlyph("./data/tiles/heart.png", TileHeartS)
+	_ = SetGlyph("./data/tiles/heartempty.png", TileHeartEmptyS)
+	_ = SetGlyph("./data/tiles/stone.png", TileStoneS)
+	_ = SetGlyph("./data/tiles/stoneempty.png", TileStoneEmptyS)
 }

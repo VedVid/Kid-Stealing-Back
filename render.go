@@ -547,76 +547,168 @@ func PrintUI(c *Creature) {
 	   provides only one basic, yet essential information: player's HP. */
 	//REMEMBER: [offset=x,y]
 	blt.Layer(UILayer)
-	hp := ""
-	for i := 0; i < c.HPCurrent; i++ {
-		hp += "[color=red]♥"
-	}
-	for i := c.HPCurrent; i < c.HPMax; i++ {
-		hp += "[/color][color=darker red]♡"
-	}
-	blt.Print(UIPosX, UIPosY+UIFontSpacingY, "[font=game]"+hp)
-	throwables := ""
-	for i := 0; i < c.ThrowablesMax; i++ {
-		if i < c.ThrowablesCur {
-			throwables += "[color=#304e66]♦"
-		} else {
-			throwables += "[/color][color=#1a394f]♢"
+	if Tiles {
+		hpX := 0
+		uiY := 0
+		for i := 0; i < c.HPCurrent; i++ {
+			blt.Color(blt.ColorFromName("red"))
+			blt.Put(UIPosX+UIFontSpacingX+(hpX*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileHeartI)
+			hpX++
+			if hpX >= 5 {
+				hpX = 0
+				uiY = 1
+			}
 		}
-	}
-	blt.Print(UIPosX, UIPosY+(2*UIFontSpacingY), "[font=game]"+throwables)
-	enc := ""
-	if c.LightItem1 == true {
-		enc += "[color=yellow]" + TreasureCharLight
+		for i := c.HPCurrent; i < c.HPMax; i++ {
+			blt.Color(blt.ColorFromName("dark red"))
+			blt.Put(UIPosX+UIFontSpacingX+(hpX*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileHeartEmptyI)
+			hpX++
+			if hpX >= 5 {
+				hpX = 0
+				uiY = 1
+			}
+		}
+		blt.Color(blt.ColorFromName("white"))
+		uiY++
+		throwablesX := 0
+		for i := 0; i < c.ThrowablesMax; i++ {
+			if i < c.ThrowablesCur {
+				blt.Color(blt.ColorFromName("#304e66"))
+				blt.Put(UIPosX+UIFontSpacingX+(throwablesX*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileStoneI)
+				throwablesX++
+			} else {
+				blt.Color(blt.ColorFromName("#1a394f"))
+				blt.Put(UIPosX+UIFontSpacingX+(throwablesX*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileStoneEmptyI)
+				throwablesX++
+			}
+		}
+		blt.Color(blt.ColorFromName("white"))
+		uiY++
+		enc := ""
+		if c.LightItem1 == true {
+			enc += "[color=yellow]" + TreasureCharLight
+		} else {
+			enc += "[color=gray]" + TreasureCharLight
+		}
+		if c.LightItem2 == true {
+			enc += "[color=yellow]" + TreasureCharLight
+		} else {
+			enc += "[color=gray]" + TreasureCharLight
+		}
+		if c.LightItem3 == true {
+			enc += "[color=yellow]" + TreasureCharLight
+		} else {
+			enc += "[color=gray]" + TreasureCharLight
+		}
+		if c.MediumItem1 == true {
+			enc += "[color=yellow]" + TreasureCharMedium
+		} else {
+			enc += "[color=gray]" + TreasureCharMedium
+		}
+		if c.MediumItem2 == true {
+			enc += "[color=yellow]" + TreasureCharMedium
+		} else {
+			enc += "[color=gray]" + TreasureCharMedium
+		}
+		if c.HeavyItem1 == true {
+			enc += "[color=yellow]" + TreasureCharHeavy
+		} else {
+			enc += "[color=gray]" + TreasureCharHeavy
+		}
+		enc += "[color=lighter gray] → "
+		encm := 0
+		if c.LightItem1 && c.LightItem2 && c.LightItem3 {
+			encm += 1
+		}
+		if c.MediumItem1 && c.MediumItem2 {
+			encm += 1
+		}
+		if c.HeavyItem1 {
+			encm += 1
+		}
+		switch encm {
+		case 0:
+			enc += "[color=dark green]▏"
+		case 1:
+			enc += "[color=dark yellow]▍"
+		case 2:
+			enc += "[color=dark orange]▋"
+		case 3:
+			enc += "[color=dark red]█"
+		}
+		blt.Print(UIPosX, UIPosY+(3*UIFontSpacingY), "[font=game]"+enc)
 	} else {
-		enc += "[color=gray]" + TreasureCharLight
+		hp := ""
+		for i := 0; i < c.HPCurrent; i++ {
+			hp += "[color=red]♥"
+		}
+		for i := c.HPCurrent; i < c.HPMax; i++ {
+			hp += "[/color][color=darker red]♡"
+		}
+		blt.Print(UIPosX, UIPosY+UIFontSpacingY, "[font=game]"+hp)
+		throwables := ""
+		for i := 0; i < c.ThrowablesMax; i++ {
+			if i < c.ThrowablesCur {
+				throwables += "[color=#304e66]♦"
+			} else {
+				throwables += "[/color][color=#1a394f]♢"
+			}
+		}
+		blt.Print(UIPosX, UIPosY+(2*UIFontSpacingY), "[font=game]"+throwables)
+		enc := ""
+		if c.LightItem1 == true {
+			enc += "[color=yellow]" + TreasureCharLight
+		} else {
+			enc += "[color=gray]" + TreasureCharLight
+		}
+		if c.LightItem2 == true {
+			enc += "[color=yellow]" + TreasureCharLight
+		} else {
+			enc += "[color=gray]" + TreasureCharLight
+		}
+		if c.LightItem3 == true {
+			enc += "[color=yellow]" + TreasureCharLight
+		} else {
+			enc += "[color=gray]" + TreasureCharLight
+		}
+		if c.MediumItem1 == true {
+			enc += "[color=yellow]" + TreasureCharMedium
+		} else {
+			enc += "[color=gray]" + TreasureCharMedium
+		}
+		if c.MediumItem2 == true {
+			enc += "[color=yellow]" + TreasureCharMedium
+		} else {
+			enc += "[color=gray]" + TreasureCharMedium
+		}
+		if c.HeavyItem1 == true {
+			enc += "[color=yellow]" + TreasureCharHeavy
+		} else {
+			enc += "[color=gray]" + TreasureCharHeavy
+		}
+		enc += "[color=lighter gray] → "
+		encm := 0
+		if c.LightItem1 && c.LightItem2 && c.LightItem3 {
+			encm += 1
+		}
+		if c.MediumItem1 && c.MediumItem2 {
+			encm += 1
+		}
+		if c.HeavyItem1 {
+			encm += 1
+		}
+		switch encm {
+		case 0:
+			enc += "[color=dark green]▏"
+		case 1:
+			enc += "[color=dark yellow]▍"
+		case 2:
+			enc += "[color=dark orange]▋"
+		case 3:
+			enc += "[color=dark red]█"
+		}
+		blt.Print(UIPosX, UIPosY+(3*UIFontSpacingY), "[font=game]"+enc)
 	}
-	if c.LightItem2 == true {
-		enc += "[color=yellow]" + TreasureCharLight
-	} else {
-		enc += "[color=gray]" + TreasureCharLight
-	}
-	if c.LightItem3 == true {
-		enc += "[color=yellow]" + TreasureCharLight
-	} else {
-		enc += "[color=gray]" + TreasureCharLight
-	}
-	if c.MediumItem1 == true {
-		enc += "[color=yellow]" + TreasureCharMedium
-	} else {
-		enc += "[color=gray]" + TreasureCharMedium
-	}
-	if c.MediumItem2 == true {
-		enc += "[color=yellow]" + TreasureCharMedium
-	} else {
-		enc += "[color=gray]" + TreasureCharMedium
-	}
-	if c.HeavyItem1 == true {
-		enc += "[color=yellow]" + TreasureCharHeavy
-	} else {
-		enc += "[color=gray]" + TreasureCharHeavy
-	}
-	enc += "[color=lighter gray] → "
-	encm := 0
-	if c.LightItem1 && c.LightItem2 && c.LightItem3 {
-		encm += 1
-	}
-	if c.MediumItem1 && c.MediumItem2 {
-		encm += 1
-	}
-	if c.HeavyItem1 {
-		encm += 1
-	}
-	switch encm {
-	case 0:
-		enc += "[color=dark green]▏"
-	case 1:
-		enc += "[color=dark yellow]▍"
-	case 2:
-		enc += "[color=dark orange]▋"
-	case 3:
-		enc += "[color=dark red]█"
-	}
-	blt.Print(UIPosX, UIPosY+(3*UIFontSpacingY), "[font=game]"+enc)
 
 	/*
 		name := "Player"

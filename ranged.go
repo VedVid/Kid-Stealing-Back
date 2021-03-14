@@ -44,49 +44,90 @@ func (c *Creature) Look(b Board, o Objects, cs Creatures) {
 	   Line from Vector is drawn, then game waits for player input,
 	   that will change position of "looking" cursors.
 	   Loop breaks with Escape, Space or Enter input. */
-	startX, startY := c.X, c.Y
-	targetX, targetY := startX, startY
-	fov := FOVLength
-	if b[cs[0].X][cs[0].Y].Hides == true {
-		fov = FOVLengthShort
-	}
-	for {
-		var mon = []string{}
-		var hps = []int{}
-		var obj = []string{}
-		var til = []string{}
-		vec, err := NewVector(startX, startY, targetX, targetY)
-		if err != nil {
-			fmt.Println(err)
+	if Tiles {
+		startX, startY := c.X, c.Y
+		targetX, targetY := startX, startY
+		fov := FOVLength
+		if b[cs[0].X][cs[0].Y].Hides == true {
+			fov = FOVLengthShort
 		}
-		_ = ComputeVector(vec)
-		_, _, _, _ = ValidateVector(vec, b, cs, o, StrLook)
-		PrintVector(vec, VectorWhyInspect, VectorColorNeutral, VectorColorNeutral, b, o, cs)
-		if b[targetX][targetY].Explored == true {
-			tt, cc, oo := GetAllThingsFromTile(targetX, targetY, b, cs, o)
-			if IsInFOV(b, c.X, c.Y, targetX, targetY, fov) == true {
-				for _, v := range cc {
-					s := "[color=" + v.Color + "]" + v.Char + "[/color] " + v.Name + " "
-					mon = append(mon, s)
-					hp := CalcHPPercent(v.HPCurrent, v.HPMax)
-					hps = append(hps, hp)
+		for {
+			var mon = Creatures{}
+			var obj = Objects{}
+			var til *Tile = nil
+			vec, err := NewVector(startX, startY, targetX, targetY)
+			if err != nil {
+				fmt.Println(err)
+			}
+			_ = ComputeVector(vec)
+			_, _, _, _ = ValidateVector(vec, b, cs, o, StrLook)
+			PrintVector(vec, VectorWhyInspect, VectorColorNeutral, VectorColorNeutral, b, o, cs)
+			if b[targetX][targetY].Explored == true {
+				tt, cc, oo := GetAllThingsFromTile(targetX, targetY, b, cs, o)
+				if IsInFOV(b, c.X, c.Y, targetX, targetY, fov) == true {
+					for _, v := range cc {
+						mon = append(mon, v)
+					}
+				}
+				for _, v := range oo {
+					obj = append(obj, v)
+				}
+				if tt != nil {
+					til = tt
 				}
 			}
-			for _, v := range oo {
-				s := "[color=" + v.Color + "]" + v.Char + "[/color] " + v.Name + " "
-				obj = append(obj, s)
+			PrintLookingMessageTiles(mon, obj, til)
+			key := ReadInput()
+			if key == blt.TK_ESCAPE || key == blt.TK_ENTER || key == blt.TK_SPACE {
+				break
 			}
-			if tt != nil {
-				s := "[color=" + tt.Color + "]" + tt.Char + "[/color] " + tt.Name + " "
-				til = append(til, s)
+			CursorMovement(&targetX, &targetY, key)
+		}
+	} else {
+		startX, startY := c.X, c.Y
+		targetX, targetY := startX, startY
+		fov := FOVLength
+		if b[cs[0].X][cs[0].Y].Hides == true {
+			fov = FOVLengthShort
+		}
+		for {
+			var mon = []string{}
+			var hps = []int{}
+			var obj = []string{}
+			var til = []string{}
+			vec, err := NewVector(startX, startY, targetX, targetY)
+			if err != nil {
+				fmt.Println(err)
 			}
+			_ = ComputeVector(vec)
+			_, _, _, _ = ValidateVector(vec, b, cs, o, StrLook)
+			PrintVector(vec, VectorWhyInspect, VectorColorNeutral, VectorColorNeutral, b, o, cs)
+			if b[targetX][targetY].Explored == true {
+				tt, cc, oo := GetAllThingsFromTile(targetX, targetY, b, cs, o)
+				if IsInFOV(b, c.X, c.Y, targetX, targetY, fov) == true {
+					for _, v := range cc {
+						s := "[color=" + v.Color + "]" + v.Char + "[/color] " + v.Name + " "
+						mon = append(mon, s)
+						hp := CalcHPPercent(v.HPCurrent, v.HPMax)
+						hps = append(hps, hp)
+					}
+				}
+				for _, v := range oo {
+					s := "[color=" + v.Color + "]" + v.Char + "[/color] " + v.Name + " "
+					obj = append(obj, s)
+				}
+				if tt != nil {
+					s := "[color=" + tt.Color + "]" + tt.Char + "[/color] " + tt.Name + " "
+					til = append(til, s)
+				}
+			}
+			PrintLookingMessage(mon, obj, til)
+			key := ReadInput()
+			if key == blt.TK_ESCAPE || key == blt.TK_ENTER || key == blt.TK_SPACE {
+				break
+			}
+			CursorMovement(&targetX, &targetY, key)
 		}
-		PrintLookingMessage(mon, obj, til)
-		key := ReadInput()
-		if key == blt.TK_ESCAPE || key == blt.TK_ENTER || key == blt.TK_SPACE {
-			break
-		}
-		CursorMovement(&targetX, &targetY, key)
 	}
 }
 

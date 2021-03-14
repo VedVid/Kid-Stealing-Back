@@ -584,38 +584,50 @@ func PrintUI(c *Creature) {
 		}
 		blt.Color(blt.ColorFromName("white"))
 		uiY++
-		enc := ""
 		if c.LightItem1 == true {
-			enc += "[color=yellow]" + TreasureCharLight
+			blt.Color(blt.ColorFromName("yellow"))
+			blt.Put(UIPosX+UIFontSpacingX+(0*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureLightI)
 		} else {
-			enc += "[color=gray]" + TreasureCharLight
+			blt.Color(blt.ColorFromName("gray"))
+			blt.Put(UIPosX+UIFontSpacingX+(0*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureLightEmptyI)
 		}
 		if c.LightItem2 == true {
-			enc += "[color=yellow]" + TreasureCharLight
+			blt.Color(blt.ColorFromName("yellow"))
+			blt.Put(UIPosX+UIFontSpacingX+(1*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureLightI)
 		} else {
-			enc += "[color=gray]" + TreasureCharLight
+			blt.Color(blt.ColorFromName("gray"))
+			blt.Put(UIPosX+UIFontSpacingX+(1*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureLightEmptyI)
 		}
 		if c.LightItem3 == true {
-			enc += "[color=yellow]" + TreasureCharLight
+			blt.Color(blt.ColorFromName("yellow"))
+			blt.Put(UIPosX+UIFontSpacingX+(2*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureLightI)
 		} else {
-			enc += "[color=gray]" + TreasureCharLight
+			blt.Color(blt.ColorFromName("gray"))
+			blt.Put(UIPosX+UIFontSpacingX+(2*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureLightEmptyI)
 		}
 		if c.MediumItem1 == true {
-			enc += "[color=yellow]" + TreasureCharMedium
+			blt.Color(blt.ColorFromName("yellow"))
+			blt.Put(UIPosX+UIFontSpacingX+(3*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureMediumI)
 		} else {
-			enc += "[color=gray]" + TreasureCharMedium
+			blt.Color(blt.ColorFromName("gray"))
+			blt.Put(UIPosX+UIFontSpacingX+(3*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureMediumEmptyI)
 		}
 		if c.MediumItem2 == true {
-			enc += "[color=yellow]" + TreasureCharMedium
+			blt.Color(blt.ColorFromName("yellow"))
+			blt.Put(UIPosX+UIFontSpacingX+(4*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureMediumI)
 		} else {
-			enc += "[color=gray]" + TreasureCharMedium
+			blt.Color(blt.ColorFromName("gray"))
+			blt.Put(UIPosX+UIFontSpacingX+(4*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureMediumEmptyI)
 		}
 		if c.HeavyItem1 == true {
-			enc += "[color=yellow]" + TreasureCharHeavy
+			blt.Color(blt.ColorFromName("yellow"))
+			blt.Put(UIPosX+UIFontSpacingX+(5*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureHeavyI)
 		} else {
-			enc += "[color=gray]" + TreasureCharHeavy
+			blt.Color(blt.ColorFromName("gray"))
+			blt.Put(UIPosX+UIFontSpacingX+(5*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureHeavyEmptyI)
 		}
-		enc += "[color=lighter gray] → "
+		blt.Color(blt.ColorFromName("white"))
+		enc := "[color=lighter gray][font=game][offset=-5,3] → [/offset]"
 		encm := 0
 		if c.LightItem1 && c.LightItem2 && c.LightItem3 {
 			encm += 1
@@ -628,15 +640,15 @@ func PrintUI(c *Creature) {
 		}
 		switch encm {
 		case 0:
-			enc += "[color=dark green]▏"
+			enc += "[color=dark green][offset=-10,0]▏"
 		case 1:
-			enc += "[color=dark yellow]▍"
+			enc += "[color=dark yellow][offset=-10,0]▍"
 		case 2:
-			enc += "[color=dark orange]▋"
+			enc += "[color=dark orange][offset=-10,0]▋"
 		case 3:
-			enc += "[color=dark red]█"
+			enc += "[color=dark red][offset=-10,0]█"
 		}
-		blt.Print(UIPosX, UIPosY+(3*UIFontSpacingY), "[font=game]"+enc)
+		blt.Print(UIPosX+UIFontSpacingX+(6*GameFontSpacingX), UIPosY+(3*UIFontSpacingY), "[font=game]"+enc)
 	} else {
 		hp := ""
 		for i := 0; i < c.HPCurrent; i++ {

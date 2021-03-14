@@ -627,7 +627,6 @@ func PrintUI(c *Creature) {
 			blt.Put(UIPosX+UIFontSpacingX+(5*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileTreasureHeavyEmptyI)
 		}
 		blt.Color(blt.ColorFromName("white"))
-		enc := "[color=lighter gray][font=game][offset=-5,3] → [/offset]"
 		encm := 0
 		if c.LightItem1 && c.LightItem2 && c.LightItem3 {
 			encm += 1
@@ -640,15 +639,19 @@ func PrintUI(c *Creature) {
 		}
 		switch encm {
 		case 0:
-			enc += "[color=dark green][offset=-10,0]▏"
+			blt.Color(blt.ColorFromName("dark green"))
+			blt.Put(UIPosX+UIFontSpacingX+(7*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileEncNoneI)
 		case 1:
-			enc += "[color=dark yellow][offset=-10,0]▍"
+			blt.Color(blt.ColorFromName("dark yellow"))
+			blt.Put(UIPosX+UIFontSpacingX+(7*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileEncLightI)
 		case 2:
-			enc += "[color=dark orange][offset=-10,0]▋"
+			blt.Color(blt.ColorFromName("dark orange"))
+			blt.Put(UIPosX+UIFontSpacingX+(7*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileEncMediumI)
 		case 3:
-			enc += "[color=dark red][offset=-10,0]█"
+			blt.Color(blt.ColorFromName("dark red"))
+			blt.Put(UIPosX+UIFontSpacingX+(7*GameFontSpacingX), UIPosY*UIFontSpacingY+(uiY*UIFontSpacingY), TileEncHeavyI)
 		}
-		blt.Print(UIPosX+UIFontSpacingX+(6*GameFontSpacingX), UIPosY+(3*UIFontSpacingY), "[font=game]"+enc)
+		blt.Color(blt.ColorFromName("white"))
 	} else {
 		hp := ""
 		for i := 0; i < c.HPCurrent; i++ {

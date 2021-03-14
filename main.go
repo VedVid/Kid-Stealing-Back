@@ -34,6 +34,8 @@ import (
 	"time"
 )
 
+const Tiles = false
+
 var KeyboardLayout int
 var CustomControls bool
 
@@ -188,6 +190,7 @@ func NewGame(b *Board, c *Creatures, o *Objects) {
 		fmt.Println(err)
 	}
 	(*b)[playerX][playerY].Char = ">"
+	(*b)[playerX][playerY].Tile = TileHatchI
 	(*b)[playerX][playerY].Name = "Hatch"
 	(*b)[playerX][playerY].Color = "lightest gray"
 	(*b)[playerX][playerY].ColorDark = "grey"
@@ -229,4 +232,5 @@ func init() {
 	InitializeKeyboardLayouts()
 	ReadOptionsControls()
 	ChooseKeyboardLayout()
+	SetTiles()
 }

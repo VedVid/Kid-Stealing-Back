@@ -3,3 +3,9 @@
 - environmental interactions, like throwing a bottles to stagger an enemy
 
 - start with unexplored dungeon
+
+- tiles:
+    - angry viking
+    - footsteps
+    - pebble
+    - "ranged" - looking (both icon and UI), firing

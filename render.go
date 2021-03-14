@@ -256,27 +256,57 @@ func PrintBoard(b Board, c Creatures) {
 	if b[c[0].X][c[0].Y].Hides == true {
 		fov = FOVLengthShort
 	}
-	for x := 0; x < MapSizeX; x++ {
-		for y := 0; y < MapSizeY; y++ {
-			// Technically, "t" is new variable with own memory address...
-			t := b[x][y] // Should it be *b[x][y]?
-			blt.Layer(t.Layer)
-			if t.Explored == true {
-				ch := t.Char
-				if t.Char == "[" || t.Char == "]" {
-					ch = t.Char + t.Char
-				}
-				if t.Treasure == true {
-					glyph := "[font=game][color=" + t.TreasureCol + "]" + t.TreasureChar
-					SmartPrint(t.X, t.Y, MapEntity, glyph)
-				} else {
-					if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y, fov) == true {
-						glyph := "[font=game][color=" + t.Color + "]" + ch
+	if Tiles {
+		for x := 0; x < MapSizeX; x++ {
+			for y := 0; y < MapSizeY; y++ {
+				// Technically, "t" is new variable with own memory address...
+				t := b[x][y] // Should it be *b[x][y]?
+				blt.Layer(t.Layer)
+				if t.Explored == true {
+					ch := t.Char
+					if t.Char == "[" || t.Char == "]" {
+						ch = t.Char + t.Char
+					}
+					if t.Treasure == true {
+						glyph := "[font=game][color=" + t.TreasureCol + "]" + t.TreasureChar
 						SmartPrint(t.X, t.Y, MapEntity, glyph)
 					} else {
-						if t.AlwaysVisible == true {
-							glyph := "[font=game][color=" + t.ColorDark + "]" + ch
+						if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y, fov) == true {
+							glyph := "[font=game][color=" + t.Color + "]" + ch
 							SmartPrint(t.X, t.Y, MapEntity, glyph)
+						} else {
+							if t.AlwaysVisible == true {
+								glyph := "[font=game][color=" + t.ColorDark + "]" + ch
+								SmartPrint(t.X, t.Y, MapEntity, glyph)
+							}
+						}
+					}
+				}
+			}
+		}
+	} else {
+		for x := 0; x < MapSizeX; x++ {
+			for y := 0; y < MapSizeY; y++ {
+				// Technically, "t" is new variable with own memory address...
+				t := b[x][y] // Should it be *b[x][y]?
+				blt.Layer(t.Layer)
+				if t.Explored == true {
+					ch := t.Char
+					if t.Char == "[" || t.Char == "]" {
+						ch = t.Char + t.Char
+					}
+					if t.Treasure == true {
+						glyph := "[font=game][color=" + t.TreasureCol + "]" + t.TreasureChar
+						SmartPrint(t.X, t.Y, MapEntity, glyph)
+					} else {
+						if IsInFOV(b, c[0].X, c[0].Y, t.X, t.Y, fov) == true {
+							glyph := "[font=game][color=" + t.Color + "]" + ch
+							SmartPrint(t.X, t.Y, MapEntity, glyph)
+						} else {
+							if t.AlwaysVisible == true {
+								glyph := "[font=game][color=" + t.ColorDark + "]" + ch
+								SmartPrint(t.X, t.Y, MapEntity, glyph)
+							}
 						}
 					}
 				}
@@ -300,19 +330,38 @@ func PrintObjects(b Board, o Objects, c Creatures) {
 	if b[c[0].X][c[0].Y].Hides == true {
 		fov = FOVLengthShort
 	}
-	for _, v := range o {
-		if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
-			((v.AlwaysVisible == true) && (b[v.X][v.Y].Explored == true)) {
-			blt.Layer(v.Layer)
-			ch := v.Char
-			if v.Char == "]" || v.Char == "[" {
-				ch = v.Char + v.Char
+	if Tiles {
+		for _, v := range o {
+			if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
+				((v.AlwaysVisible == true) && (b[v.X][v.Y].Explored == true)) {
+				blt.Layer(v.Layer)
+				ch := v.Char
+				if v.Char == "]" || v.Char == "[" {
+					ch = v.Char + v.Char
+				}
+				glyph := "[font=game][color=" + v.Color + "]" + ch
+				SmartPrint(v.X, v.Y, ObjectEntity, glyph)
+				for i := 0; i < v.Layer; i++ {
+					blt.Layer(i)
+					SmartClear(v.X, v.Y, ObjectEntity)
+				}
 			}
-			glyph := "[font=game][color=" + v.Color + "]" + ch
-			SmartPrint(v.X, v.Y, ObjectEntity, glyph)
-			for i := 0; i < v.Layer; i++ {
-				blt.Layer(i)
-				SmartClear(v.X, v.Y, ObjectEntity)
+		}
+	} else {
+		for _, v := range o {
+			if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
+				((v.AlwaysVisible == true) && (b[v.X][v.Y].Explored == true)) {
+				blt.Layer(v.Layer)
+				ch := v.Char
+				if v.Char == "]" || v.Char == "[" {
+					ch = v.Char + v.Char
+				}
+				glyph := "[font=game][color=" + v.Color + "]" + ch
+				SmartPrint(v.X, v.Y, ObjectEntity, glyph)
+				for i := 0; i < v.Layer; i++ {
+					blt.Layer(i)
+					SmartClear(v.X, v.Y, ObjectEntity)
+				}
 			}
 		}
 	}
@@ -338,57 +387,22 @@ func PrintCreatures(b Board, c Creatures) {
 	if b[c[0].X][c[0].Y].Hides == true {
 		fov = FOVLengthShort
 	}
-	for i, v := range c {
-		if i == 0 {
-			continue // Player will be drawn separately
-		}
-		if v.Layer != DeadLayer {
-			continue
-		}
-		if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
-			(v.AlwaysVisible == true) {
-			blt.Layer(v.Layer)
-			ch := v.Char
-			if v.Char == "]" || v.Char == "[" {
-				ch = v.Char + v.Char
+	if Tiles {
+		for i, v := range c {
+			if i == 0 {
+				continue // Player will be drawn separately
 			}
-			glyph := "[font=game][color=" + v.Color + "]" + ch
-			SmartPrint(v.X, v.Y, MonsterEntity, glyph)
-			for j := 0; j < v.Layer; j++ {
-				blt.Layer(j)
-				SmartClear(v.X, v.Y, MonsterEntity)
+			if v.Layer != DeadLayer {
+				continue
 			}
-		}
-	}
-	// Print living creatures
-	for i, v := range c {
-		if i == 0 {
-			continue // Player will be drawn separately
-		}
-		if v.Layer == DeadLayer {
-			continue
-		}
-		if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
-			(v.AlwaysVisible == true) {
-			blt.Layer(v.Layer)
-			ch := v.Char
-			if v.Char == "]" || v.Char == "[" {
-				ch = v.Char + v.Char
-			}
-			glyph := "[font=game][color=" + v.Color + "]" + ch
-			if v.Staggered > 0 {
-				glyph = "[font=game][color=dark yellow]" + ch
-			}
-			SmartPrint(v.X, v.Y, MonsterEntity, glyph)
-			for j := 0; j < v.Layer; j++ {
-				blt.Layer(j)
-				SmartClear(v.X, v.Y, MonsterEntity)
-			}
-		}
-		if IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == false {
-			if v.Char == "‼" {
+			if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
+				(v.AlwaysVisible == true) {
 				blt.Layer(v.Layer)
-				glyph := "[font=game][color=" + v.Color + "]" + v.Char
+				ch := v.Char
+				if v.Char == "]" || v.Char == "[" {
+					ch = v.Char + v.Char
+				}
+				glyph := "[font=game][color=" + v.Color + "]" + ch
 				SmartPrint(v.X, v.Y, MonsterEntity, glyph)
 				for j := 0; j < v.Layer; j++ {
 					blt.Layer(j)
@@ -396,22 +410,135 @@ func PrintCreatures(b Board, c Creatures) {
 				}
 			}
 		}
-	}
-	// Print player
-	blt.Layer(PlayerLayer)
-	playerColor := c[0].Color
-	if b[c[0].X][c[0].Y].Hides == true {
-		if c[0].Hidden {
-			playerColor = "darkest gray"
-		} else {
-			playerColor = "dark gray"
+		// Print living creatures
+		for i, v := range c {
+			if i == 0 {
+				continue // Player will be drawn separately
+			}
+			if v.Layer == DeadLayer {
+				continue
+			}
+			if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
+				(v.AlwaysVisible == true) {
+				blt.Layer(v.Layer)
+				ch := v.Char
+				if v.Char == "]" || v.Char == "[" {
+					ch = v.Char + v.Char
+				}
+				glyph := "[font=game][color=" + v.Color + "]" + ch
+				if v.Staggered > 0 {
+					glyph = "[font=game][color=dark yellow]" + ch
+				}
+				SmartPrint(v.X, v.Y, MonsterEntity, glyph)
+				for j := 0; j < v.Layer; j++ {
+					blt.Layer(j)
+					SmartClear(v.X, v.Y, MonsterEntity)
+				}
+			}
+			if IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == false {
+				if v.Char == "‼" {
+					blt.Layer(v.Layer)
+					glyph := "[font=game][color=" + v.Color + "]" + v.Char
+					SmartPrint(v.X, v.Y, MonsterEntity, glyph)
+					for j := 0; j < v.Layer; j++ {
+						blt.Layer(j)
+						SmartClear(v.X, v.Y, MonsterEntity)
+					}
+				}
+			}
 		}
-	}
-	SmartPrint(c[0].X, c[0].Y,
-		MonsterEntity, "[font=game][color="+playerColor+"]"+c[0].Char)
-	for i := 0; i < PlayerLayer; i++ {
-		blt.Layer(i)
-		SmartClear(c[0].X, c[0].Y, MonsterEntity)
+		// Print player
+		blt.Layer(PlayerLayer)
+		playerColor := c[0].Color
+		if b[c[0].X][c[0].Y].Hides == true {
+			if c[0].Hidden {
+				playerColor = "darkest gray"
+			} else {
+				playerColor = "dark gray"
+			}
+		}
+		SmartPrint(c[0].X, c[0].Y,
+			MonsterEntity, "[font=game][color="+playerColor+"]"+c[0].Char)
+		for i := 0; i < PlayerLayer; i++ {
+			blt.Layer(i)
+			SmartClear(c[0].X, c[0].Y, MonsterEntity)
+		}
+	} else {
+		for i, v := range c {
+			if i == 0 {
+				continue // Player will be drawn separately
+			}
+			if v.Layer != DeadLayer {
+				continue
+			}
+			if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
+				(v.AlwaysVisible == true) {
+				blt.Layer(v.Layer)
+				ch := v.Char
+				if v.Char == "]" || v.Char == "[" {
+					ch = v.Char + v.Char
+				}
+				glyph := "[font=game][color=" + v.Color + "]" + ch
+				SmartPrint(v.X, v.Y, MonsterEntity, glyph)
+				for j := 0; j < v.Layer; j++ {
+					blt.Layer(j)
+					SmartClear(v.X, v.Y, MonsterEntity)
+				}
+			}
+		}
+		// Print living creatures
+		for i, v := range c {
+			if i == 0 {
+				continue // Player will be drawn separately
+			}
+			if v.Layer == DeadLayer {
+				continue
+			}
+			if (IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == true) ||
+				(v.AlwaysVisible == true) {
+				blt.Layer(v.Layer)
+				ch := v.Char
+				if v.Char == "]" || v.Char == "[" {
+					ch = v.Char + v.Char
+				}
+				glyph := "[font=game][color=" + v.Color + "]" + ch
+				if v.Staggered > 0 {
+					glyph = "[font=game][color=dark yellow]" + ch
+				}
+				SmartPrint(v.X, v.Y, MonsterEntity, glyph)
+				for j := 0; j < v.Layer; j++ {
+					blt.Layer(j)
+					SmartClear(v.X, v.Y, MonsterEntity)
+				}
+			}
+			if IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == false {
+				if v.Char == "‼" {
+					blt.Layer(v.Layer)
+					glyph := "[font=game][color=" + v.Color + "]" + v.Char
+					SmartPrint(v.X, v.Y, MonsterEntity, glyph)
+					for j := 0; j < v.Layer; j++ {
+						blt.Layer(j)
+						SmartClear(v.X, v.Y, MonsterEntity)
+					}
+				}
+			}
+		}
+		// Print player
+		blt.Layer(PlayerLayer)
+		playerColor := c[0].Color
+		if b[c[0].X][c[0].Y].Hides == true {
+			if c[0].Hidden {
+				playerColor = "darkest gray"
+			} else {
+				playerColor = "dark gray"
+			}
+		}
+		SmartPrint(c[0].X, c[0].Y,
+			MonsterEntity, "[font=game][color="+playerColor+"]"+c[0].Char)
+		for i := 0; i < PlayerLayer; i++ {
+			blt.Layer(i)
+			SmartClear(c[0].X, c[0].Y, MonsterEntity)
+		}
 	}
 }
 

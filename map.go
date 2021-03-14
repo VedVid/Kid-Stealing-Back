@@ -95,7 +95,7 @@ func NewTile(layer, x, y int, character, name, color, colorDark string,
 		txt := CharacterLengthError(character)
 		err = errors.New("Tile character string length is not equal to 1." + txt)
 	}
-	tileBasicProperties := BasicProperties{x, y, character, name, color,
+	tileBasicProperties := BasicProperties{x, y, character, TileFloorI, name, color,
 		colorDark}
 	tileVisibilityProperties := VisibilityProperties{layer, alwaysVisible}
 	tileCollisionProperties := CollisionProperties{blocked, blocksSight}
@@ -131,6 +131,7 @@ func InitializeEmptyMap() Board {
 
 func ZeroTile(t *Tile) {
 	t.Char = "."
+	t.Tile = TileFloorI
 	t.Name = "floor"
 	t.Color = "lighter gray"
 	t.ColorDark = "darker gray"

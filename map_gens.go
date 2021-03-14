@@ -60,6 +60,7 @@ func MakeRoomsMap(b *Board) {
 		for y := 0; y < MapSizeY; y++ {
 			if x > borderIndexX || y > borderIndexY {
 				(*b)[x][y].Char = "."
+				(*b)[x][y].Tile = TileFloorI
 				(*b)[x][y].Name = "floor"
 				(*b)[x][y].Color = "lighter grey"
 				(*b)[x][y].ColorDark = "darker grey"
@@ -73,6 +74,7 @@ func MakeRoomsMap(b *Board) {
 				if crumblinWallChance > RandInt(100) && x > 0 && x < MapSizeX-1 && y > 0 && y < MapSizeY-1 {
 					(*b)[x][y].Char = "%"
 					(*b)[x][y].Name = "crumbling wall"
+					(*b)[x][y].Tile = TileCrumblingWallI
 					(*b)[x][y].Color = "#404b59"
 					(*b)[x][y].ColorDark = "grey"
 					(*b)[x][y].Layer = BoardLayer
@@ -83,6 +85,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].BlocksSight = true
 				} else {
 					(*b)[x][y].Char = "#"
+					(*b)[x][y].Tile = TileWallI
 					(*b)[x][y].Name = "wall"
 					(*b)[x][y].Color = "light grey"
 					(*b)[x][y].ColorDark = "grey"
@@ -132,6 +135,7 @@ func MakeRoomsMap(b *Board) {
 					switch ch {
 					case ".":
 						(*b)[cx][cy].Char = "."
+						(*b)[cx][cy].Tile = TileWallI
 						(*b)[cx][cy].Name = "floor"
 						(*b)[cx][cy].Color = "lighter grey"
 						(*b)[cx][cy].ColorDark = "darker grey"
@@ -143,6 +147,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[cx][cy].BlocksSight = false
 					case "o":
 						(*b)[cx][cy].Char = "○"
+						(*b)[cx][cy].Tile = TilePillarI
 						(*b)[cx][cy].Name = "pillar"
 						(*b)[cx][cy].Color = "grey"
 						(*b)[cx][cy].ColorDark = "grey"
@@ -154,6 +159,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[cx][cy].BlocksSight = true
 					case "h":
 						(*b)[cx][cy].Char = "h"
+						(*b)[cx][cy].Tile = TileChairI
 						(*b)[cx][cy].Name = "chair"
 						(*b)[cx][cy].Color = "dark orange"
 						(*b)[cx][cy].ColorDark = "grey"
@@ -165,6 +171,7 @@ func MakeRoomsMap(b *Board) {
 						(*b)[cx][cy].BlocksSight = false
 					case "T":
 						(*b)[cx][cy].Char = "T"
+						(*b)[cx][cy].Tile = TileTableI
 						(*b)[cx][cy].Name = "table"
 						(*b)[cx][cy].Color = "dark orange"
 						(*b)[cx][cy].ColorDark = "grey"
@@ -188,6 +195,7 @@ func MakeRoomsMap(b *Board) {
 				y := i*(roomSizeY+1) - RandRange(1, roomSizeY)
 				x := j * (roomSizeX + 1)
 				(*b)[x][y].Char = "+"
+				(*b)[x][y].Tile = TileDoorsI
 				(*b)[x][y].Name = "closed doors"
 				(*b)[x][y].Color = "darker orange"
 				(*b)[x][y].ColorDark = "grey"
@@ -202,6 +210,7 @@ func MakeRoomsMap(b *Board) {
 				y := i * (roomSizeY + 1)
 				x := j*(roomSizeX+1) - RandRange(1, roomSizeX)
 				(*b)[x][y].Char = "+"
+				(*b)[x][y].Tile = TileDoorsI
 				(*b)[x][y].Name = "closed doors"
 				(*b)[x][y].Color = "darker orange"
 				(*b)[x][y].ColorDark = "grey"
@@ -215,6 +224,7 @@ func MakeRoomsMap(b *Board) {
 			y := i * (roomSizeY + 1)
 			x := j*(roomSizeX+1) + RandRange(1, roomSizeX)
 			(*b)[x][y].Char = "+"
+			(*b)[x][y].Tile = TileDoorsI
 			(*b)[x][y].Name = "closed doors"
 			(*b)[x][y].Color = "darker orange"
 			(*b)[x][y].ColorDark = "grey"
@@ -227,6 +237,7 @@ func MakeRoomsMap(b *Board) {
 			y = i*(roomSizeY+1) + RandRange(1, roomSizeY)
 			x = j * (roomSizeX + 1)
 			(*b)[x][y].Char = "+"
+			(*b)[x][y].Tile = TileDoorsI
 			(*b)[x][y].Name = "closed doors"
 			(*b)[x][y].Color = "darker orange"
 			(*b)[x][y].ColorDark = "grey"
@@ -244,6 +255,7 @@ func MakeRoomsMap(b *Board) {
 				if x > 0 {
 					if (*b)[x-1][y].Char != "." && (*b)[x-1][y].Char != "#" {
 						(*b)[x][y].Char = "#"
+						(*b)[x][y].Tile = TileWallI
 						(*b)[x][y].Name = "wall"
 						(*b)[x][y].Color = "light grey"
 						(*b)[x][y].ColorDark = "grey"
@@ -258,6 +270,7 @@ func MakeRoomsMap(b *Board) {
 				if x < MapSizeX-1 {
 					if (*b)[x+1][y].Char != "." && (*b)[x+1][y].Char != "#" {
 						(*b)[x][y].Char = "#"
+						(*b)[x][y].Tile = TileWallI
 						(*b)[x][y].Name = "wall"
 						(*b)[x][y].Color = "light grey"
 						(*b)[x][y].ColorDark = "grey"
@@ -272,6 +285,7 @@ func MakeRoomsMap(b *Board) {
 				if y > 0 {
 					if (*b)[x][y-1].Char != "." && (*b)[x][y-1].Char != "#" {
 						(*b)[x][y].Char = "#"
+						(*b)[x][y].Tile = TileWallI
 						(*b)[x][y].Name = "wall"
 						(*b)[x][y].Color = "light grey"
 						(*b)[x][y].ColorDark = "grey"
@@ -286,6 +300,7 @@ func MakeRoomsMap(b *Board) {
 				if y < MapSizeY-1 {
 					if (*b)[x][y+1].Char != "." && (*b)[x][y+1].Char != "#" {
 						(*b)[x][y].Char = "#"
+						(*b)[x][y].Tile = TileWallI
 						(*b)[x][y].Name = "wall"
 						(*b)[x][y].Color = "light grey"
 						(*b)[x][y].ColorDark = "grey"
@@ -299,6 +314,7 @@ func MakeRoomsMap(b *Board) {
 				}
 				if x == 0 || x >= MapSizeX-1 || y == 0 || y >= MapSizeY-1 {
 					(*b)[x][y].Char = "#"
+					(*b)[x][y].Tile = TileWallI
 					(*b)[x][y].Name = "wall"
 					(*b)[x][y].Color = "light grey"
 					(*b)[x][y].ColorDark = "grey"
@@ -313,6 +329,7 @@ func MakeRoomsMap(b *Board) {
 				if x > 0 {
 					if (*b)[x-1][y].Char == "%" {
 						(*b)[x][y].Char = "#"
+						(*b)[x][y].Tile = TileWallI
 						(*b)[x][y].Name = "wall"
 						(*b)[x][y].Color = "light grey"
 						(*b)[x][y].ColorDark = "grey"
@@ -327,6 +344,7 @@ func MakeRoomsMap(b *Board) {
 				if x < MapSizeX-1 {
 					if (*b)[x+1][y].Char == "%" {
 						(*b)[x][y].Char = "#"
+						(*b)[x][y].Tile = TileWallI
 						(*b)[x][y].Name = "wall"
 						(*b)[x][y].Color = "light grey"
 						(*b)[x][y].ColorDark = "grey"
@@ -341,6 +359,7 @@ func MakeRoomsMap(b *Board) {
 				if y > 0 {
 					if (*b)[x][y-1].Char == "%" {
 						(*b)[x][y].Char = "#"
+						(*b)[x][y].Tile = TileWallI
 						(*b)[x][y].Name = "wall"
 						(*b)[x][y].Color = "light grey"
 						(*b)[x][y].ColorDark = "grey"
@@ -355,6 +374,7 @@ func MakeRoomsMap(b *Board) {
 				if y < MapSizeY-1 {
 					if (*b)[x][y+1].Char == "%" {
 						(*b)[x][y].Char = "#"
+						(*b)[x][y].Tile = TileWallI
 						(*b)[x][y].Name = "wall"
 						(*b)[x][y].Color = "light grey"
 						(*b)[x][y].ColorDark = "grey"
@@ -380,6 +400,7 @@ func MakeRoomsMap(b *Board) {
 			if RandInt(100) < deleteChance {
 				for xx := 0; xx < roomSizeX; xx++ {
 					(*b)[x][y].Char = "."
+					(*b)[x][y].Tile = TileFloorI
 					(*b)[x][y].Name = "floor"
 					(*b)[x][y].Color = "lighter grey"
 					(*b)[x][y].ColorDark = "darker grey"
@@ -401,6 +422,7 @@ func MakeRoomsMap(b *Board) {
 			if RandInt(100) < deleteChance {
 				for yy := 0; yy < roomSizeY; yy++ {
 					(*b)[x][y].Char = "."
+					(*b)[x][y].Tile = TileFloorI
 					(*b)[x][y].Name = "floor"
 					(*b)[x][y].Color = "lighter grey"
 					(*b)[x][y].ColorDark = "darker grey"
@@ -435,16 +457,19 @@ func MakeRoomsMap(b *Board) {
 				(*b)[x][y].Treasure = true
 				(*b)[x][y].TreasureCol = "yellow"
 				(*b)[x][y].TreasureChar = TreasureCharLight
+				(*b)[x][y].Tile = TileTreasureLightI
 				treasureLC++
 			} else if 66 < chances && treasureMC < treasureM {
 				(*b)[x][y].Treasure = true
 				(*b)[x][y].TreasureCol = "yellow"
 				(*b)[x][y].TreasureChar = TreasureCharMedium
+				(*b)[x][y].Tile = TileTreasureMediumI
 				treasureMC++
 			} else if treasureHC < treasureH {
 				(*b)[x][y].Treasure = true
 				(*b)[x][y].TreasureCol = "yellow"
 				(*b)[x][y].TreasureChar = TreasureCharHeavy
+				(*b)[x][y].Tile = TileTreasureHeavyI
 				treasureHC++
 			}
 		}
@@ -465,6 +490,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Name = "pebble"
 					(*b)[x][y].Char = "…"
 					(*b)[x][y].Color = "#304e66"
+					(*b)[x][y].Tile = TileFloorI
 					throwablesNo1--
 				} else {
 					continue
@@ -474,6 +500,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Name = "pebble"
 					(*b)[x][y].Char = "…"
 					(*b)[x][y].Color = "#304e66"
+					(*b)[x][y].Tile = TileFloorI
 					throwablesNo2--
 				} else {
 					continue
@@ -483,6 +510,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Name = "pebble"
 					(*b)[x][y].Char = "…"
 					(*b)[x][y].Color = "#304e66"
+					(*b)[x][y].Tile = TileFloorI
 					throwablesNo3--
 				} else {
 					continue
@@ -492,6 +520,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].Name = "pebble"
 					(*b)[x][y].Char = "…"
 					(*b)[x][y].Color = "#304e66"
+					(*b)[x][y].Tile = TileFloorI
 					throwablesNo4--
 				} else {
 					continue
@@ -509,6 +538,7 @@ func MakeRoomsMap(b *Board) {
 				chance := RandInt(100)
 				if chance < wallChance {
 					(*b)[x][y].Char = "#"
+					(*b)[x][y].Tile = TileWallI
 					(*b)[x][y].Name = "wall"
 					(*b)[x][y].Color = "light grey"
 					(*b)[x][y].ColorDark = "grey"
@@ -519,6 +549,7 @@ func MakeRoomsMap(b *Board) {
 					(*b)[x][y].BlocksSight = true
 					if TestMapTilesConnections(b) == false {
 						(*b)[x][y].Char = "+"
+						(*b)[x][y].Tile = TileDoorsI
 						(*b)[x][y].Name = "closed doors"
 						(*b)[x][y].Color = "darker orange"
 						(*b)[x][y].ColorDark = "grey"
@@ -530,6 +561,7 @@ func MakeRoomsMap(b *Board) {
 					}
 				} else if chance < floorChance {
 					(*b)[x][y].Char = "."
+					(*b)[x][y].Tile = TileFloorI
 					(*b)[x][y].Name = "floor"
 					(*b)[x][y].Color = "lighter grey"
 					(*b)[x][y].ColorDark = "darker grey"
@@ -550,6 +582,7 @@ func MakeRandomMap(b *Board) {
 			ch := RandInt(100)
 			if ch <= 20 {
 				(*b)[x][y].Char = "#"
+				(*b)[x][y].Tile = TileWallI
 				(*b)[x][y].Name = "wall"
 				(*b)[x][y].Color = "lightest grey"
 				(*b)[x][y].ColorDark = "grey"
@@ -560,6 +593,7 @@ func MakeRandomMap(b *Board) {
 				(*b)[x][y].BlocksSight = true
 			} else {
 				(*b)[x][y].Char = ","
+				(*b)[x][y].Tile = TileFloorI
 				(*b)[x][y].Name = "grass"
 				(*b)[x][y].Color = "#D2B48C"
 				(*b)[x][y].ColorDark = "grey"

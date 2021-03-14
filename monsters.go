@@ -152,6 +152,7 @@ func NewCreature(x, y int, b Board, monsterFile string) (*Creature, error) {
 		monster.LastPosition = []int{monster.X, monster.Y}
 	}
 	monster.MaxOutOfFOV = 10
+	monster.Tile = TileVikingI
 	return monster, err2
 }
 
@@ -280,6 +281,7 @@ func (c *Creature) UseEnvironment(b *Board, o *Objects, cs *Creatures) bool {
 		turnSpent = c.Target(*b, o, cs, StrThrowable, FOVLength)
 		if turnSpent {
 			(*b)[c.X][c.Y].Char = "."
+			(*b)[c.X][c.Y].Tile = TileFloorI
 			(*b)[c.X][c.Y].Name = "floor"
 			(*b)[c.X][c.Y].Color = "lighter grey"
 		}
@@ -432,6 +434,7 @@ func (c *Creature) PickUp(b *Board) bool {
 			if c.ThrowablesCur < c.ThrowablesMax {
 				c.ThrowablesCur++
 				(*b)[c.X][c.Y].Char = "."
+				(*b)[c.X][c.Y].Tile = TileFloorI
 				(*b)[c.X][c.Y].Name = "floor"
 				(*b)[c.X][c.Y].Color = "lighter grey"
 				turnSpent = true

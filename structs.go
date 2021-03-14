@@ -32,6 +32,7 @@ type BasicProperties struct {
 	   map tile and object representation. */
 	X, Y      int
 	Char      string
+	Tile      int
 	Name      string
 	Color     string
 	ColorDark string

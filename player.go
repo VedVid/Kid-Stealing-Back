@@ -110,6 +110,7 @@ func NewPlayer(x, y int) (*Creature, error) {
 	}
 	player.Speed = SpeedFast
 	player.StoleAnything = false
+	player.Tile = TilePlayerI
 	return player, err2
 }
 

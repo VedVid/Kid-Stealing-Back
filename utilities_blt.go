@@ -27,8 +27,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package main
 
 import (
-	"strconv"
-
 	blt "bearlibterminal"
 )
 
@@ -39,14 +37,14 @@ const (
 	UIEntity
 )
 
-func SetGlyph(path, number, filter string, size int) string {
+func SetGlyph(path, number string) string {
 	/* Function SetTile allows to use special tiles (glyphs, bitmaps)
 	   as font elements; it returns unicode number.
 	   Number variable has to be formatted in that way:
 	   U+<unicode-number>, like: U+E001
 	   Later, that U+E001 identifier may be used in printing functions, like
 	   wall := 0xE001 (note different format!); blt.Print(x, y, wall). */
-	blt.Set(number + ": " + path + ", resize=" + strconv.Itoa(size) + ", resize-filter=" + filter)
+	blt.Set(number + ": " + path)
 	return "0x" + number[2:]
 }
 

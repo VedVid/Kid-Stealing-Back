@@ -41,6 +41,7 @@ type BasicProperties struct {
 type TreasureProperties struct {
 	Treasure     bool
 	TreasureChar string
+	TreasureTile int
 	TreasureCol  string
 }
 

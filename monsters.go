@@ -328,6 +328,7 @@ func (c *Creature) Drop(b *Board) bool {
 					(*b)[x][y].Treasure = true
 					(*b)[x][y].TreasureCol = "yellow"
 					(*b)[x][y].TreasureChar = TreasureCharLight
+					(*b)[x][y].TreasureTile = TileTreasureLightI
 					turnSpent = true
 					break
 				} else if key == blt.TK_M && m {
@@ -340,6 +341,7 @@ func (c *Creature) Drop(b *Board) bool {
 					(*b)[x][y].Treasure = true
 					(*b)[x][y].TreasureCol = "yellow"
 					(*b)[x][y].TreasureChar = TreasureCharMedium
+					(*b)[x][y].TreasureTile = TileTreasureMediumI
 					turnSpent = true
 					break
 				} else if key == blt.TK_H && h {
@@ -348,6 +350,7 @@ func (c *Creature) Drop(b *Board) bool {
 					(*b)[x][y].Treasure = true
 					(*b)[x][y].TreasureCol = "yellow"
 					(*b)[x][y].TreasureChar = TreasureCharHeavy
+					(*b)[x][y].TreasureTile = TileTreasureHeavyI
 					turnSpent = true
 					break
 				} else {

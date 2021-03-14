@@ -79,7 +79,7 @@ var ShowMapValidationProcess = ShowMapValidationProcessOff
 
 func NewTile(layer, x, y int, character, name, color, colorDark string,
 	alwaysVisible, explored, slows, hides, blocked, blocksSight,
-	treasure bool, treasureChar, treasureCol string) (*Tile, error) {
+	treasure bool, treasureChar, treasureCol string, treasureTile int) (*Tile, error) {
 	/* Function NewTile takes all values necessary by its struct,
 	   and creates then returns Tile. */
 	var err error
@@ -99,7 +99,7 @@ func NewTile(layer, x, y int, character, name, color, colorDark string,
 		colorDark}
 	tileVisibilityProperties := VisibilityProperties{layer, alwaysVisible}
 	tileCollisionProperties := CollisionProperties{blocked, blocksSight}
-	tileTreasureProperties := TreasureProperties{treasure, treasureChar, treasureCol}
+	tileTreasureProperties := TreasureProperties{treasure, treasureChar, treasureTile, treasureCol}
 	tileNew := &Tile{tileBasicProperties, tileVisibilityProperties,
 		explored, slows, hides, tileCollisionProperties, tileTreasureProperties}
 	return tileNew, err
@@ -120,7 +120,7 @@ func InitializeEmptyMap() Board {
 		for y := 0; y < MapSizeY; y++ {
 			var err error
 			b[x][y], err = NewTile(BoardLayer, x, y, ".", "floor", "lighter gray",
-				"darker gray", true, true, false, false, false, false, false, "", "")
+				"darker gray", true, true, false, false, false, false, false, "", "", 0)
 			if err != nil {
 				fmt.Println(err)
 			}

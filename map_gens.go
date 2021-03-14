@@ -457,19 +457,19 @@ func MakeRoomsMap(b *Board) {
 				(*b)[x][y].Treasure = true
 				(*b)[x][y].TreasureCol = "yellow"
 				(*b)[x][y].TreasureChar = TreasureCharLight
-				(*b)[x][y].Tile = TileTreasureLightI
+				(*b)[x][y].TreasureTile = TileTreasureLightI
 				treasureLC++
 			} else if 66 < chances && treasureMC < treasureM {
 				(*b)[x][y].Treasure = true
 				(*b)[x][y].TreasureCol = "yellow"
 				(*b)[x][y].TreasureChar = TreasureCharMedium
-				(*b)[x][y].Tile = TileTreasureMediumI
+				(*b)[x][y].TreasureTile = TileTreasureMediumI
 				treasureMC++
 			} else if treasureHC < treasureH {
 				(*b)[x][y].Treasure = true
 				(*b)[x][y].TreasureCol = "yellow"
 				(*b)[x][y].TreasureChar = TreasureCharHeavy
-				(*b)[x][y].Tile = TileTreasureHeavyI
+				(*b)[x][y].TreasureTile = TileTreasureHeavyI
 				treasureHC++
 			}
 		}

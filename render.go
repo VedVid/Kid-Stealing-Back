@@ -432,8 +432,9 @@ func PrintCreatures(b Board, c Creatures) {
 			if IsInFOV(b, c[0].X, c[0].Y, v.X, v.Y, fov) == false {
 				if v.Char == "‼" {
 					blt.Layer(v.Layer)
-					glyph := "[font=game][color=" + v.Color + "]" + v.Char
-					SmartPrint(v.X, v.Y, MonsterEntity, glyph)
+					ch := v.Tile
+					blt.Color(blt.ColorFromName(v.Color))
+					SmartPut(v.X, v.Y, MapEntity, ch)
 					for j := 0; j < v.Layer; j++ {
 						blt.Layer(j)
 						SmartClear(v.X, v.Y, MonsterEntity)

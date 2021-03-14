@@ -123,10 +123,12 @@ func TriggerAI(b Board, p, c *Creature) {
 		c.Color = "#33a2ac"
 		c.ColorDark = "#33a2ac"
 		c.Char = "☺"
+		c.Tile = TileVikingI
 	} else {
 		c.Color = "#d17519"
 		c.ColorDark = "#d17519"
 		c.Char = "☹"
+		c.Tile = TileVikingAngryI
 	}
 	if IsInFOV(b, p.X, p.Y, c.X, c.Y, fov) == false &&
 		p.DistanceTo(c.X, c.Y) < 10 &&
@@ -134,6 +136,7 @@ func TriggerAI(b Board, p, c *Creature) {
 			c.Color = "dark red"
 			c.ColorDark = "dark red"
 			c.Char = "‼"
+			c.Tile = TileFootstepsI
 		}
 }
 

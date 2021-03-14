@@ -52,8 +52,12 @@ var (
 	TileTreasureMediumS = "U+E00B"
 	TileVikingI         = 0xE00C
 	TileVikingS         = "U+E00C"
-	TileWallI           = 0xE00D
-	TileWallS           = "U+E00D"
+	TileVikingAngryI    = 0xE00D
+	TileVikingAngryS    = "U+E00D"
+	TileWallI           = 0xE00E
+	TileWallS           = "U+E00E"
+	TileFootstepsI      = 0xE00F
+	TileFootstepsS      = "U+E00F"
 )
 
 func SetTiles() {
@@ -69,5 +73,7 @@ func SetTiles() {
 	_ = SetGlyph("./data/tiles/treasurelight.png", TileTreasureLightS)
 	_ = SetGlyph("./data/tiles/treasuremedium.png", TileTreasureMediumS)
 	_ = SetGlyph("./data/tiles/viking.png", TileVikingS)
+	_ = SetGlyph("./data/tiles/vikingangry.png", TileVikingAngryS)
 	_ = SetGlyph("./data/tiles/wall.png", TileWallS)
+	_ = SetGlyph("./data/tiles/footsteps.png", TileFootstepsS)
 }

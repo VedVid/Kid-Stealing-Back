@@ -52,7 +52,7 @@ const (
 	LogPosY      = MapSizeY * 6
 
 	GameTitle   = "About The Kid Who Stole The Relics Back"
-	GameVersion = "(7DRL 2021)"
+	GameVersion = "(0.1 20210314)"
 )
 
 var (
@@ -93,6 +93,10 @@ func InitializeBLT() {
 	blt.Open()
 	sizeX, sizeY := strconv.Itoa(WindowSizeX), strconv.Itoa(WindowSizeY)
 	window := "window: size=" + sizeX + "x" + sizeY
+	currentVersion := GameVersion
+	if Tiles {
+		currentVersion += " [[Tiles]]"
+	}
 	blt.Set(window + ", title=' " + GameTitle + " " + GameVersion +
 		"'; font: " + ReferenceFontName + ", size=" +
 		strconv.Itoa(ReferenceFontSize))

@@ -293,16 +293,34 @@ func PrintVector(vec *Vector, why string, color1, color2 string, b Board, o Obje
 
 func PrintRangedCharacter(x, y int, color string, valid bool) {
 	blt.Layer(LookLayer)
-	if valid == true {
-		ch := "[font=game][color=" + color + "]" + "○" + "[/color][/font]"
-		blt.Print(x*GameFontSpacingX, y*GameFontSpacingY, ch)
+	if Tiles {
+		if valid == true {
+			blt.Color(blt.ColorFromName(color))
+			ch := TileLookingI
+			SmartPut(x, y, MapEntity, ch)
+		} else {
+			blt.Color(blt.ColorFromName(color))
+			ch := TileCrossI
+			SmartPut(x, y, MapEntity, ch)
+		}
+		for i := 0; i < LookLayer; i++ {
+			blt.Layer(i)
+			blt.ClearArea(x*GameFontSpacingX, y*GameFontSpacingY,
+				GameFontSpacingX, GameFontSpacingY)
+		}
+		blt.Color(blt.ColorFromName("white"))
 	} else {
-		ch := "[font=game][color=" + color + "]" + "X" + "[/color][/font]"
-		blt.Print(x*GameFontSpacingX, y*GameFontSpacingY, ch)
-	}
-	for i := 0; i < LookLayer; i++ {
-		blt.Layer(i)
-		blt.ClearArea(x*GameFontSpacingX, y*GameFontSpacingY,
-			GameFontSpacingX, GameFontSpacingY)
+		if valid == true {
+			ch := "[font=game][color=" + color + "]" + "○" + "[/color][/font]"
+			blt.Print(x*GameFontSpacingX, y*GameFontSpacingY, ch)
+		} else {
+			ch := "[font=game][color=" + color + "]" + "X" + "[/color][/font]"
+			blt.Print(x*GameFontSpacingX, y*GameFontSpacingY, ch)
+		}
+		for i := 0; i < LookLayer; i++ {
+			blt.Layer(i)
+			blt.ClearArea(x*GameFontSpacingX, y*GameFontSpacingY,
+				GameFontSpacingX, GameFontSpacingY)
+		}
 	}
 }

@@ -1,0 +1,8 @@
+v0.1
+ [NEW] version with graphical tiles
+ [MOD] meaningless info about enemy HP will not show anymore
+ [FIX] throwing pebbles directly fromthe ground was consuming player's ammo
+ [FIX] missing licensing info
+
+7DRL 2021
+  INITIAL RELEASE

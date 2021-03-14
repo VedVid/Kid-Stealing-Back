@@ -117,7 +117,7 @@ func PrintMessages(x, y int) {
 	   will not format text in special way. */
 	blt.Layer(UILayer)
 	for i, v := range MsgBuf {
-		blt.Print(x+UIFontSpacingX, y+(i*UIFontSpacingY), "[font=ui]"+v)
+		blt.Print(x+UIFontSpacingX, y+(i*UIFontSpacingY), "[font=ui][offset=0,3]"+v)
 	}
 }
 

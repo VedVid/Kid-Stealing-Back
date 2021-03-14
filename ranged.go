@@ -81,7 +81,7 @@ func (c *Creature) Look(b Board, o Objects, cs Creatures) {
 				til = append(til, s)
 			}
 		}
-		PrintLookingMessage(mon, obj, til, hps)
+		PrintLookingMessage(mon, obj, til)
 		key := ReadInput()
 		if key == blt.TK_ESCAPE || key == blt.TK_ENTER || key == blt.TK_SPACE {
 			break
@@ -90,20 +90,12 @@ func (c *Creature) Look(b Board, o Objects, cs Creatures) {
 	}
 }
 
-func PrintLookingMessage(monstersSlice, objectsSlice, tilesSlice []string, hpSlice []int) {
+func PrintLookingMessage(monstersSlice, objectsSlice, tilesSlice []string) {
 	/* */
-	hpSymbol := " "
 	y := 0
-	for i, v := range monstersSlice {
-		if hpSlice[i] >= 80 {
-			hpSymbol = "[color=dark green]Ⅲ[/color]"
-		} else if hpSlice[i] >= 40 {
-			hpSymbol = "[color=dark yellow]Ⅱ[/color]"
-		} else {
-			hpSymbol = "[color=dark red]Ⅰ[/color]"
-		}
+	for _, v := range monstersSlice {
 		blt.Print(UIPosX, (UIPosY+9+y)*UIFontSpacingY, "[font=ui]"+v+
-			" "+hpSymbol+"[/font]")
+			"[/font]")
 		y++
 	}
 	for _, v := range objectsSlice {
@@ -189,15 +181,13 @@ func (c *Creature) Target(b Board, o *Objects, cs *Creatures, dist string, fovLe
 		valid, _, monsterHit, _ := ValidateVector(vec, b, targets, *o, dist)
 		PrintVector(vec, VectorWhyTarget, VectorColorGood, VectorColorBad, b, *o, *cs)
 		if monsterHit != nil {
-			hp := CalcHPPercent(monsterHit.HPCurrent, monsterHit.HPMax)
 			s := "[color=" + monsterHit.Color + "]" + monsterHit.Char +
 				"[/color] " + monsterHit.Name + " "
-			PrintLookingMessage([]string{s}, nil, nil, []int{hp})
+			PrintLookingMessage([]string{s}, nil, nil)
 		} else if targetX == (*cs)[0].X && targetY == (*cs)[0].Y {
-			hp := CalcHPPercent((*cs)[0].HPCurrent, (*cs)[0].HPMax)
 			s := "[color=" + (*cs)[0].Color + "]" + (*cs)[0].Char + "[/color] " +
 				(*cs)[0].Name + " "
-			PrintLookingMessage([]string{s}, nil, nil, []int{hp})
+			PrintLookingMessage([]string{s}, nil, nil)
 		}
 		key := ReadInput()
 		if key == blt.TK_ESCAPE {

@@ -9,5 +9,6 @@ I made the changes as stated below.
 5. "pillar.png" is tile made by me, and it is not part of the Scroll-o-sprites tileset.
 6. "viking.png" and "vikingangry.png" are modified "Charaters" from the original tileset. The "viking.png" smiles, and "vikingangry.png" has does not, and holds his sword higher.
 7. The shape of "stone.png", "heart.png", "treasureheavy.png", "treasuremedium.png", "treasurelight.png" remains the same as original, but there are additional "stoneempty.png", "heartempty.png", "treasureheavyempy.png", "treasuremediumempty.png", "treasurelightempty.png" tiles that have only the contour remaining.
+8. "playerhidden.png" is modified by me "player.png" icon.
 
 The original tileset is redistributed with game archive, in "data/tiles/original_tileset" directory.

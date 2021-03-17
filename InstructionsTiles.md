@@ -28,7 +28,7 @@ This game also provides (rather experimental and not very well tested) support f
 
 **GAMEPLAY**
 
-Your goal it to stole (or maybe *recover*?) as many treasures as possible, and stay alive. You can not fight back, so you need to be clever: hide under the tables, listen to surroundings, and throw pebbles at the enemies to buy some time if necessary.
+Your goal it to stole (or maybe *recover*?) as many treasures as possible, and stay alive. You can not fight back, so you need to be clever: hide under the tables, listen to surroundings, and throw pebbles at the enemies to buy some time if necessary. The stolen valuables you can store in the hatch to the old tunnel – you need to enter it (to do it, press the key that triggers contextual environmental action).
 
 
 
@@ -83,3 +83,13 @@ Points are deducted when:
 
 - player die,
 - player ends the game without any valuable stolen.
+
+
+
+**HINTS**
+
+- Hide (inside the crumbling wall, under the tables) from the  enemies; a hidden player is dark gray, almost black, and the player icon changes; to hide  successfully, the player has to enter the hiding tile when there are no  triggered enemies in the field of view; otherwise, player will not be  hidden, and the color of player character will be a lighter gray.
+- If discovered, run - as a kid, you can actually squeeze through crumbling walls, and the Vikings can not follow the same path.
+- To lose the enemies, throw pebbles at them from your own pocket or directly from the ground.
+- If your bag is full, enter the hatch, store the valuables there, and go  back to the cellar; you can not steal all the treasures at once, but it  is guaranteed that clearing the level is possible in two runs is  possible.
+- Mind your encumbrance – with each container filled, you are becoming slower; still, the bigger risk, the bigger rewards – the  scoring system promotes clearing level in as small number of attempts as possible.

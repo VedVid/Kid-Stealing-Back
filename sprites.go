@@ -86,6 +86,8 @@ var (
 	TileEncMediumS           = "U+1A02"
 	TileEncHeavyI            = 0x1A03
 	TileEncHeavyS            = "U+1A03"
+	TilePlayerHiddenI        = 0x1A04
+	TilePlayerHiddenS        = "U+1A04"
 )
 
 func SetTiles() {
@@ -118,4 +120,5 @@ func SetTiles() {
 	_ = SetGlyph("./data/tiles/encl.png", TileEncLightS)
 	_ = SetGlyph("./data/tiles/encm.png", TileEncMediumS)
 	_ = SetGlyph("./data/tiles/ench.png", TileEncHeavyS)
+	_ = SetGlyph("./data/tiles/playerhidden.png", TilePlayerHiddenS)
 }

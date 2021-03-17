@@ -52,7 +52,7 @@ const (
 	LogPosY      = MapSizeY * 6
 
 	GameTitle   = "About The Kid Who Stole The Relics Back"
-	GameVersion = "(0.1 20210314)"
+	GameVersion = "(0.2 20210317)"
 )
 
 var (

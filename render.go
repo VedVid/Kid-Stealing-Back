@@ -446,15 +446,17 @@ func PrintCreatures(b Board, c Creatures) {
 		// Print player
 		blt.Layer(PlayerLayer)
 		playerColor := c[0].Color
+		playerTile := c[0].Tile
 		if b[c[0].X][c[0].Y].Hides == true {
 			if c[0].Hidden {
 				playerColor = "darkest gray"
+				playerTile = TilePlayerHiddenI
 			} else {
 				playerColor = "dark gray"
 			}
 		}
 		blt.Color(blt.ColorFromName(playerColor))
-		SmartPut(c[0].X, c[0].Y, MapEntity, c[0].Tile)
+		SmartPut(c[0].X, c[0].Y, MapEntity, playerTile)
 		for i := 0; i < PlayerLayer; i++ {
 			blt.Layer(i)
 			SmartClear(c[0].X, c[0].Y, MonsterEntity)
@@ -523,15 +525,17 @@ func PrintCreatures(b Board, c Creatures) {
 		// Print player
 		blt.Layer(PlayerLayer)
 		playerColor := c[0].Color
+		playerChar := c[0].Char
 		if b[c[0].X][c[0].Y].Hides == true {
 			if c[0].Hidden {
 				playerColor = "darkest gray"
+				playerChar = "Θ"
 			} else {
 				playerColor = "dark gray"
 			}
 		}
 		SmartPrint(c[0].X, c[0].Y,
-			MonsterEntity, "[font=game][color="+playerColor+"]"+c[0].Char)
+			MonsterEntity, "[font=game][color="+playerColor+"]"+playerChar)
 		for i := 0; i < PlayerLayer; i++ {
 			blt.Layer(i)
 			SmartClear(c[0].X, c[0].Y, MonsterEntity)

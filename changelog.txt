@@ -1,3 +1,9 @@
+v0.2
+ [NEW] when player is actually hidden, the player icon changes
+ [NEW] added hints section to the Instructions file
+ [MOD] the game goal is stated in the Instruction file
+ [FIX] fixed the critical issue about player not able store loots in the hatch
+
 v0.1
  [NEW] version with graphical tiles
  [MOD] meaningless info about enemy HP will not show anymore

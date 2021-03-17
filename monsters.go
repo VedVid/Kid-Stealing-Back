@@ -241,6 +241,10 @@ func (c *Creature) Move(tx, ty int, b Board, cs Creatures) bool {
 				c.Hidden = hidden
 			}
 		}
+		if b[c.X][c.Y].Name == "Hatch" {
+			AddMessage("You see hatch to the old tunnel there.")
+			AddMessage("You can enter it and store the stolen valuables.")
+		}
 	}
 	return turnSpent
 }
@@ -254,26 +258,32 @@ func (c *Creature) UseEnvironment(b *Board, o *Objects, cs *Creatures) bool {
 		if c.LightItem1 {
 			c.StoleAnything = true
 			Game.SmallStolen++
+			c.LightItem1 = false
 		}
 		if c.LightItem2 {
 			c.StoleAnything = true
 			Game.SmallStolen++
+			c.LightItem2 = false
 		}
 		if c.LightItem3 {
 			c.StoleAnything = true
 			Game.SmallStolen++
+			c.LightItem3 = false
 		}
 		if c.MediumItem1 {
 			c.StoleAnything = true
 			Game.MediumStolen++
+			c.MediumItem1 = false
 		}
 		if c.MediumItem2 {
 			c.StoleAnything = true
 			Game.MediumStolen++
+			c.MediumItem2 = false
 		}
 		if c.HeavyItem1 {
 			c.StoleAnything = true
 			Game.HeavyStolen++
+			c.HeavyItem1 = false
 		}
 		PrintOverlay(*b, HiddenInTunnel, c)
 		Game.Breaks++

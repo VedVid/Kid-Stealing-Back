@@ -11,6 +11,7 @@ Move up:    up arrow
 Move down:  down arrow
 Move left:  left arrow
 Move right: right arrow
+Wait:       space
 
 Look:    l
 Pick up: g
